@@ -1,0 +1,95 @@
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Subset</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/pamflet.js"></script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"></link><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+      </head>
+      <body>
+        <a class="page next nav" href="Getting+Started.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span>
+              
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Subset">Subset</h1><p><em>Subset</em> is a library to ease extracting fields from MongoDB documents,
+serializing them back and constructing queries.
+</p><blockquote><p><a  href="http://www.mongodb.org/">MongoDB</a> is a scalable, high-performance, open-source
+NoSQL document-oriented database. It stores schema-less JSON-like structures.
+</p></blockquote><p>In short, <em>Subset</em> may help you to
+</p><ul><li><p>define typed fields and feel safe about both the types of values your application
+reads from MongoDB and the types of values you store into MongoDB, thus keeping
+your MongoDB records sane. As well:
+</p><ul><li>utilize and easily write reusable value serializers/deserializers
+</li><li>define MongoDB subdocuments
+</li></ul></li><li>construct queries to MongoDB based on the fields
+</li><li>construct MongoDB update operations based on the fields
+</li></ul><p>That said, <em>Subset</em> does not provide methods to perform queries to MongoDB, its
+only concern is actually about serialization/deserialization.
+</p><h3 id="Example">Example</h3><p>The following is a fragment of <a  href="https://gist.github.com/1e9df3f30d58c5eef1df">REPLable gist</a>:
+</p><blockquote><p>A couple of fields in a tweet JSON:
+</p></blockquote><pre><code class="prettyprint lang-scala">val text = &quot;text&quot;.fieldOf[String]
+val createdAt = &quot;created_at&quot;.fieldOf[DateTime]
+</code></pre><blockquote><p>We may run through MongoDB collection and extract only fields
+we need
+</p></blockquote><pre><code class="prettyprint lang-scala">coll.find.iterator foreach {
+  case text(t) ~ createdAt(dt) =&gt; println(t + &quot; @ &quot; + dt)
+}
+</code></pre><blockquote><p>Actually the tweets contain a subdocument “user”.
+Suppose we want it as an object
+</p></blockquote><pre><code class="prettyprint lang-scala">case class User(name: String, tweets: Int, description: String)
+</code></pre><blockquote><p>Let’s define a subdocument declaration (we call it <em>Subset</em>) with its fields
+</p></blockquote><pre><code class="prettyprint lang-scala">object UserDoc extends Subset[User](&quot;user&quot;) {
+  val tweets = &quot;statuses_count&quot;.fieldOf[Int]
+  val description = &quot;description&quot;.fieldOf[String]
+  val name = &quot;screen_name&quot;.fieldOf[String]
+}
+</code></pre><blockquote><p>We need a custom ValueReader, in order for the library to extract User
+objects from a document
+</p></blockquote><pre><code class="prettyprint lang-scala">implicit val userReader = {
+  import UserDoc._
+  ValueReader[User]({
+    case name(n) ~ tweets(t) ~ description(d) =&gt;
+      new User(n,t,d)
+  })
+}
+</code></pre><blockquote><p>With all the above, we may extract not only ordinary fields, but
+a User object as well
+</p></blockquote><pre><code class="prettyprint lang-scala">coll.find.iterator foreach { 
+  case UserDoc(u) ~ text(t) ~ createdAt(dt) =&gt;
+    println(&quot;%s @ %s: %s&quot;.format(u, dt, t))
+}
+</code></pre><blockquote><p>In case we would like to get only recent tweets (for the last 6 hours):
+</p></blockquote><pre><code class="prettyprint lang-scala">coll.find(createdAt &gt; DateTime.now.minusHours(6)).iterator foreach { 
+  case UserDoc(u) ~ text(t) ~ createdAt(dt) =&gt;
+    println(&quot;%s @ %s: %s&quot;.format(u, dt, t))
+}
+</code></pre><h3 id="Why+Subset">Why Subset</h3><p>Other libraries.
+</p><h3 id="Links">Links</h3><ul><li><a  href="http://github.com/osinka/subset">Source Code</a>
+</li><li><a  href="http://osinka.github.com/subset/api/latest/index.html">API Reference</a>
+</li></ul><h3 id="License">License</h3><p><a  href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p><h4>Contents</h4><div class="current">Subset</div><ol class="toc"> <li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li> </ol></li><li><div><a href="Query+Conditions.html">Query Conditions</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>
