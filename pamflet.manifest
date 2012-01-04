@@ -1,9 +1,19 @@
 CACHE MANIFEST
+css/custom.css
 Subset.html
+Example.html
+Why+Subset.html
 Getting+Started.html
+Serialization.html
+ValueReader+%26+ValueWriter.html
+Defining+ValueReader.html
+Defining+ValueWriter.html
+Sub-document.html
+Lens.html
 Documents+%26+Fields.html
 Tuples.html
-Query+Conditions.html
+Caveats.html
+Building+Queries.html
 Update+Operators.html
 Contents+in+Depth.html
 Combined+Pages.html
