@@ -35,15 +35,15 @@
             </div>
           </div>
           <div class="span-16 prepend-1 append-1 contents">
-            <h1 id="Defining+ValueWriter">Defining ValueWriter</h1><p><code>ValueWriter</code> has a factory method as well
+            <h1 id="Defining+ValueWriter">Defining ValueWriter</h1><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueWriter"><code>ValueWriter</code></a> has a factory method as well
 </p><pre><code class="prettyprint lang-scala">object ValueWriter {
   def apply[T](sane: (T =&gt; Any)): ValueWriter[T]
 </code></pre><p>Function <code>sane</code> is supposed to perform “normalization” of <code>T</code> into
 BSON-compatible value.
-</p><p>Looking back to an example of storing Joda <code>DateTime</code>, most likely we
-would want to save a <code>DateTime</code> as a sane MongoDate value
+</p><p>Looking back to an example of storing Joda’s <code>DateTime</code>, most likely we
+would want to save a <code>DateTime</code> as a sane MongoDate value:
 </p><pre><code class="prettyprint lang-scala">implicit val myDateWriter = ValueWriter(_.toDate)
-</code></pre><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div class="current">Defining ValueWriter</div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Lens.html">Lens</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+</code></pre><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div class="current">Defining ValueWriter</div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
           </div>
         </div>
         <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>

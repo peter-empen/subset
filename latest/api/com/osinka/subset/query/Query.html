@@ -24,11 +24,11 @@
       <span class="symbol"> 
         <span class="name">Query</span>
         
-        <span class="result"> extends <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>
+        <span class="result"> extends <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>A Query</p><h4> Lens </h4><p>Query is a <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a>, which means you may
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>A Query</p><h4> Mutation </h4><p>Query is a <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a>, which means you may
 get a <code>DBObject</code> or apply it to the existing <code>DBObject</code> at any time.</p><p>Thus whenever you have a <code>Query</code>, you may get its MongoDB repesentation
 explicitly using <code>get</code></p><pre>
 val q = f &gt; 5 &lt; 10
@@ -44,10 +44,10 @@ val q1 = (f &gt; 0 &amp;&amp; f &lt; 10).get
 </pre><p>This results in <code>{$and: [{f: {$gt:0}}, {f: {$lt:10}}]}</code>.</p><pre>
 val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
 </pre><p>This results in <code>{f: {$gt:0}, g: {$lt:10}}</code></p><p>The same rules apply to the larger number of query terms.
-</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p>[https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala Blog Comment Example]
+</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
 </p></span></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a>, (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a>, (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div><div class="toggleContainer block">
           <span class="toggle">Known Subclasses</span>
           <div class="subClasses hiddenContent"><a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a></div>
@@ -66,7 +66,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.query.Query" class="in"><span>Query</span></li><li name="com.osinka.subset.DBObjectLens" class="in"><span>DBObjectLens</span></li><li name="scala.Function1" class="in"><span>Function1</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="com.osinka.subset.query.Query" class="in"><span>Query</span></li><li name="com.osinka.subset.Mutation" class="in"><span>Mutation</span></li><li name="scala.Function1" class="in"><span>Function1</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -80,14 +80,14 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         
         <div class="values members" id="values">
               <h3>Abstract Value Members</h3>
-              <ol><li visbl="pub" name="com.osinka.subset.query.Query#queryLens" data-isabs="true">
-      <a id="queryLens:QueryLens"></a>
+              <ol><li visbl="pub" name="com.osinka.subset.query.Query#queryMutation" data-isabs="true">
+      <a id="queryMutation:QueryMutation"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">queryLens</span>
+        <span class="name">queryMutation</span>
         
-        <span class="result">: <a name="com.osinka.subset.query.QueryLens" class="extype" href="QueryLens.html">QueryLens</a></span>
+        <span class="result">: <a name="com.osinka.subset.query.QueryMutation" class="extype" href="QueryMutation.html">QueryMutation</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
@@ -140,7 +140,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
       </span>
       </h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#:~&gt;" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#:~&gt;" data-isabs="false">
       <a id=":~&gt;(DBObject):DBObject"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -150,10 +150,10 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Apply this lens to the DBObject
-</p><div class="fullcomment"><div class="comment cmt"><p>Apply this lens to the DBObject
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#&lt;~:" data-isabs="false">
+      <p class="shortcomment cmt">Apply this mutation to the DBObject
+</p><div class="fullcomment"><div class="comment cmt"><p>Apply this mutation to the DBObject
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#&lt;~:" data-isabs="false">
       <a id="&lt;~:(DBObject):DBObject"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -163,9 +163,9 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Apply this lens to the DBObject (right-associative version)
-</p><div class="fullcomment"><div class="comment cmt"><p>Apply this lens to the DBObject (right-associative version)
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Apply this mutation to the DBObject (right-associative version)
+</p><div class="fullcomment"><div class="comment cmt"><p>Apply this mutation to the DBObject (right-associative version)
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
       <a id="==(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -278,7 +278,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="params">(<span name="o">o: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="">Query</a> → <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a> → AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="">Query</a> → <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -293,7 +293,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#get" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#get" data-isabs="false">
       <a id="get:DBObject"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -303,8 +303,8 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Applies this lens to an empty <code>DBObject</code></p><div class="fullcomment"><div class="comment cmt"><p>Applies this lens to an empty <code>DBObject</code></p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p><code>DBObject</code>
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Applies this mutation to an empty <code>DBObject</code></p><div class="fullcomment"><div class="comment cmt"><p>Applies this mutation to an empty <code>DBObject</code></p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p><code>DBObject</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -316,7 +316,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#hashCode" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -326,7 +326,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a> → AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -403,7 +403,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="result">: <span name="java.lang.String" class="extype">String</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="">Query</a> → <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="">Query</a> → <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -415,7 +415,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#toString" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#toString" data-isabs="false">
       <a id="toString():String"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -425,7 +425,7 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
         <span class="params">()</span><span class="result">: String</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a> → Function1 → AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> → Function1 → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
       <a id="wait():Unit"></a>
       <h4 class="signature">
@@ -479,25 +479,25 @@ val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
       </span>
       </h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#~" data-isabs="false">
-      <a id="~(DBObjectLens):DBObjectLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#~" data-isabs="false">
+      <a id="~(Mutation):Mutation"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">~</span>
         
-        <span class="params">(<span name="other">other: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Compose two lenses.</p><div class="fullcomment"><div class="comment cmt"><p>Compose two lenses.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a composition of lenses
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Compose two mutations.</p><div class="fullcomment"><div class="comment cmt"><p>Compose two mutations.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a composition of mutations
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li></ol>
             </div>
 
         
 
-        <div name="com.osinka.subset.DBObjectLens" class="parent">
-              <h3>Inherited from <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></h3>
+        <div name="com.osinka.subset.Mutation" class="parent">
+              <h3>Inherited from <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></h3>
             </div><div name="scala.Function1" class="parent">
               <h3>Inherited from (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></h3>
             </div><div name="scala.AnyRef" class="parent">

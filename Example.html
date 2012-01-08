@@ -46,31 +46,39 @@ we need
 }
 </code></pre><blockquote><p>Every field provides both extractor (you’ve seen it above when we extracted the
 field values using pattern matching) and <code>apply</code> function to serialize values.
-The result of this <code>apply</code> method is a Lens that modifies DBObjects, which is
+The result of this <code>apply</code> method is a Mutation that modifies DBObjects, which is
 rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
 or you may modify an existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>
-</p></blockquote><pre><code class="prettyprint lang-scala">val lens = text(&quot;text&quot;) ~ createdAt(new DateTime)
+</p></blockquote><pre><code class="prettyprint lang-scala">val changes = text(&quot;text&quot;) ~ createdAt(new DateTime)
 
 // this will produce a fresh DBObject with two fields
-// (you may call lens.get explicitly)
-val dbo1: DBObject = lens
+// (you may call changes.get explicitly)
+val dbo1: DBObject = changes
 
 // this will modify an existing DBObject
-val dboModified: DBObject = lens(exstingDBObject)
+val dboModified: DBObject = changes(exstingDBObject)
 </code></pre><h3 id="Subdocument">Subdocument</h3><blockquote><p>Actually the tweets contain a subdocument “user”.
 Suppose we want it as an object
 </p></blockquote><pre><code class="prettyprint lang-scala">case class User(name: String, tweets: Int, description: String)
-</code></pre><blockquote><p>Let’s define a subdocument declaration (we call it <a  href="http://osinka.github.com/subset/Documents+%26+Fields.html"><em>Subset</em></a>)
-with its fields
-</p></blockquote><pre><code class="prettyprint lang-scala">object UserDoc extends Subset[User](&quot;user&quot;) {
+
+object User {
   val tweets = &quot;statuses_count&quot;.fieldOf[Int]
   val description = &quot;description&quot;.fieldOf[String]
   val name = &quot;screen_name&quot;.fieldOf[String]
 }
-</code></pre><blockquote><p>We need a custom <a  href="http://osinka.github.com/subset/ValueReader+%26+ValueWriter.html">ValueReader</a>, in order for the
-library to extract User objects from a document
+
+val user = &quot;user&quot;.subset(User).of[User]
+</code></pre><blockquote><p>First, we have declared a container for the sub-document’s fields.
+<code>user</code> is an object that denotes it’s name represents sub-documents
+of type <code>User</code>. Its type could be <code>List[User]</code> as well, if
+MongoDB document field “user” stored an array of sub-documents.
+</p></blockquote><blockquote><p>We need a custom
+<a  href="http://osinka.github.com/subset/ValueReader+%26+ValueWriter.html">ValueReader</a>,
+in order for the library to extract User objects from a
+document. (in fact, the best place for this <code>implicit</code> is <code>User</code>
+object itself)
 </p></blockquote><pre><code class="prettyprint lang-scala">implicit val userReader = {
-  import UserDoc._
+  import User._
   ValueReader[User]({
     case name(n) ~ tweets(t) ~ description(d) =&gt;
       new User(n,t,d)
@@ -79,30 +87,30 @@ library to extract User objects from a document
 </code></pre><blockquote><p>With all the above, we may extract not only ordinary fields, but
 a User object as well
 </p></blockquote><pre><code class="prettyprint lang-scala">coll.find.iterator foreach { 
-  case UserDoc(u) ~ text(t) ~ createdAt(dt) =&gt;
+  case user(u) ~ text(t) ~ createdAt(dt) =&gt;
     println(&quot;%s @ %s: %s&quot;.format(u, dt, t))
 }
 </code></pre><h3 id="Querying">Querying</h3><blockquote><p>In case we would like to get only recent tweets (for the last 6 hours)
 from a user who has more than 100 tweets:
 </p></blockquote><pre><code class="prettyprint lang-scala">coll.find( createdAt &gt; DateTime.now.minusHours(6) &amp;&amp;
-           UserDoc.tweets &gt; 100 )
+           user.where {_.tweets &gt; 100} )
 </code></pre><h3 id="Updating">Updating</h3><blockquote><p>How would you get tweets from a user who has more than 100 tweets and mark
 these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
 </p></blockquote><pre><code class="prettyprint lang-scala">val fromActiveUser = &quot;fromActiveUser&quot;.field[Boolean]
 
-coll.find( UserDoc.tweets &gt; 100 ) foreach { dbo =&gt;
+coll.find( user.where {_.tweets &gt; 100} ) foreach { dbo =&gt;
   coll.save( fromActiveUser(true) :~&gt; dbo )
 }
 </code></pre><blockquote><p>You could want to accomplish the same task using <a  href="www.mongodb.org/display/DOCS/Updating"><code>update</code></a>
 operation
 </p></blockquote><pre><code class="prettyprint lang-scala">import Document._
 
-coll.find( UserDoc.tweets &gt; 100 ) foreach {
+coll.find( user.where{_.tweets &gt; 100} ) foreach {
   case DocumentId(id) =&gt;
     coll.update(DocumentId === id, fromActiveUser.set(true))
   }
 }
-</code></pre><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div class="current">Example</div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Lens.html">Lens</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+</code></pre><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div class="current">Example</div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
           </div>
         </div>
         <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>

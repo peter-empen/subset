@@ -24,17 +24,17 @@
       <span class="symbol"> 
         <span class="name">Update</span>
         
-        <span class="params">(<span name="ops">ops: Map[String, <a name="com.osinka.subset.query.QueryLens" class="extype" href="../query/QueryLens.html">QueryLens</a>]</span>)</span><span class="result"> extends <span name="scala.Product" class="extype">Product</span> with <span name="scala.Serializable" class="extype">Serializable</span></span>
+        <span class="params">(<span name="ops">ops: Map[String, <a name="com.osinka.subset.query.QueryMutation" class="extype" href="../query/QueryMutation.html">QueryMutation</a>]</span>)</span><span class="result"> extends <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> with <span name="scala.Product" class="extype">Product</span> with <span name="scala.Serializable" class="extype">Serializable</span></span>
       </span>
       </h4>
       
           <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Update builder</p><p>You may compose update operators with <code>~</code></p><pre>
 val updateOp = f.set(&quot;value&quot;) ~ count.inc(1)
 collection.update(query, updateOp)
-</pre><p>You may get a <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a> explicitly with <code>lens</code> method
+</pre><p>You may get a <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> explicitly with <code>mutation</code> method
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span name="scala.Serializable" class="extype">Serializable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, <span name="scala.Product" class="extype">Product</span>, <span name="scala.Equals" class="extype">Equals</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><span name="scala.Serializable" class="extype">Serializable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, <span name="scala.Product" class="extype">Product</span>, <span name="scala.Equals" class="extype">Equals</span>, <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a>, (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -50,7 +50,7 @@ collection.update(query, updateOp)
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.update.Update" class="in"><span>Update</span></li><li name="scala.Serializable" class="in"><span>Serializable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.Product" class="in"><span>Product</span></li><li name="scala.Equals" class="in"><span>Equals</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="com.osinka.subset.update.Update" class="in"><span>Update</span></li><li name="scala.Serializable" class="in"><span>Serializable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.Product" class="in"><span>Product</span></li><li name="scala.Equals" class="in"><span>Equals</span></li><li name="com.osinka.subset.Mutation" class="in"><span>Mutation</span></li><li name="scala.Function1" class="in"><span>Function1</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -67,7 +67,7 @@ collection.update(query, updateOp)
       <span class="symbol"> 
         <span class="name">Update</span>
         
-        <span class="params">(<span name="ops">ops: Map[String, <a name="com.osinka.subset.query.QueryLens" class="extype" href="../query/QueryLens.html">QueryLens</a>]</span>)</span>
+        <span class="params">(<span name="ops">ops: Map[String, <a name="com.osinka.subset.query.QueryMutation" class="extype" href="../query/QueryMutation.html">QueryMutation</a>]</span>)</span>
       </span>
       </h4>
       
@@ -113,6 +113,32 @@ collection.update(query, updateOp)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#:~&gt;" data-isabs="false">
+      <a id=":~&gt;(DBObject):DBObject"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">:~&gt;</span>
+        
+        <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Apply this mutation to the DBObject
+</p><div class="fullcomment"><div class="comment cmt"><p>Apply this mutation to the DBObject
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#&lt;~:" data-isabs="false">
+      <a id="&lt;~:(DBObject):DBObject"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">&lt;~:</span>
+        
+        <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Apply this mutation to the DBObject (right-associative version)
+</p><div class="fullcomment"><div class="comment cmt"><p>Apply this mutation to the DBObject (right-associative version)
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
       <a id="==(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -135,6 +161,28 @@ collection.update(query, updateOp)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="scala.Function1#andThen" data-isabs="false">
+      <a id="andThen[A]((DBObject) ⇒ A):(DBObject) ⇒ A"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">andThen</span>
+        <span class="tparams">[<span name="A">A</span>]</span>
+        <span class="params">(<span name="g">g: (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ A</span>)</span><span class="result">: (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ A</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Function1</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.update.Update#apply" data-isabs="false">
+      <a id="apply(DBObject):DBObject"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">apply</span>
+        
+        <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → Function1</dd></dl></div>
     </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -171,6 +219,17 @@ collection.update(query, updateOp)
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li visbl="pub" name="scala.Function1#compose" data-isabs="false">
+      <a id="compose[A]((A) ⇒ DBObject):(A) ⇒ DBObject"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">compose</span>
+        <span class="tparams">[<span name="A">A</span>]</span>
+        <span class="params">(<span name="g">g: (A) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: (A) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Function1</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -192,7 +251,7 @@ collection.update(query, updateOp)
         <span class="params">(<span name="obj">obj: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → Equals → AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → Equals → <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -207,6 +266,18 @@ collection.update(query, updateOp)
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#get" data-isabs="false">
+      <a id="get:DBObject"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">get</span>
+        
+        <span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Applies this mutation to an empty <code>DBObject</code></p><div class="fullcomment"><div class="comment cmt"><p>Applies this mutation to an empty <code>DBObject</code></p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p><code>DBObject</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -228,7 +299,7 @@ collection.update(query, updateOp)
         <span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -240,18 +311,6 @@ collection.update(query, updateOp)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.update.Update#lens" data-isabs="false">
-      <a id="lens(Path):DBObjectLens"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">lens</span>
-        
-        <span class="params">(<span class="implicit">implicit </span><span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a> = <span class="symbol"><span class="name"><a href="../Path$.html">Path.empty</a></span></span></span>)</span><span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Returns a <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a> with update operations
-</p>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -286,16 +345,27 @@ collection.update(query, updateOp)
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Update#ops" data-isabs="false">
-      <a id="ops:Map[String, QueryLens]"></a>
+      <a id="ops:Map[String, QueryMutation]"></a>
       <h4 class="signature">
       <span class="kind">val</span>
       <span class="symbol"> 
         <span class="name">ops</span>
         
-        <span class="result">: Map[String, <a name="com.osinka.subset.query.QueryLens" class="extype" href="../query/QueryLens.html">QueryLens</a>]</span>
+        <span class="result">: Map[String, <a name="com.osinka.subset.query.QueryMutation" class="extype" href="../query/QueryMutation.html">QueryMutation</a>]</span>
       </span>
       </h4>
       
+    </li><li visbl="pub" name="com.osinka.subset.update.Update#prefixString" data-isabs="false">
+      <a id="prefixString:String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">prefixString</span>
+        
+        <span class="result">: <span name="java.lang.String" class="extype">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Update#productArity" data-isabs="false">
       <a id="productArity:Int"></a>
       <h4 class="signature">
@@ -351,17 +421,17 @@ collection.update(query, updateOp)
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.update.Update#toString" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#toString" data-isabs="false">
       <a id="toString():String"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">toString</span>
         
-        <span class="params">()</span><span class="result">: <span name="java.lang.String" class="extype">String</span></span>
+        <span class="params">()</span><span class="result">: String</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Update" class="extype" href="">Update</a> → AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a> → Function1 → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
       <a id="wait():Unit"></a>
       <h4 class="signature">
@@ -416,6 +486,18 @@ collection.update(query, updateOp)
       </h4>
       <p class="shortcomment cmt">Compose with another <code>Update</code> object
 </p>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#~" data-isabs="false">
+      <a id="~(Mutation):Mutation"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">~</span>
+        
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Compose two mutations.</p><div class="fullcomment"><div class="comment cmt"><p>Compose two mutations.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a composition of mutations
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li></ol>
             </div>
 
@@ -446,6 +528,10 @@ collection.update(query, updateOp)
               <h3>Inherited from <span name="scala.Product" class="extype">Product</span></h3>
             </div><div name="scala.Equals" class="parent">
               <h3>Inherited from <span name="scala.Equals" class="extype">Equals</span></h3>
+            </div><div name="com.osinka.subset.Mutation" class="parent">
+              <h3>Inherited from <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></h3>
+            </div><div name="scala.Function1" class="parent">
+              <h3>Inherited from (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></h3>
             </div><div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">

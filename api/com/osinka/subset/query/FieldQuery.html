@@ -24,7 +24,7 @@
       <span class="symbol"> 
         <span class="name">FieldQuery</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="condition">condition: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result"> extends <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a> with <a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a>[T] with <span name="scala.Product" class="extype">Product</span> with <span name="scala.Serializable" class="extype">Serializable</span></span>
+        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="condition">condition: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span><span class="result"> extends <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a> with <a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a>[T] with <span name="scala.Product" class="extype">Product</span> with <span name="scala.Serializable" class="extype">Serializable</span></span>
       </span>
       </h4>
       
@@ -38,7 +38,7 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
 </code>
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span name="scala.Serializable" class="extype">Serializable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, <span name="scala.Product" class="extype">Product</span>, <span name="scala.Equals" class="extype">Equals</span>, <a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a>[T], <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a>, <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a>, <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a>, (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><span name="scala.Serializable" class="extype">Serializable</span>, <span name="java.io.Serializable" class="extype">Serializable</span>, <span name="scala.Product" class="extype">Product</span>, <span name="scala.Equals" class="extype">Equals</span>, <a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a>[T], <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a>, <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a>, <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a>, (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -54,7 +54,7 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.query.FieldQuery" class="in"><span>FieldQuery</span></li><li name="scala.Serializable" class="in"><span>Serializable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.Product" class="in"><span>Product</span></li><li name="scala.Equals" class="in"><span>Equals</span></li><li name="com.osinka.subset.query.Conditions" class="in"><span>Conditions</span></li><li name="com.osinka.subset.Path" class="in"><span>Path</span></li><li name="com.osinka.subset.query.Query" class="in"><span>Query</span></li><li name="com.osinka.subset.DBObjectLens" class="in"><span>DBObjectLens</span></li><li name="scala.Function1" class="in"><span>Function1</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="com.osinka.subset.query.FieldQuery" class="in"><span>FieldQuery</span></li><li name="scala.Serializable" class="in"><span>Serializable</span></li><li name="java.io.Serializable" class="in"><span>Serializable</span></li><li name="scala.Product" class="in"><span>Product</span></li><li name="scala.Equals" class="in"><span>Equals</span></li><li name="com.osinka.subset.query.Conditions" class="in"><span>Conditions</span></li><li name="com.osinka.subset.Path" class="in"><span>Path</span></li><li name="com.osinka.subset.query.Query" class="in"><span>Query</span></li><li name="com.osinka.subset.Mutation" class="in"><span>Mutation</span></li><li name="scala.Function1" class="in"><span>Function1</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -71,7 +71,7 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       <span class="symbol"> 
         <span class="name">FieldQuery</span>
         
-        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="condition">condition: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>)</span>
+        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="condition">condition: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span>
       </span>
       </h4>
       
@@ -139,7 +139,18 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#:~&gt;" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Path#+" data-isabs="false">
+      <a id="+(Path):Path"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">+</span>
+        
+        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#:~&gt;" data-isabs="false">
       <a id=":~&gt;(DBObject):DBObject"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -149,9 +160,9 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
         <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Apply this lens to the DBObject
-</p><div class="fullcomment"><div class="comment cmt"><p>Apply this lens to the DBObject
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Apply this mutation to the DBObject
+</p><div class="fullcomment"><div class="comment cmt"><p>Apply this mutation to the DBObject
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#&lt;" data-isabs="false">
       <a id="&lt;(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
@@ -174,7 +185,7 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#&lt;~:" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#&lt;~:" data-isabs="false">
       <a id="&lt;~:(DBObject):DBObject"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -184,9 +195,9 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
         <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Apply this lens to the DBObject (right-associative version)
-</p><div class="fullcomment"><div class="comment cmt"><p>Apply this lens to the DBObject (right-associative version)
-</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Apply this mutation to the DBObject (right-associative version)
+</p><div class="fullcomment"><div class="comment cmt"><p>Apply this mutation to the DBObject (right-associative version)
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
       <a id="==(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -323,13 +334,13 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Function1</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery#condition" data-isabs="false">
-      <a id="condition:DBObjectLens"></a>
+      <a id="condition:Mutation"></a>
       <h4 class="signature">
       <span class="kind">val</span>
       <span class="symbol"> 
         <span class="name">condition</span>
         
-        <span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>
+        <span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>
       </span>
       </h4>
       
@@ -381,17 +392,17 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
               
         </dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery#fquery" data-isabs="false">
-      <a id="fquery(DBObjectLens):FieldQuery[T]"></a>
+      <a id="fquery(Mutation):FieldQuery[T]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">fquery</span>
         
-        <span class="params">(<span name="cond">cond: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a>[T]</span>
+        <span class="params">(<span name="cond">cond: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a> → <a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#get" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#get" data-isabs="false">
       <a id="get:DBObject"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -401,8 +412,8 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
         <span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Applies this lens to an empty <code>DBObject</code></p><div class="fullcomment"><div class="comment cmt"><p>Applies this lens to an empty <code>DBObject</code></p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p><code>DBObject</code>
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Applies this mutation to an empty <code>DBObject</code></p><div class="fullcomment"><div class="comment cmt"><p>Applies this mutation to an empty <code>DBObject</code></p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p><code>DBObject</code>
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -470,6 +481,17 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a></dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Path#name" data-isabs="false">
+      <a id="name:String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">name</span>
+        
+        <span class="result">: String</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -591,18 +613,6 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a> → <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.Path#positionIn" data-isabs="false">
-      <a id="positionIn(Path,String):Path"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">positionIn</span>
-        
-        <span class="params">(<span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="delimiter">delimiter: String = <span class="symbol">&quot;$&quot;</span></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Returns the positional segment</p><div class="fullcomment"><div class="comment cmt"><p>Returns the positional segment</p></div><dl class="paramcmts block"><dt class="param">scope</dt><dd class="cmt"><p>the subdocument this path resides in</p></dd><dt class="param">delimiter</dt><dd class="cmt"><p>is a name to embed between the scope and the field segments. Defaults to <code>$</code>
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery#prefixString" data-isabs="false">
       <a id="prefixString:String"></a>
       <h4 class="signature">
@@ -613,7 +623,7 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
         <span class="result">: <span name="java.lang.String" class="extype">String</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a> → <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a> → <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a> → <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a> → <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a> → <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery#productArity" data-isabs="false">
       <a id="productArity:Int"></a>
       <h4 class="signature">
@@ -658,29 +668,17 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a> → Product</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery#queryLens" data-isabs="false">
-      <a id="queryLens:QueryLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery#queryMutation" data-isabs="false">
+      <a id="queryMutation:QueryMutation"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">queryLens</span>
+        <span class="name">queryMutation</span>
         
-        <span class="result">: <a name="com.osinka.subset.query.QueryLens" class="extype" href="QueryLens.html">QueryLens</a></span>
+        <span class="result">: <a name="com.osinka.subset.query.QueryMutation" class="extype" href="QueryMutation.html">QueryMutation</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldQuery" class="extype" href="">FieldQuery</a> → <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.Path#relativeTo" data-isabs="false">
-      <a id="relativeTo(Path):Path"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">relativeTo</span>
-        
-        <span class="params">(<span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Return the common suffix</p><div class="fullcomment"><div class="comment cmt"><p>Return the common suffix</p></div><dl class="paramcmts block"><dt class="param">scope</dt><dd class="cmt"><p>the sub-document this path resides in
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#size" data-isabs="false">
       <a id="size(Int)(&lt;:&lt;[T, Traversable[_]]):FieldQuery[T]"></a>
       <h4 class="signature">
@@ -811,18 +809,18 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.DBObjectLens#~" data-isabs="false">
-      <a id="~(DBObjectLens):DBObjectLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation#~" data-isabs="false">
+      <a id="~(Mutation):Mutation"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">~</span>
         
-        <span class="params">(<span name="other">other: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Compose two lenses.</p><div class="fullcomment"><div class="comment cmt"><p>Compose two lenses.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a composition of lenses
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></dd></dl></div>
+      <p class="shortcomment cmt">Compose two mutations.</p><div class="fullcomment"><div class="comment cmt"><p>Compose two mutations.</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a composition of mutations
+</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></dd></dl></div>
     </li></ol>
             </div>
 
@@ -859,8 +857,8 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
               <h3>Inherited from <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></h3>
             </div><div name="com.osinka.subset.query.Query" class="parent">
               <h3>Inherited from <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></h3>
-            </div><div name="com.osinka.subset.DBObjectLens" class="parent">
-              <h3>Inherited from <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></h3>
+            </div><div name="com.osinka.subset.Mutation" class="parent">
+              <h3>Inherited from <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></h3>
             </div><div name="scala.Function1" class="parent">
               <h3>Inherited from (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></h3>
             </div><div name="scala.AnyRef" class="parent">

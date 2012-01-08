@@ -1,0 +1,72 @@
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Mutation</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/custom.css"></link>
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/pamflet.js"></script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"></link><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+      </head>
+      <body>
+        <a class="page prev nav" href="Sub-document.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip">❧</span>
+          </a><a class="page next nav" href="Documents+%26+Fields.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span>
+               — Mutation
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Mutation">Mutation</h1><p><em>Mutation</em> in <strong>Subset</strong> is an extension of function <code>(DBObject =&gt;
+DBObject)</code>. <strong>Subset</strong> makes a heavy use of mutations to accumulate
+updates to <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> values and benefits from mutations composability.
+</p><pre><code class="prettyprint lang-scala">trait Mutation extends (DBObject =&gt; DBObject)
+</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Mutation"><code>Mutation</code></a> has the
+following methods:
+</p><pre><code class="prettyprint lang-scala">def get: DBObject
+</code></pre><blockquote><p>applies the mutation to an empty <code>DBObject</code>
+</p></blockquote><pre><code class="prettyprint lang-scala">def ~ (other: Mutation): Mutation
+</code></pre><blockquote><p>composes two mutations together. This is equivalent to the composition
+of two functions <code>f andThen g</code>
+</p></blockquote><pre><code class="prettyprint lang-scala">def :~&gt; (dbo: DBObject): DBObject
+</code></pre><blockquote><p>applies the mutation to <code>dbo</code>. That is, write all accumulated updates to
+the object.
+</p></blockquote><pre><code class="prettyprint lang-scala">def &lt;~: (dbo: DBObject): DBObject
+</code></pre><blockquote><p>The right-associative version, so that one may write <code>dbo &lt;~: mutation</code>
+</p></blockquote><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Mutation$"><code>Mutation</code></a> companion
+object hosts a number of predefined mutations (e.g. writing a value under
+some key, removing a key, to name a few), though they are rarely used
+directly. Almost everywhere <strong>Subset</strong> generates <code>Mutation</code>: when
+one serializes a field’s value or builds a query, the result would be
+<code>Mutation</code> or its subtype. This gives a beautiful flexibility:
+</p><ul><li>it’s very easy to get a fresh <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> by calling <code>mutation.get</code>
+(certainly there is also an implicit, that converts mutations into
+<code>DBObject</code>)
+</li><li>it’s always possible to apply a mutation to the existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>, so
+that a developer may modify <code>DBObject</code> got from any source and keep
+other fields intact.
+</li><li>mutations compose, accumulating the changes.
+</li></ul><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div class="current">Mutation</div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>

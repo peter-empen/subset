@@ -28,17 +28,14 @@
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>All the update operators MongoDB allows to create.</p><p>This trait mixes into <a name="com.osinka.subset.Field" class="extype" href="../Field.html">Field</a></p><h4> <code>$pull</code> </h4><p><code>pull</code> allows specifying a <a name="com.osinka.subset.query.Query" class="extype" href="../query/Query.html">Query</a> to select an object
-that needs to be removed from an array, e.g.</p><pre>
-collection.update(BlogPost.title === &quot;empty&quot;,
-                  BlogPost.comments.pull(Comment.by === &quot;user2&quot; &amp;&amp; Comment.votes === 0))
-</pre></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>All the update operators MongoDB allows to create.</p><p>This trait mixes into <a name="com.osinka.subset.Field" class="extype" href="../Field.html">Field</a>
+</p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
 </p></span></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div><div class="toggleContainer block">
           <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a name="com.osinka.subset.Field" class="extype" href="../Field.html">Field</a>, <a name="com.osinka.subset.Field.PositionalField" class="extype" href="../Field$PositionalField.html">PositionalField</a></div>
+          <div class="subClasses hiddenContent"><a name="com.osinka.subset.Field" class="extype" href="../Field.html">Field</a>, <a name="com.osinka.subset.Subset" class="extype" href="../Subset.html">Subset</a></div>
         </div></div>
         
 
@@ -117,6 +114,17 @@ collection.update(BlogPost.title === &quot;empty&quot;,
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Path#+" data-isabs="false">
+      <a id="+(Path):Path"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">+</span>
+        
+        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
       <a id="==(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -278,6 +286,17 @@ collection.update(BlogPost.title === &quot;empty&quot;,
       </h4>
       <p class="shortcomment cmt">Path in dot notation</p><div class="fullcomment"><div class="comment cmt"><p>Path in dot notation</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd><dt>See also</dt><dd><span class="cmt"><p><a href="http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29">MongoDB dot notation</a>
 </p></span></dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Path#name" data-isabs="false">
+      <a id="name:String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">name</span>
+        
+        <span class="result">: String</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -311,6 +330,17 @@ collection.update(BlogPost.title === &quot;empty&quot;,
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="prt" name="com.osinka.subset.update.Modifications#op" data-isabs="false">
+      <a id="op[B](String,B)(ValueWriter[B]):Update"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">op</span>
+        <span class="tparams">[<span name="B">B</span>]</span>
+        <span class="params">(<span name="op">op: String</span>, <span name="x">x: B</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="../ValueWriter.html">ValueWriter</a>[B]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="Update.html">Update</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pop" data-isabs="false">
       <a id="pop(Int)(ValueWriter[Int],&lt;:&lt;[T, Traversable[_]]):Update"></a>
       <h4 class="signature">
@@ -322,18 +352,17 @@ collection.update(BlogPost.title === &quot;empty&quot;,
       </span>
       </h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.Path#positionIn" data-isabs="false">
-      <a id="positionIn(Path,String):Path"></a>
+    </li><li visbl="pub" name="com.osinka.subset.Path#prefixString" data-isabs="false">
+      <a id="prefixString:String"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">positionIn</span>
+        <span class="name">prefixString</span>
         
-        <span class="params">(<span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="delimiter">delimiter: String = <span class="symbol">&quot;$&quot;</span></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
+        <span class="result">: String</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Returns the positional segment</p><div class="fullcomment"><div class="comment cmt"><p>Returns the positional segment</p></div><dl class="paramcmts block"><dt class="param">scope</dt><dd class="cmt"><p>the subdocument this path resides in</p></dd><dt class="param">delimiter</dt><dd class="cmt"><p>is a name to embed between the scope and the field segments. Defaults to <code>$</code>
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pull" data-isabs="false">
       <a id="pull[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
@@ -342,17 +371,6 @@ collection.update(BlogPost.title === &quot;empty&quot;,
         <span class="name">pull</span>
         <span class="tparams">[<span name="A">A</span>]</span>
         <span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="../ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="Update.html">Update</a></span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pull" data-isabs="false">
-      <a id="pull(Query)(&lt;:&lt;[T, Traversable[_]]):Update"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pull</span>
-        
-        <span class="params">(<span name="q">q: <a name="com.osinka.subset.query.Query" class="extype" href="../query/Query.html">Query</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="Update.html">Update</a></span>
       </span>
       </h4>
       
@@ -411,18 +429,6 @@ collection.update(BlogPost.title === &quot;empty&quot;,
       </span>
       </h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.Path#relativeTo" data-isabs="false">
-      <a id="relativeTo(Path):Path"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">relativeTo</span>
-        
-        <span class="params">(<span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Return the common suffix</p><div class="fullcomment"><div class="comment cmt"><p>Return the common suffix</p></div><dl class="paramcmts block"><dt class="param">scope</dt><dd class="cmt"><p>the sub-document this path resides in
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#rename" data-isabs="false">
       <a id="rename(String)(ValueWriter[String]):Update"></a>
       <h4 class="signature">

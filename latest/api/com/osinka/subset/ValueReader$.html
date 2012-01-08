@@ -24,14 +24,14 @@
       <span class="symbol"> 
         <span class="name">ValueReader</span>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends <a name="com.osinka.subset.LowPriorityReaders" class="extype" href="LowPriorityReaders.html">LowPriorityReaders</a></span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>ValueReader factory based on <code>PartialFunction[Any,T]</code>.</p><p>It contains a default reader implicit as well.
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>ValueReader factory based on <code>PartialFunction[Any,T]</code>.</p><p>It contains default reader implicits as well.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent"><a name="com.osinka.subset.LowPriorityReaders" class="extype" href="LowPriorityReaders.html">LowPriorityReaders</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
         
 
@@ -47,7 +47,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.ValueReader" class="in"><span>ValueReader</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="com.osinka.subset.ValueReader" class="in"><span>ValueReader</span></li><li name="com.osinka.subset.LowPriorityReaders" class="in"><span>LowPriorityReaders</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -140,6 +140,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#booleanGetter" data-isabs="false">
+      <a id="booleanGetter:ValueReaderPf[Boolean]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">booleanGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Boolean" class="extype">Boolean</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
@@ -154,7 +165,29 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.ValueReader#defaultReader" data-isabs="false">
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#dateGetter" data-isabs="false">
+      <a id="dateGetter:ValueReaderPf[Date]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">dateGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="java.util.Date" class="extype">Date</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#dboGetter" data-isabs="false">
+      <a id="dboGetter:ValueReaderPf[DBObject]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">dboGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="com.mongodb.DBObject" class="extype">DBObject</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.LowPriorityReaders#defaultReader" data-isabs="false">
       <a id="defaultReader[T&lt;:AnyRef](Manifest[T]):ValueReader[T]"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
@@ -162,6 +195,17 @@
         <span class="name">defaultReader</span>
         <span class="tparams">[<span name="T">T &lt;: AnyRef</span>]</span>
         <span class="params">(<span class="implicit">implicit </span><span name="m">m: Manifest[T]</span>)</span><span class="result">: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.LowPriorityReaders" class="extype" href="LowPriorityReaders.html">LowPriorityReaders</a></dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#doubleGetter" data-isabs="false">
+      <a id="doubleGetter:ValueReaderPf[Double]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">doubleGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Double" class="extype">Double</span>]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
@@ -223,6 +267,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#intGetter" data-isabs="false">
+      <a id="intGetter:ValueReaderPf[Int]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">intGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Int" class="extype">Int</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -234,6 +289,28 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#listGetter" data-isabs="false">
+      <a id="listGetter[T](ValueReader[T]):ValueReaderPf[List[T]]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit def</span>
+      <span class="symbol"> 
+        <span class="name">listGetter</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="params">(<span class="implicit">implicit </span><span name="r">r: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[List[T]]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#longGetter" data-isabs="false">
+      <a id="longGetter:ValueReaderPf[Long]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">longGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Long" class="extype">Long</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -267,6 +344,50 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#optionGetter" data-isabs="false">
+      <a id="optionGetter[T](ValueReader[T]):ValueReader[Option[T]]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit def</span>
+      <span class="symbol"> 
+        <span class="name">optionGetter</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="params">(<span class="implicit">implicit </span><span name="r">r: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[<span name="scala.Option" class="extype">Option</span>[T]]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#regexGetter" data-isabs="false">
+      <a id="regexGetter:ValueReaderPf[Regex]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">regexGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.util.matching.Regex" class="extype">Regex</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#stringGetter" data-isabs="false">
+      <a id="stringGetter:ValueReaderPf[String]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">stringGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[String]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.ValueReader#symbolGetter" data-isabs="false">
+      <a id="symbolGetter:ValueReaderPf[Symbol]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">symbolGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Symbol" class="extype">Symbol</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -336,7 +457,9 @@
 
         
 
-        <div name="scala.AnyRef" class="parent">
+        <div name="com.osinka.subset.LowPriorityReaders" class="parent">
+              <h3>Inherited from <a name="com.osinka.subset.LowPriorityReaders" class="extype" href="LowPriorityReaders.html">LowPriorityReaders</a></h3>
+            </div><div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>

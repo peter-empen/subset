@@ -28,20 +28,35 @@
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><h4> Getting Started </h4><p>This 'package object' provides a number of implicits to ease conversions and
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><h4> Getting Started </h4><p>This 'package object' provides a number of implicits to ease the
 use of the library. Thus the initial step is supposed to be</p><pre>
 import com.osinka.subset._
-</pre><h4> Value conversions </h4><p><b>Subset</b> provides a means to convert Java/Scala types to/from BSON values.
-You have several options:</p><ul><li>if you are using Casbah, it already contains the conversion library</li><li>you may <code>import SmartValues._</code>. <b>Subset</b> will try to extract correct
-   values from incorrect field contents (e.g. an integer value stored as a
-   string field)</li><li>if you do not need this, do <code>import StrictValues._</code></li></ul><h4> Field </h4><p>It is possible to pimp a string into a <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a> with <code>&quot;fieldName&quot;.fieldOf[T]</code>.</p><p>Tuples made of <code>Field[T]</code> and the object of the same <code>T</code> can be implicitly converted into
-<code>DBObject</code> or <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a>. This depends on <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>.</p><pre>
+</pre><h4> Value conversions </h4><p>MongoDB Java driver is capable to encode/decode few Java types to/from BSON.
+E.g. it encodes any subtype of <code>List[T]</code> into BSON array. However, it cannot
+work with Scala types (<code>Symbol</code>, sequences, <code>Option[T]</code>). <b>Subset</b> provides
+a couple of type classes, <code>ValueReader[T]</code> and <code>ValueWriter[T]</code> to define
+mechanisms of converting values to and from BSON values, and a library of
+<i>implicit</i>s for common Scala types.</p><p>A developer may define own instances to support other types, e.g. if one needs
+to store <code>BigDecimal</code> values in an integer BSON value</p><pre>
+implicit val bigDecimalReader = ValueReader[BigDecimal]({
+    case l: Long =&gt; BigDecimal(l, 2)
+  })
+implicit val bigDecimalWriter = ValueWriter[BigDecimal](bd =&gt; {
+    assert(bd.scale == 2)
+    (bd*100).setScale(0).toLong
+  })
+</pre><p>There are few optional <i>import</i>s:</p><ul><li><code>import JodaValues._</code> will make available a conversions for JodaTime <code>DateTime</code></li><li><code>import SmartValues._</code> provides extended readers for primitive types and date, when
+   readers try to extract a value even from incorrect BSON type (e.g. when an Int
+   is stored in Double or in String)</li></ul><h4> Field </h4><p>It is possible to pimp a string into a <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a> with <code>&quot;fieldName&quot;.fieldOf[T]</code>.</p><p>Tuples made of <code>Field[T]</code> and an object of the same <code>T</code> can be implicitly converted into
+<code>DBObject</code> or <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a> if <code>T</code> has a <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>.</p><pre>
 val dbo: DBObject = &quot;i&quot;.fieldOf[Int] -&gt; 10
-val lens: DBObjectLens = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot;.fieldOf[String] -&gt; &quot;str&quot;)
-</pre><p>It's possible to simply use a string instead of field as well (but only to create a
-<code>DBObjectLens</code>):</p><pre>
-val lens: DBObjectLens = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot; -&gt; &quot;str&quot;)
-</pre><h4> What's next? </h4><ul><li>We recommend to start from <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>.</li><li><a name="com.osinka.subset.Subset" class="extype" href="Subset.html">Subset</a> will give you a hint on how to work with subdocuments.</li><li><a name="com.osinka.subset.query" class="extype" href="query/package.html">query</a> provides information on building queries.</li><li><a name="com.osinka.subset.update" class="extype" href="update/package.html">update</a> is about &quot;update operators&quot;.</li><li>If you need details, <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a>, <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a>,
+val mutation: Mutation = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot;.fieldOf[String] -&gt; &quot;str&quot;)
+</pre><p>It's possible to use a string instead of field as well (but only to create a
+<code>Mutation</code>):</p><pre>
+val mutation: Mutation = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot; -&gt; &quot;str&quot;)
+</pre><h4> Subset </h4><p>You may pimp a <code>String</code> into Subset with</p><pre>
+val subset = &quot;name&quot;.subset(Obj).of[T]
+</pre><p>where <code>Obj</code> is a container of fields and <code>T</code> is a subset's type</p><h4> What's next? </h4><ul><li>Start from <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>.</li><li><a name="com.osinka.subset.Subset" class="extype" href="Subset.html">Subset</a> will give you a hint on how to work with subdocuments.</li><li><a name="com.osinka.subset.query" class="extype" href="query/package.html">query</a> provides information on building queries.</li><li><a name="com.osinka.subset.update" class="extype" href="update/package.html">update</a> is about &quot;update modifiers&quot;.</li><li>If you need details, <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a>,
    <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a> and <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a> are the
    way to go.
 </li></ul></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
@@ -64,18 +79,7 @@ val lens: DBObjectLens = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot; 
 
         <div class="types members" id="types">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="com.osinka.subset.DBObjectLens" data-isabs="true">
-      <a id="DBObjectLens:DBObjectLens"></a>
-      <h4 class="signature">
-      <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="DBObjectLens.html"><span class="name">DBObjectLens</span></a>
-        
-        <span class="result"> extends (DBObject) ⇒ DBObject</span>
-      </span>
-      </h4>
-      <p class="comment cmt">The low level mechanism for modifying DBObjects.</p>
-    </li><li visbl="pub" name="com.osinka.subset.Field" data-isabs="false">
+              <ol><li visbl="pub" name="com.osinka.subset.Field" data-isabs="false">
       <a id="Field:Field[T]"></a>
       <h4 class="signature">
       <span class="kind">class</span>
@@ -86,6 +90,39 @@ val lens: DBObjectLens = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot; 
       </span>
       </h4>
       <p class="comment cmt">A typed field</p>
+    </li><li visbl="pub" name="com.osinka.subset.LowPriorityReaders" data-isabs="true">
+      <a id="LowPriorityReaders:LowPriorityReaders"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="LowPriorityReaders.html"><span class="name">LowPriorityReaders</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="com.osinka.subset.LowPriorityWriters" data-isabs="true">
+      <a id="LowPriorityWriters:LowPriorityWriters"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="LowPriorityWriters.html"><span class="name">LowPriorityWriters</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      
+    </li><li visbl="pub" name="com.osinka.subset.Mutation" data-isabs="true">
+      <a id="Mutation:Mutation"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="Mutation.html"><span class="name">Mutation</span></a>
+        
+        <span class="result"> extends (DBObject) ⇒ DBObject</span>
+      </span>
+      </h4>
+      <p class="comment cmt">The low level mechanism for modifying DBObjects.</p>
     </li><li visbl="pub" name="com.osinka.subset.Path" data-isabs="true">
       <a id="Path:Path"></a>
       <h4 class="signature">
@@ -96,18 +133,30 @@ val lens: DBObjectLens = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot; 
         <span class="result"> extends AnyRef</span>
       </span>
       </h4>
-      <p class="comment cmt">MongoDB field/subdocument path</p>
-    </li><li visbl="pub" name="com.osinka.subset.Subset" data-isabs="true">
-      <a id="Subset:Subset[T]"></a>
+      <p class="comment cmt">MongoDB field/subdocument path
+</p>
+    </li><li visbl="pub" name="com.osinka.subset.SmartValues" data-isabs="true">
+      <a id="SmartValues:SmartValues"></a>
+      <h4 class="signature">
+      <span class="kind">trait</span>
+      <span class="symbol"> 
+        <a href="SmartValues.html"><span class="name">SmartValues</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">unpack primitives and try to convert from other type:</p>
+    </li><li visbl="pub" name="com.osinka.subset.Subset" data-isabs="false">
+      <a id="Subset:Subset[T, Self]"></a>
       <h4 class="signature">
       <span class="kind">class</span>
       <span class="symbol"> 
         <a href="Subset.html"><span class="name">Subset</span></a>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="result"> extends Path</span>
+        <span class="tparams">[<span name="T">T</span>, <span name="Self">Self</span>]</span>
+        <span class="result"> extends Field[T]</span>
       </span>
       </h4>
-      <p class="comment cmt">Subset is an abstract class to build subdocuments</p>
+      <p class="comment cmt">Subset wraps facilities for working with subdocuments.</p>
     </li><li visbl="pub" name="com.osinka.subset.Tuple2Subset" data-isabs="false">
       <a id="Tuple2Subset:Tuple2Subset[T1, T2]"></a>
       <h4 class="signature">
@@ -197,19 +246,7 @@ val lens: DBObjectLens = (&quot;i&quot;.fieldOf[Int] -&gt; 10) ~ (&quot;s&quot; 
 
         <div class="values members" id="values">
               <h3>Value Members</h3>
-              <ol><li visbl="pub" name="com.osinka.subset.DBObjectLens" data-isabs="false">
-      <a id="DBObjectLens:DBObjectLens"></a>
-      <h4 class="signature">
-      <span class="kind">object</span>
-      <span class="symbol"> 
-        <a href="DBObjectLens$.html"><span class="name">DBObjectLens</span></a>
-        
-        <span class="result"> extends AnyRef</span>
-      </span>
-      </h4>
-      <p class="comment cmt">Provides a factory method to create lenses from <code>DBObject =&gt; DBObject</code> functions and a couple
-convenience methods.</p>
-    </li><li visbl="pub" name="com.osinka.subset.Document" data-isabs="false">
+              <ol><li visbl="pub" name="com.osinka.subset.Document" data-isabs="false">
       <a id="Document:Document"></a>
       <h4 class="signature">
       <span class="kind">object</span>
@@ -221,6 +258,17 @@ convenience methods.</p>
       </h4>
       <p class="comment cmt">A set of helper fields and methods to work with MongoDB documents
 </p>
+    </li><li visbl="pub" name="com.osinka.subset.Extractors" data-isabs="false">
+      <a id="Extractors:Extractors"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Extractors$.html"><span class="name">Extractors</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Few generic extractors.</p>
     </li><li visbl="pub" name="com.osinka.subset.Field" data-isabs="false">
       <a id="Field:Field"></a>
       <h4 class="signature">
@@ -232,6 +280,29 @@ convenience methods.</p>
       </span>
       </h4>
       
+    </li><li visbl="pub" name="com.osinka.subset.JodaValues" data-isabs="false">
+      <a id="JodaValues:JodaValues"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="JodaValues$.html"><span class="name">JodaValues</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt"><a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a> and <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a> for Joda Time</p>
+    </li><li visbl="pub" name="com.osinka.subset.Mutation" data-isabs="false">
+      <a id="Mutation:Mutation"></a>
+      <h4 class="signature">
+      <span class="kind">object</span>
+      <span class="symbol"> 
+        <a href="Mutation$.html"><span class="name">Mutation</span></a>
+        
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      <p class="comment cmt">Provides a factory method to create mutations from <code>DBObject =&gt; DBObject</code> functions and a couple
+convenience methods.</p>
     </li><li visbl="pub" name="com.osinka.subset.Path" data-isabs="false">
       <a id="Path:Path"></a>
       <h4 class="signature">
@@ -254,28 +325,29 @@ convenience methods.</p>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.package#SmartValues" data-isabs="false">
-      <a id="SmartValues:com.osinka.subset.values.SmartValues.type"></a>
+    </li><li visbl="pub" name="com.osinka.subset.SmartValues" data-isabs="false">
+      <a id="SmartValues:SmartValues"></a>
       <h4 class="signature">
-      <span class="kind">val</span>
+      <span class="kind">object</span>
       <span class="symbol"> 
-        <span class="name">SmartValues</span>
+        <a href="SmartValues$.html"><span class="name">SmartValues</span></a>
         
-        <span class="result">: com.osinka.subset.values.SmartValues.type</span>
+        <span class="result"> extends SmartValues</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.package#StrictValues" data-isabs="false">
-      <a id="StrictValues:com.osinka.subset.values.StrictValues.type"></a>
+      <p class="comment cmt">Provides a smart deserialization of BSON values
+</p>
+    </li><li visbl="pub" name="com.osinka.subset.Subset" data-isabs="false">
+      <a id="Subset:Subset"></a>
       <h4 class="signature">
-      <span class="kind">val</span>
+      <span class="kind">object</span>
       <span class="symbol"> 
-        <span class="name">StrictValues</span>
+        <a href="Subset$.html"><span class="name">Subset</span></a>
         
-        <span class="result">: com.osinka.subset.values.StrictValues.type</span>
+        <span class="result"> extends AnyRef</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
+      
     </li><li visbl="pub" name="com.osinka.subset.package#Update" data-isabs="false">
       <a id="Update:com.osinka.subset.update.Update.type"></a>
       <h4 class="signature">
@@ -294,7 +366,7 @@ convenience methods.</p>
       <span class="symbol"> 
         <a href="ValueReader$.html"><span class="name">ValueReader</span></a>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends LowPriorityReaders</span>
       </span>
       </h4>
       <p class="comment cmt">ValueReader factory based on <code>PartialFunction[Any,T]</code>.</p>
@@ -305,29 +377,29 @@ convenience methods.</p>
       <span class="symbol"> 
         <a href="ValueWriter$.html"><span class="name">ValueWriter</span></a>
         
-        <span class="result"> extends AnyRef</span>
+        <span class="result"> extends LowPriorityWriters</span>
       </span>
       </h4>
       <p class="comment cmt">ValueWriter factory based on ordinary &quot;sanitization&quot; function.</p>
-    </li><li visbl="pub" name="com.osinka.subset.package#fToDBObjectLens" data-isabs="false">
-      <a id="fToDBObjectLens((DBObject) ⇒ DBObject):DBObjectLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.package#fToMutation" data-isabs="false">
+      <a id="fToMutation((DBObject) ⇒ DBObject):Mutation"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
       <span class="symbol"> 
-        <span class="name">fToDBObjectLens</span>
+        <span class="name">fToMutation</span>
         
-        <span class="params">(<span name="f">f: (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a></span>
+        <span class="params">(<span name="f">f: (<span name="com.mongodb.DBObject" class="extype">DBObject</span>) ⇒ <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.package#fToQDBObjectLens" data-isabs="false">
-      <a id="fToQDBObjectLens((Path) ⇒ DBObjectLens):QueryLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.package#fToQMutation" data-isabs="false">
+      <a id="fToQMutation((Path) ⇒ Mutation):QueryMutation"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
       <span class="symbol"> 
-        <span class="name">fToQDBObjectLens</span>
+        <span class="name">fToQMutation</span>
         
-        <span class="params">(<span name="f">f: (<a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a>) ⇒ <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.QueryLens" class="extype" href="query/QueryLens.html">QueryLens</a></span>
+        <span class="params">(<span name="f">f: (<a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a>) ⇒ <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.QueryMutation" class="extype" href="query/QueryMutation.html">QueryMutation</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
@@ -343,24 +415,13 @@ convenience methods.</p>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.package#fieldTupleSerializer" data-isabs="false">
-      <a id="fieldTupleSerializer[T]((Field[T], T))(ValueWriter[T]):DBObjectLens"></a>
+      <a id="fieldTupleSerializer[T]((Field[T], T))(ValueWriter[T]):Mutation"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
       <span class="symbol"> 
         <span class="name">fieldTupleSerializer</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="t">t: (<a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T], T)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.package#lensToDBO" data-isabs="false">
-      <a id="lensToDBO(DBObjectLens):DBObject"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol"> 
-        <span class="name">lensToDBO</span>
-        
-        <span class="params">(<span name="l">l: <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
+        <span class="params">(<span name="t">t: (<a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T], T)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
@@ -387,13 +448,13 @@ convenience methods.</p>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.package#stringTupleSerializer" data-isabs="false">
-      <a id="stringTupleSerializer[T]((String, T))(ValueWriter[T]):DBObjectLens"></a>
+      <a id="stringTupleSerializer[T]((String, T))(ValueWriter[T]):Mutation"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
       <span class="symbol"> 
         <span class="name">stringTupleSerializer</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="t">t: (String, T)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.DBObjectLens" class="extype" href="DBObjectLens.html">DBObjectLens</a></span>
+        <span class="params">(<span name="t">t: (String, T)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
@@ -407,29 +468,7 @@ convenience methods.</p>
         
       </span>
       </h4>
-      <p class="comment cmt">Basically, it is possible to create update operators and compose them.</p>
-    </li><li visbl="pub" name="com.osinka.subset.package#updateToDBO" data-isabs="false">
-      <a id="updateToDBO(Update)(Path):DBObject"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol"> 
-        <span class="name">updateToDBO</span>
-        
-        <span class="params">(<span name="u">u: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a> = <span class="symbol"><span class="name"><a href="Path$.html">Path.empty</a></span></span></span>)</span><span class="result">: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.values" data-isabs="false">
-      <a id="values:values"></a>
-      <h4 class="signature">
-      <span class="kind">package</span>
-      <span class="symbol"> 
-        <a href="values/package.html"><span class="name">values</span></a>
-        
-        
-      </span>
-      </h4>
-      <p class="comment cmt">Collection of <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a> and <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a> implicits.</p>
+      <p class="comment cmt">Update operators and their composition.</p>
     </li><li visbl="pub" name="com.osinka.subset.package.~" data-isabs="false">
       <a id="~:~"></a>
       <h4 class="signature">

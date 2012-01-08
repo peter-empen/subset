@@ -34,7 +34,7 @@ a range <code>f &gt; 3 &lt;= 10</code>) or negate a condition, see
 <a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a> for details.</p><h4> Composing Queries </h4><p>It is possible to compose queries with <code>&amp;&amp;</code>, <code>||</code> and <code>nor</code> methods.
 See <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a> for details.</p><h4> Subset </h4><p>com.osinka.subset.Subset.elemMatch method allows creating <code>$elemMatch</code>
 queries, when you need to match all the conditions on a specific subdocument.</p><pre>
-val query = BlogPost.Comments.elemMatch { comment =&gt;
+val query = BlogPost.comments.elemMatch { comment =&gt;
   comment.by === &quot;joe&quot; &amp;&amp; comment.votes === 2
 }
 
@@ -89,7 +89,7 @@ val blogPosts = collection.find(query)
       <span class="symbol"> 
         <a href="FieldQuery.html"><span class="name">FieldQuery</span></a>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="p">p: Path</span>, <span name="condition">condition: DBObjectLens</span>)</span><span class="result"> extends Query with Conditions[T] with Product with Serializable</span>
+        <span class="params">(<span name="p">p: Path</span>, <span name="condition">condition: Mutation</span>)</span><span class="result"> extends Query with Conditions[T] with Product with Serializable</span>
       </span>
       </h4>
       <p class="comment cmt">A query term that helps define several conditions on the same field (e.</p>
@@ -100,21 +100,21 @@ val blogPosts = collection.find(query)
       <span class="symbol"> 
         <a href="Query.html"><span class="name">Query</span></a>
         
-        <span class="result"> extends DBObjectLens</span>
+        <span class="result"> extends Mutation</span>
       </span>
       </h4>
       <p class="comment cmt">A Query</p>
-    </li><li visbl="pub" name="com.osinka.subset.query.QueryLens" data-isabs="true">
-      <a id="QueryLens:QueryLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.query.QueryMutation" data-isabs="true">
+      <a id="QueryMutation:QueryMutation"></a>
       <h4 class="signature">
       <span class="kind">trait</span>
       <span class="symbol"> 
-        <a href="QueryLens.html"><span class="name">QueryLens</span></a>
+        <a href="QueryMutation.html"><span class="name">QueryMutation</span></a>
         
-        <span class="result"> extends (Path) ⇒ DBObjectLens</span>
+        <span class="result"> extends (Path) ⇒ Mutation</span>
       </span>
       </h4>
-      <p class="comment cmt">The low level mechanism for constructing lenses dependant on Path.</p>
+      <p class="comment cmt">The low level mechanism for constructing mutations dependant on Path.</p>
     </li></ol>
             </div>
         
@@ -133,12 +133,12 @@ val blogPosts = collection.find(query)
       </span>
       </h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.query.QueryLens" data-isabs="false">
-      <a id="QueryLens:QueryLens"></a>
+    </li><li visbl="pub" name="com.osinka.subset.query.QueryMutation" data-isabs="false">
+      <a id="QueryMutation:QueryMutation"></a>
       <h4 class="signature">
       <span class="kind">object</span>
       <span class="symbol"> 
-        <a href="QueryLens$.html"><span class="name">QueryLens</span></a>
+        <a href="QueryMutation$.html"><span class="name">QueryMutation</span></a>
         
         <span class="result"> extends AnyRef</span>
       </span>

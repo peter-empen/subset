@@ -39,14 +39,14 @@
 </p><pre><code class="prettyprint lang-scala">trait ValueReader[+T] {
   def unpack(o: Any): Option[T]
 }
-</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values.ValueReader"><code>ValueReader</code></a> is a
+</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueReader"><code>ValueReader</code></a> is a
 deserializer for type <code>T</code>. If it can read <code>T</code> from any BSON value <code>o</code>,
 it returns <code>Some[T]</code>.
 </p><p>A deserializer:
 </p><pre><code class="prettyprint lang-scala">trait ValueWriter[-T] {
   def pack(x: T): Option[Any]
 }
-</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values.ValueWriter"><code>ValueWriter</code></a>
+</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueWriter"><code>ValueWriter</code></a>
 serializes an object of type <code>T</code> into a BSON-compatible value.
 </p><blockquote><p>MongoDB Java driver
 <a  href="http://www.mongodb.org/display/DOCS/Java+Types">supports</a> a number
@@ -56,7 +56,7 @@ box.
 declared as <code>implicit</code>, so that Scala can select the right one when a
 developer applies methods from higher-level <strong>Subset</strong> classes, like
 <code>Field[T]</code>.
-</p><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div class="current">ValueReader &amp; ValueWriter</div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Lens.html">Lens</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+</p><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div class="current">ValueReader &amp; ValueWriter</div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Building+Queries.html">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc">  </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
           </div>
         </div>
         <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>

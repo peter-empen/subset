@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="span-16 prepend-1 append-1 contents">
-            <h4>Contents</h4><div><a href="#Subset">Subset</a></div><ol class="toc"> <li><div><a href="#Example">Example</a></div></li><li><div><a href="#Why+Subset">Why Subset</a></div></li><li><div><a href="#Getting+Started">Getting Started</a></div></li><li><div><a href="#Serialization">Serialization</a></div><ol class="toc"> <li><div><a href="#ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="#Defining+ValueReader">Defining ValueReader</a></div></li><li><div><a href="#Defining+ValueWriter">Defining ValueWriter</a></div></li><li><div><a href="#Sub-document">Sub-document</a></div></li> </ol></li><li><div><a href="#Lens">Lens</a></div></li><li><div><a href="#Documents+%26+Fields">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="#Tuples">Tuples</a></div></li><li><div><a href="#Caveats">Caveats</a></div></li> </ol></li><li><div><a href="#Building+Queries">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="#Update+Operators">Update Operators</a></div><ol class="toc">  </ol></li> </ol><h1 id="Subset">Subset</h1><p><strong>Subset</strong> is a library to ease extracting fields from MongoDB documents,
+            <h4>Contents</h4><div><a href="#Subset">Subset</a></div><ol class="toc"> <li><div><a href="#Example">Example</a></div></li><li><div><a href="#Why+Subset">Why Subset</a></div></li><li><div><a href="#Getting+Started">Getting Started</a></div></li><li><div><a href="#Serialization">Serialization</a></div><ol class="toc"> <li><div><a href="#ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="#Defining+ValueReader">Defining ValueReader</a></div></li><li><div><a href="#Defining+ValueWriter">Defining ValueWriter</a></div></li><li><div><a href="#Sub-document">Sub-document</a></div></li> </ol></li><li><div><a href="#Mutation">Mutation</a></div></li><li><div><a href="#Documents+%26+Fields">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="#Tuples">Tuples</a></div></li><li><div><a href="#Caveats">Caveats</a></div></li> </ol></li><li><div><a href="#Building+Queries">Building Queries</a></div><ol class="toc">  </ol></li><li><div><a href="#Update+Operators">Update Operators</a></div><ol class="toc">  </ol></li> </ol><h1 id="Subset">Subset</h1><p><strong>Subset</strong> is a library to ease extracting fields from MongoDB documents,
 serializing them back and constructing queries.
 </p><blockquote><p><a  href="http://www.mongodb.org/">MongoDB</a> is a scalable, high-performance, open-source
 NoSQL document-oriented database. It stores schema-less JSON-like structures.
@@ -56,7 +56,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#109;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#97;&#x7a;&#x61;&#114;&#111;&#x76;&#64;&#x6f;&#115;&#105;&#110;&#x6b;&#x61;&#46;&#99;&#111;&#109;">mailto:azarov@osinka.com</a>  
+<a  href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#97;&#x7a;&#97;&#114;&#111;&#118;&#64;&#111;&#x73;&#x69;&#110;&#107;&#97;&#x2e;&#x63;&#x6f;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
@@ -73,31 +73,39 @@ we need
 }
 </code></pre><blockquote><p>Every field provides both extractor (you’ve seen it above when we extracted the
 field values using pattern matching) and <code>apply</code> function to serialize values.
-The result of this <code>apply</code> method is a Lens that modifies DBObjects, which is
+The result of this <code>apply</code> method is a Mutation that modifies DBObjects, which is
 rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
 or you may modify an existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>
-</p></blockquote><pre><code class="prettyprint lang-scala">val lens = text(&quot;text&quot;) ~ createdAt(new DateTime)
+</p></blockquote><pre><code class="prettyprint lang-scala">val changes = text(&quot;text&quot;) ~ createdAt(new DateTime)
 
 // this will produce a fresh DBObject with two fields
-// (you may call lens.get explicitly)
-val dbo1: DBObject = lens
+// (you may call changes.get explicitly)
+val dbo1: DBObject = changes
 
 // this will modify an existing DBObject
-val dboModified: DBObject = lens(exstingDBObject)
+val dboModified: DBObject = changes(exstingDBObject)
 </code></pre><h3 id="Subdocument">Subdocument</h3><blockquote><p>Actually the tweets contain a subdocument “user”.
 Suppose we want it as an object
 </p></blockquote><pre><code class="prettyprint lang-scala">case class User(name: String, tweets: Int, description: String)
-</code></pre><blockquote><p>Let’s define a subdocument declaration (we call it <a  href="http://osinka.github.com/subset/Documents+%26+Fields.html"><em>Subset</em></a>)
-with its fields
-</p></blockquote><pre><code class="prettyprint lang-scala">object UserDoc extends Subset[User](&quot;user&quot;) {
+
+object User {
   val tweets = &quot;statuses_count&quot;.fieldOf[Int]
   val description = &quot;description&quot;.fieldOf[String]
   val name = &quot;screen_name&quot;.fieldOf[String]
 }
-</code></pre><blockquote><p>We need a custom <a  href="http://osinka.github.com/subset/ValueReader+%26+ValueWriter.html">ValueReader</a>, in order for the
-library to extract User objects from a document
+
+val user = &quot;user&quot;.subset(User).of[User]
+</code></pre><blockquote><p>First, we have declared a container for the sub-document’s fields.
+<code>user</code> is an object that denotes it’s name represents sub-documents
+of type <code>User</code>. Its type could be <code>List[User]</code> as well, if
+MongoDB document field “user” stored an array of sub-documents.
+</p></blockquote><blockquote><p>We need a custom
+<a  href="http://osinka.github.com/subset/ValueReader+%26+ValueWriter.html">ValueReader</a>,
+in order for the library to extract User objects from a
+document. (in fact, the best place for this <code>implicit</code> is <code>User</code>
+object itself)
 </p></blockquote><pre><code class="prettyprint lang-scala">implicit val userReader = {
-  import UserDoc._
+  import User._
   ValueReader[User]({
     case name(n) ~ tweets(t) ~ description(d) =&gt;
       new User(n,t,d)
@@ -106,25 +114,25 @@ library to extract User objects from a document
 </code></pre><blockquote><p>With all the above, we may extract not only ordinary fields, but
 a User object as well
 </p></blockquote><pre><code class="prettyprint lang-scala">coll.find.iterator foreach { 
-  case UserDoc(u) ~ text(t) ~ createdAt(dt) =&gt;
+  case user(u) ~ text(t) ~ createdAt(dt) =&gt;
     println(&quot;%s @ %s: %s&quot;.format(u, dt, t))
 }
 </code></pre><h3 id="Querying">Querying</h3><blockquote><p>In case we would like to get only recent tweets (for the last 6 hours)
 from a user who has more than 100 tweets:
 </p></blockquote><pre><code class="prettyprint lang-scala">coll.find( createdAt &gt; DateTime.now.minusHours(6) &amp;&amp;
-           UserDoc.tweets &gt; 100 )
+           user.where {_.tweets &gt; 100} )
 </code></pre><h3 id="Updating">Updating</h3><blockquote><p>How would you get tweets from a user who has more than 100 tweets and mark
 these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
 </p></blockquote><pre><code class="prettyprint lang-scala">val fromActiveUser = &quot;fromActiveUser&quot;.field[Boolean]
 
-coll.find( UserDoc.tweets &gt; 100 ) foreach { dbo =&gt;
+coll.find( user.where {_.tweets &gt; 100} ) foreach { dbo =&gt;
   coll.save( fromActiveUser(true) :~&gt; dbo )
 }
 </code></pre><blockquote><p>You could want to accomplish the same task using <a  href="www.mongodb.org/display/DOCS/Updating"><code>update</code></a>
 operation
 </p></blockquote><pre><code class="prettyprint lang-scala">import Document._
 
-coll.find( UserDoc.tweets &gt; 100 ) foreach {
+coll.find( user.where{_.tweets &gt; 100} ) foreach {
   case DocumentId(id) =&gt;
     coll.update(DocumentId === id, fromActiveUser.set(true))
   }
@@ -146,7 +154,7 @@ functionality that needs to be addressed. Nevertheless, since Osinka
 <strong>Subset</strong>) projects utilize own library to work with MongoDB
 (<a  href="https://github.com/osinka/mongo-scala-driver">mongo-scala-driver</a>)
 and we have such an experience, we finally established a number of
-requirements:
+requirements for the new library:
 </p><ul><li>ability to work via official mongo-java-driver directly,
 </li><li>a type-safe mechanism to record transitions of documents
 (<a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>), define queries and “update modifiers”
@@ -157,7 +165,7 @@ design goals:
 </p><ul><li><strong>Subset</strong> provides a rich DSL to define typed fields and
 subdocuments, compose them and build queries and update
 operations, expressed finally in terms of a
-<a  href="http://osinka.github.com/subset/Lens.html">lens</a> for perfect interoperability with
+<a  href="http://osinka.github.com/subset/Mutation.html">mutation</a> for perfect interoperability with
 Java driver.
 </li><li>It has a library of value serializers/deserializers for common Java
 and Scala types (e.g. Scala’s <code>Symbol</code>, <code>Traversable[T]</code>,
@@ -181,32 +189,27 @@ find some possible caveats <a  href="http://osinka.github.com/subset/Caveats.htm
 </p><hr></hr><h1 id="Getting+Started">Getting Started</h1><h2 id="Imports">Imports</h2><p><strong>Subset</strong> declares most <em>implicits</em> via <code>package object</code>, so it’s a
 good idea to import the whole package:
 </p><pre><code class="prettyprint lang-scala">import com.osinka.subset._
-</code></pre><p>Then, you have three choices
-</p><ul><li>if you are using <strong>Casbah</strong>, you do not need to import value
-serializers (<strong>TODO: check Casbah</strong>)
-</li><li>if not, you may import
-<a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values.StrictValues$"><code>StrictValues</code></a>,
-so that <strong>Subset</strong> knows how to convert common Scala/Java values
-back and forth to BSON:
-</li></ul><pre><code class="prettyprint lang-scala">import StrictValues._
-</code></pre><ul><li><strong>Subset</strong> also supports
-<a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values.SmartValues$"><code>SmartValues</code></a>
-and they are very much like the previous, but little bit
-smart. Those who use MongoDB from various programming languages know
-that a field data type is very easy to alter, e.g. you could forget
-to cast a variable to <code>Int</code> in PHP and voila, your database contains
-a String BSON field, while your Scala code still expects
-<code>Int</code>. <code>SmartValues</code> is here to the rescue: will try to extract an
-Int field from a BSON String or e.g. a Date field from Int BSON.
-</li></ul><pre><code class="prettyprint lang-scala">import SmartValues._
-</code></pre><h2 id="Joda+Time">Joda Time</h2><p>Import <code>values.Joda._</code> in case you use <a  href="http://joda-time.sourceforge.net/">Joda Time</a> library. This
-will let you create <code>DateTime</code> fields
-</p><p><strong>Note:</strong> <strong>Subset</strong> itself does not depend on “Joda Time” library, it
+</code></pre><p>The above <code>import</code> includes a set of routines to convert Scala types
+back and forth to BSON values. Though this set is pretty
+comprehensive, <strong>Subset</strong> also supports a number of “smart”
+converters, that try to extract values from another BSON type
+(e.g. when a developer expects <code>Int</code>, “smart” converters will read a
+value both from <code>Int</code> BSON field and <code>String</code> as well).
+</p><blockquote><p>Those who use MongoDB from various programming languages know that a
+field data type is very easy to alter, e.g. you could forget to cast
+a variable to <code>Int</code> in PHP and voila, your database contains a
+String BSON field, while your Scala code still expects <code>Int</code>.
+</p></blockquote><p>In order to use “smart” converters,
+</p><pre><code class="prettyprint lang-scala">import SmartValues._
+</code></pre><h2 id="Joda+Time">Joda Time</h2><p>Import <code>JodaValues._</code> in case you use
+<a  href="http://joda-time.sourceforge.net/">Joda Time</a> library. This will let
+you save and consume <code>DateTime</code> fields
+</p><p><strong>NOTE:</strong> <strong>Subset</strong> itself does not depend on “Joda Time” library, it
 is declared <em>optional</em> in Ivy / Maven configurations. Your project
 must depend on “Joda Time” if you use it.
-</p><h2 id="SBT+Configuration">SBT Configuration</h2><p>Depending on <em>simple</em> or <em>scala</em> configration:
+</p><h2 id="SBT+Configuration">SBT Configuration</h2><p>For <em>simple</em> configuration:
 </p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.3.0&quot;
-</code></pre><p>or
+</code></pre><p>For <em>scala</em> configration:
 </p><pre><code class="prettyprint lang-scala">lazy val root = Project(....) dependsOn(subset)
 
 lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.3.0&quot;
@@ -216,7 +219,7 @@ lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.
   &lt;artifactId&gt;subset_2.8.2&lt;/artifactId&gt;
   &lt;version&gt;0.3.0&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre><p>Do not forget repository:
+</code></pre><p>Do not forget to add the repository:
 </p><pre><code class="prettyprint lang-xml">&lt;repositories&gt;
   &lt;repository&gt;
      &lt;id&gt;scala-tools.org&lt;/id&gt;
@@ -227,28 +230,30 @@ lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.
 </code></pre><hr></hr><h1 id="Serialization">Serialization</h1><p><strong>Subset</strong>’s units of serialization are ordinary values: the
 library needs to know how to create a typed Scala/Java object from a
 BSON value and how to convert an object back.
-</p><h3 id="Subset">Subset</h3><p><strong>Subset</strong> has an own comprehensive library of serializers for
+</p><p><strong>Subset</strong> has an own comprehensive library of serializers for
 Java/Scala types (along with <code>Seq[T]</code>, <code>Option[T]</code>, etc.), with
 simple mechanisms for a developer to define own serializers.
-</p><p>All the serializers and deserializers are based on type classes, thus
-declared as <code>implicit</code>. There are several traits and objects that
-compose implicits into packs (e.g. for basic values or Scala complex
-type like <code>Seq[T]</code>) to help you import only what you want, see
-<a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values"><code>com.osinka.subset.values</code></a>
-package API reference.q
-</p><h3 id="Casbah">Casbah</h3><blockquote><p>(<strong>TODO: check Casbah</strong>)
-</p></blockquote><hr></hr><h1 id="ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</h1><p>A serializer:
+</p><pre><code class="prettyprint lang-scala">implicit val bigDecimalReader = ValueReader[BigDecimal]({
+    case l: Long =&gt; BigDecimal(l, 2)
+  })
+implicit val bigDecimalWriter = ValueWriter[BigDecimal](bd =&gt; {
+    assert(bd.scale == 2)
+    (bd*100).setScale(0).toLong
+  })
+</code></pre><p>All the serializers and deserializers are based on type classes, thus
+declared as <code>implicit</code>.
+</p><hr></hr><h1 id="ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</h1><p>A serializer:
 </p><pre><code class="prettyprint lang-scala">trait ValueReader[+T] {
   def unpack(o: Any): Option[T]
 }
-</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values.ValueReader"><code>ValueReader</code></a> is a
+</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueReader"><code>ValueReader</code></a> is a
 deserializer for type <code>T</code>. If it can read <code>T</code> from any BSON value <code>o</code>,
 it returns <code>Some[T]</code>.
 </p><p>A deserializer:
 </p><pre><code class="prettyprint lang-scala">trait ValueWriter[-T] {
   def pack(x: T): Option[Any]
 }
-</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.values.ValueWriter"><code>ValueWriter</code></a>
+</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueWriter"><code>ValueWriter</code></a>
 serializes an object of type <code>T</code> into a BSON-compatible value.
 </p><blockquote><p>MongoDB Java driver
 <a  href="http://www.mongodb.org/display/DOCS/Java+Types">supports</a> a number
@@ -267,7 +272,7 @@ factory method to create deserializers from a <code>PartialFunction[Any,T]</code
 do the following:
 </p><pre><code class="prettyprint lang-scala">implicit val myDateReader = ValueReader[DateTime]({
     case i: Int =&gt;
-      // assuming the time is stored in the number of seconds
+      // assuming the time is stored as the number of seconds
       // since the epoch
       new DateTime(i*1000L)
 
@@ -279,18 +284,18 @@ do the following:
 based on the field contents.
 </p><p><code>ValueReaderPf</code> does more than that, it has methods for composing
 several deserializers, see
-<a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.value.ValueReaderPf"><code>ValueReaderPf</code> scaladoc</a> and
-<a  href="https://github.com/osinka/subset/blob/master/src/main/scala/values/Smart.scala"><code>SmartValues</code> sources</a>
-</p><hr></hr><h1 id="Defining+ValueWriter">Defining ValueWriter</h1><p><code>ValueWriter</code> has a factory method as well
+<a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueReaderPf"><code>ValueReaderPf</code> scaladoc</a> and
+<a  href="https://github.com/osinka/subset/blob/master/src/main/scala/SmartValues.scala"><code>SmartValues</code> sources</a>
+</p><hr></hr><h1 id="Defining+ValueWriter">Defining ValueWriter</h1><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.ValueWriter"><code>ValueWriter</code></a> has a factory method as well
 </p><pre><code class="prettyprint lang-scala">object ValueWriter {
   def apply[T](sane: (T =&gt; Any)): ValueWriter[T]
 </code></pre><p>Function <code>sane</code> is supposed to perform “normalization” of <code>T</code> into
 BSON-compatible value.
-</p><p>Looking back to an example of storing Joda <code>DateTime</code>, most likely we
-would want to save a <code>DateTime</code> as a sane MongoDate value
+</p><p>Looking back to an example of storing Joda’s <code>DateTime</code>, most likely we
+would want to save a <code>DateTime</code> as a sane MongoDate value:
 </p><pre><code class="prettyprint lang-scala">implicit val myDateWriter = ValueWriter(_.toDate)
 </code></pre><hr></hr><h1 id="Sub-document">Sub-document</h1><p>Suppose you have a model where you store subdocuments in an array,
-e.g.
+e.g. (as JSON)
 </p><pre><code class="prettyprint lang-json">{
   title: &quot;A blog post&quot;,
   comments: [
@@ -308,14 +313,17 @@ e.g.
 }
 </code></pre><p>Every comment is represented in the model as
 </p><pre><code class="prettyprint lang-scala">case class Comment(by: String, votes: Int, text: String)
-</code></pre><p>And a list of comments is defined in a “blog post” like
+</code></pre><blockquote><p>Since <strong>Subset</strong> is not a mapper, there is no real necessity to give
+same names to the <em>case class</em>’s fields  
+</p></blockquote><p>And a list of comments is defined in a “blog post” like
 </p><pre><code class="prettyprint lang-scala">object BlogPost {
+  val title = &quot;title&quot;.fieldOf[String]
   val comments = &quot;comments&quot;.fieldOf[List[Comment]]
-</code></pre><p>If you are going to read <code>comments</code> field or write to it or do any
-queries or modifications (via MongoDB’s “update modifiers”),
-<strong>Subset</strong> will need to know how to serialize and deserialize
-<code>Comment</code> (it already knows what to do with <code>List[T]</code>), so you have
-to define Comment’s reader and writer:
+</code></pre><p>In order to read <code>comments</code> field or write to it or create any queries
+or modifications (via MongoDB’s “update modifiers”), <strong>Subset</strong> needs
+to know how to serialize and deserialize <code>Comment</code> (it already knows
+what to do with <code>List[T]</code>), so you have to define Comment’s reader and
+writer:
 </p><pre><code class="prettyprint lang-scala">object Comment {
   val by = &quot;by&quot;.fieldOf[String]
   val votes = &quot;votes&quot;.fieldOf[Int]
@@ -335,7 +343,45 @@ to define Comment’s reader and writer:
 }
 </code></pre><blockquote><p>The fragment of code above is a part of
 <a  href="https://gist.github.com/3033b1cc11825870656d">REPLable example on working with subdocuments (at gist.github.com)</a>
-</p></blockquote><hr></hr><h1 id="Lens">Lens</h1><ul><li><em> </em></li></ul><h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><h2 id="Indexes">Indexes</h2><blockquote><p>TODO: <code>int</code>
+</p></blockquote><p>With all the above definitions, creating a new <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> will be like
+</p><pre><code class="prettyprint lang-scala">import BlogPost._
+
+val dbo: DBObject =
+  title(&quot;A blog post&quot;) ~
+  comments(Comment(&quot;joe&quot;, &quot;joe's comment&quot;, 0) ::
+           Comment(&quot;mary&quot;, &quot;mary's comment&quot;, 1) ::
+           Nil)
+</code></pre><pre><code>       
+</code></pre><hr></hr><h1 id="Mutation">Mutation</h1><p><em>Mutation</em> in <strong>Subset</strong> is an extension of function <code>(DBObject =&gt;
+DBObject)</code>. <strong>Subset</strong> makes a heavy use of mutations to accumulate
+updates to <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> values and benefits from mutations composability.
+</p><pre><code class="prettyprint lang-scala">trait Mutation extends (DBObject =&gt; DBObject)
+</code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Mutation"><code>Mutation</code></a> has the
+following methods:
+</p><pre><code class="prettyprint lang-scala">def get: DBObject
+</code></pre><blockquote><p>applies the mutation to an empty <code>DBObject</code>
+</p></blockquote><pre><code class="prettyprint lang-scala">def ~ (other: Mutation): Mutation
+</code></pre><blockquote><p>composes two mutations together. This is equivalent to the composition
+of two functions <code>f andThen g</code>
+</p></blockquote><pre><code class="prettyprint lang-scala">def :~&gt; (dbo: DBObject): DBObject
+</code></pre><blockquote><p>applies the mutation to <code>dbo</code>. That is, write all accumulated updates to
+the object.
+</p></blockquote><pre><code class="prettyprint lang-scala">def &lt;~: (dbo: DBObject): DBObject
+</code></pre><blockquote><p>The right-associative version, so that one may write <code>dbo &lt;~: mutation</code>
+</p></blockquote><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Mutation$"><code>Mutation</code></a> companion
+object hosts a number of predefined mutations (e.g. writing a value under
+some key, removing a key, to name a few), though they are rarely used
+directly. Almost everywhere <strong>Subset</strong> generates <code>Mutation</code>: when
+one serializes a field’s value or builds a query, the result would be
+<code>Mutation</code> or its subtype. This gives a beautiful flexibility:
+</p><ul><li>it’s very easy to get a fresh <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> by calling <code>mutation.get</code>
+(certainly there is also an implicit, that converts mutations into
+<code>DBObject</code>)
+</li><li>it’s always possible to apply a mutation to the existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>, so
+that a developer may modify <code>DBObject</code> got from any source and keep
+other fields intact.
+</li><li>mutations compose, accumulating the changes.
+</li></ul><hr></hr><h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><h2 id="Indexes">Indexes</h2><blockquote><p>TODO: <code>int</code>
 </p></blockquote><h2 id="Reusing+Fields">Reusing Fields</h2><blockquote><p>TODO: Attach &amp; Detach
 </p></blockquote><hr></hr><h1 id="Tuples">Tuples</h1><hr></hr><h1 id="Caveats">Caveats</h1><h2 id="%E2%80%9CWhere+is+my+new+object%E2%80%99s+%3F%E2%80%9C">“Where is my new object’s <code>_id</code>?“</h2><p>Suppose you want to insert a new object and you need this object’s <a  href="http://api.mongodb.org/java/2.7.0/org/bson/types/ObjectId.html"><code>_id</code></a> back?
 An approach could be like this
@@ -397,7 +443,7 @@ dbo match {
 fresh object with two fields (this can be of help if you’d like to sanitize
 your documents)
 </p></blockquote><pre><code class="prettyprint lang-scala">collection.save(modification)
-</code></pre><p><strong>Note</strong> Almost all <strong>Subset</strong> objects are <a  href="http://osinka.github.com/subset/Lens.html"><em>Lenses</em></a>.
+</code></pre><p><strong>Note</strong> Almost all <strong>Subset</strong> objects are <a  href="http://osinka.github.com/subset/Mutation.html"><em>Mutations</em></a>.
 </p><hr></hr><h1 id="Building+Queries">Building Queries</h1><h2 id=""><code>$elemMatch</code></h2><hr></hr><h1 id="Update+Operators">Update Operators</h1><h2 id="Positional+Modification">Positional Modification</h2><ul><li><em> </em></li></ul>
           </div>
         </div>

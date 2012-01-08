@@ -34,7 +34,7 @@
           <div class="superTypes hiddenContent"><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div><div class="toggleContainer block">
           <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a name="com.osinka.subset.Field" class="extype" href="../Field.html">Field</a>, <a name="com.osinka.subset.query.FieldConditions" class="extype" href="FieldConditions.html">FieldConditions</a>, <a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a>, <a name="com.osinka.subset.Field.PositionalField" class="extype" href="../Field$PositionalField.html">PositionalField</a></div>
+          <div class="subClasses hiddenContent"><a name="com.osinka.subset.Field" class="extype" href="../Field.html">Field</a>, <a name="com.osinka.subset.query.FieldConditions" class="extype" href="FieldConditions.html">FieldConditions</a>, <a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a>, <a name="com.osinka.subset.Subset" class="extype" href="../Subset.html">Subset</a></div>
         </div></div>
         
 
@@ -65,13 +65,13 @@
         <div class="values members" id="values">
               <h3>Abstract Value Members</h3>
               <ol><li visbl="prt" name="com.osinka.subset.query.Conditions#fquery" data-isabs="true">
-      <a id="fquery(DBObjectLens):FieldQuery[T]"></a>
+      <a id="fquery(Mutation):FieldQuery[T]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">fquery</span>
         
-        <span class="params">(<span name="condition">condition: <a name="com.osinka.subset.DBObjectLens" class="extype" href="../DBObjectLens.html">DBObjectLens</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a>[T]</span>
+        <span class="params">(<span name="condition">condition: <a name="com.osinka.subset.Mutation" class="extype" href="../Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected abstract </dd></dl></div>
@@ -135,6 +135,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.Path#+" data-isabs="false">
+      <a id="+(Path):Path"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">+</span>
+        
+        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#&lt;" data-isabs="false">
       <a id="&lt;(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
@@ -351,6 +362,17 @@
       </span>
       </h4>
       
+    </li><li visbl="pub" name="com.osinka.subset.Path#name" data-isabs="false">
+      <a id="name:String"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">name</span>
+        
+        <span class="result">: String</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -417,30 +439,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.Path#positionIn" data-isabs="false">
-      <a id="positionIn(Path,String):Path"></a>
+    </li><li visbl="pub" name="com.osinka.subset.Path#prefixString" data-isabs="false">
+      <a id="prefixString:String"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
-        <span class="name">positionIn</span>
+        <span class="name">prefixString</span>
         
-        <span class="params">(<span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>, <span name="delimiter">delimiter: String = <span class="symbol">&quot;$&quot;</span></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
+        <span class="result">: String</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Returns the positional segment</p><div class="fullcomment"><div class="comment cmt"><p>Returns the positional segment</p></div><dl class="paramcmts block"><dt class="param">scope</dt><dd class="cmt"><p>the subdocument this path resides in</p></dd><dt class="param">delimiter</dt><dd class="cmt"><p>is a name to embed between the scope and the field segments. Defaults to <code>$</code>
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.Path#relativeTo" data-isabs="false">
-      <a id="relativeTo(Path):Path"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">relativeTo</span>
-        
-        <span class="params">(<span name="scope">scope: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Return the common suffix</p><div class="fullcomment"><div class="comment cmt"><p>Return the common suffix</p></div><dl class="paramcmts block"><dt class="param">scope</dt><dd class="cmt"><p>the sub-document this path resides in
-</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="../Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#size" data-isabs="false">
       <a id="size(Int)(&lt;:&lt;[T, Traversable[_]]):FieldQuery[T]"></a>
       <h4 class="signature">
