@@ -31,9 +31,7 @@
           <div class="fullcommenttop" id="comment"><div class="comment cmt"><h4> Getting Started </h4><p>This 'package object' provides a number of implicits to ease the
 use of the library. Thus the initial step is supposed to be</p><pre>
 import com.osinka.subset._
-</pre><h4> Value conversions </h4><p>MongoDB Java driver is capable to encode/decode few Java types to/from BSON.
-E.g. it encodes any subtype of <code>List[T]</code> into BSON array. However, it cannot
-work with Scala types (<code>Symbol</code>, sequences, <code>Option[T]</code>). <b>Subset</b> provides
+</pre><h4> Value conversions </h4><p><b>Subset</b> provides
 a couple of type classes, <code>ValueReader[T]</code> and <code>ValueWriter[T]</code> to define
 mechanisms of converting values to and from BSON values, and a library of
 <i>implicit</i>s for common Scala types.</p><p>A developer may define own instances to support other types, e.g. if one needs
@@ -45,7 +43,7 @@ implicit val bigDecimalWriter = ValueWriter[BigDecimal](bd =&gt; {
     assert(bd.scale == 2)
     (bd*100).setScale(0).toLong
   })
-</pre><p>There are few optional <i>import</i>s:</p><ul><li><code>import JodaValues._</code> will make available a conversions for JodaTime <code>DateTime</code></li><li><code>import SmartValues._</code> provides extended readers for primitive types and date, when
+</pre><p>There are few optional <i>import</i>s:</p><ul><li><code>import JodaValues._</code> will make available conversions for Joda's <code>DateTime</code> values</li><li><code>import SmartValues._</code> provides extended readers for primitive types and date, when
    readers try to extract a value even from incorrect BSON type (e.g. when an Int
    is stored in Double or in String)</li></ul><h4> Field </h4><p>It is possible to pimp a string into a <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a> with <code>&quot;fieldName&quot;.fieldOf[T]</code>.</p><p>Tuples made of <code>Field[T]</code> and an object of the same <code>T</code> can be implicitly converted into
 <code>DBObject</code> or <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a> if <code>T</code> has a <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>.</p><pre>
@@ -90,28 +88,18 @@ val subset = &quot;name&quot;.subset(Obj).of[T]
       </span>
       </h4>
       <p class="comment cmt">A typed field</p>
-    </li><li visbl="pub" name="com.osinka.subset.LowPriorityReaders" data-isabs="true">
-      <a id="LowPriorityReaders:LowPriorityReaders"></a>
+    </li><li visbl="pub" name="com.osinka.subset.FieldBlank" data-isabs="false">
+      <a id="FieldBlank:FieldBlank"></a>
       <h4 class="signature">
-      <span class="kind">trait</span>
+      <span class="kind">class</span>
       <span class="symbol"> 
-        <a href="LowPriorityReaders.html"><span class="name">LowPriorityReaders</span></a>
+        <a href="FieldBlank.html"><span class="name">FieldBlank</span></a>
         
         <span class="result"> extends AnyRef</span>
       </span>
       </h4>
-      
-    </li><li visbl="pub" name="com.osinka.subset.LowPriorityWriters" data-isabs="true">
-      <a id="LowPriorityWriters:LowPriorityWriters"></a>
-      <h4 class="signature">
-      <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="LowPriorityWriters.html"><span class="name">LowPriorityWriters</span></a>
-        
-        <span class="result"> extends AnyRef</span>
-      </span>
-      </h4>
-      
+      <p class="comment cmt">RichString
+</p>
     </li><li visbl="pub" name="com.osinka.subset.Mutation" data-isabs="true">
       <a id="Mutation:Mutation"></a>
       <h4 class="signature">
@@ -366,7 +354,7 @@ convenience methods.</p>
       <span class="symbol"> 
         <a href="ValueReader$.html"><span class="name">ValueReader</span></a>
         
-        <span class="result"> extends LowPriorityReaders</span>
+        <span class="result"> extends AnyRef</span>
       </span>
       </h4>
       <p class="comment cmt">ValueReader factory based on <code>PartialFunction[Any,T]</code>.</p>
@@ -377,7 +365,7 @@ convenience methods.</p>
       <span class="symbol"> 
         <a href="ValueWriter$.html"><span class="name">ValueWriter</span></a>
         
-        <span class="result"> extends LowPriorityWriters</span>
+        <span class="result"> extends AnyRef</span>
       </span>
       </h4>
       <p class="comment cmt">ValueWriter factory based on ordinary &quot;sanitization&quot; function.</p>
@@ -437,13 +425,13 @@ convenience methods.</p>
       </h4>
       <p class="comment cmt">Typical query starts from a field.</p>
     </li><li visbl="pub" name="com.osinka.subset.package#stringToField" data-isabs="false">
-      <a id="stringToField(String):AnyRef { ... /* 2 definitions in type refinement */ }"></a>
+      <a id="stringToField(String):FieldBlank"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
       <span class="symbol"> 
         <span class="name">stringToField</span>
         
-        <span class="params">(<span name="name">name: String</span>)</span><span class="result">: AnyRef { ... /* 2 definitions in type refinement */ }</span>
+        <span class="params">(<span name="name">name: String</span>)</span><span class="result">: <a name="com.osinka.subset.FieldBlank" class="extype" href="FieldBlank.html">FieldBlank</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.package" class="extype" href="package$.html">package</a></dd></dl></div>

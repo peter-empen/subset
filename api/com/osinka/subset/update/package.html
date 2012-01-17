@@ -29,9 +29,9 @@
       </h4>
       
           <div class="fullcommenttop" id="comment"><div class="comment cmt"><h4> Update Operations </h4><p>Update operators and their composition. See
-<a name="com.osinka.subset.update.Update" class="extype" href="Update.html">Update</a> and <a name="com.osinka.subset.update.Modifications" class="extype" href="Modifications.html">Modifications</a></p><h4> Subset </h4><p><a name="com.osinka.subset.Subset" class="extype" href="../Subset.html">Subset</a>'s <code>updateMatch</code> method lets create a &quot;positional&quot; update
+<a name="com.osinka.subset.update.Update" class="extype" href="Update.html">Update</a> and <a name="com.osinka.subset.update.Modifications" class="extype" href="Modifications.html">Modifications</a></p><h4> Subset </h4><p><a name="com.osinka.subset.Subset" class="extype" href="../Subset.html">Subset</a>'s <code>matched</code> method lets create a &quot;positional&quot; update
 modifier relative to the enclosing sub-document.</p><pre>
-collection.update(BlogPost.comments.where{_.by === &quot;joe&quot;}, BlogPost.comments.updateMatch {_.votes inc 1})
+collection.update(BlogPost.comments.where{_.by === &quot;joe&quot;}, BlogPost.comments.matched.modify {_.votes inc 1})
 </pre><p>This is equivalent to MongoDB shell</p><pre>
 db.collection.update({&quot;comments.by&quot;: &quot;joe&quot;}, {$inc: {&quot;comments.$.votes&quot;: 1}})
 </pre></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="http://www.mongodb.org/display/DOCS/Updating#Updating-The%24positionaloperator">The $ positional operator</a>,
@@ -65,7 +65,7 @@ db.collection.update({&quot;comments.by&quot;: &quot;joe&quot;}, {$inc: {&quot;c
         <span class="result"> extends Path</span>
       </span>
       </h4>
-      <p class="comment cmt">All the update operators MongoDB allows to create.</p>
+      <p class="comment cmt">All the update modifiers MongoDB allows to create.</p>
     </li><li visbl="pub" name="com.osinka.subset.update.Update" data-isabs="false">
       <a id="Update:Update"></a>
       <h4 class="signature">

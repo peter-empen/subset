@@ -1,0 +1,86 @@
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Subset Query</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/custom.css"></link>
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/pamflet.js"></script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"></link><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+      </head>
+      <body>
+        <a class="page prev nav" href="Conditional+Operators.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip">❧</span>
+          </a><a class="page next nav" href="Field+Alias.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span>
+               — Subset Query
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Subset+Query">Subset Query</h1><p>Given a “BlogPost” model from
+<a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">blogPost example</a>
+</p><pre><code class="prettyprint lang-scala">case class Comment(by: String, votes: Int, text: String)
+case class BlogPost(title: String, comments: List[Comment])
+
+object Comment {
+  val by = &quot;by&quot;.fieldOf[String]
+  val votes = &quot;votes&quot;.fieldOf[Int]
+  val text = &quot;text&quot;.fieldOf[String]
+}
+
+object BlogPost {
+  val title = &quot;title&quot;.fieldOf[String]
+  val comments = &quot;comments&quot;.subset(Comment).of[List[Comment]]
+}
+</code></pre><p>Here <code>BlogPost.comments</code> represents an array of <code>Comment</code>
+sub-documents residing under <code>BlogPost</code> document.
+</p><p>Now it becomes possible to create queries using the fields defined
+under object <code>Comment</code>:
+</p><pre><code class="prettyprint lang-scala">BlogPost.comments.where { _.by === 10 }
+</code></pre><p>results in a query ”<code>{&quot;comments.by&quot;: 10}</code>“. Thus, method <code>where</code> and
+all its analogous siblings in <code>Subset</code> prepends a query supplied as an
+argument with a sub-document’s name.
+</p><h2 id=""><code>$elemMatch</code></h2><p><strong>Subset</strong> supports more advanced
+<a  href="http://www.mongodb.org/display/DOCS/Advanced+Queries#AdvancedQueries-%24elemMatch">elemMatch</a>
+queries as well:
+</p><pre><code class="prettyprint lang-scala">BlogPost.comments.elemMatch {comment =&gt;
+  comment.by === &quot;joe&quot; &amp;&amp; comment.votes === 2
+}
+</code></pre><p>will result in
+</p><pre><code class="prettyprint lang-json">{
+  comment: {
+    $elemMatch: {
+      by: &quot;joe&quot;,
+      votes: 2
+    }
+  }
+}
+</code></pre><p>This query will find a BlogPost which has a comment made by “Joe”
+<strong>and</strong> having <code>votes</code> equal to 2.
+</p><h2 id="Positional+Queries">Positional Queries</h2><p>You can create a conditional operator for a specific array element, e.g.
+</p><pre><code class="prettyprint lang-scala">BlogPost.comments(1).where {_.by set &quot;john&quot;}
+</code></pre><p>creates an query <code>{&quot;comments.1.by&quot;: &quot;john&quot;}</code>
+</p><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="apply+method.html">apply method</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div><a href="Composition.html">Composition</a></div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div class="current">Subset Query</div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>

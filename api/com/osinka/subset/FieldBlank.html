@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>com.osinka.subset.LowPriorityWriters</title>
+          <title>com.osinka.subset.FieldBlank</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
@@ -14,26 +14,24 @@
         </head>
         <body class="type">
       <div id="definition">
-        <img src="../../../lib/trait_big.png" />
+        <img src="../../../lib/class_big.png" />
         <p id="owner"><a name="com" class="extype" href="../../package.html">com</a>.<a name="com.osinka" class="extype" href="../package.html">osinka</a>.<a name="com.osinka.subset" class="extype" href="package.html">subset</a></p>
-        <h1>LowPriorityWriters</h1>
+        <h1>FieldBlank</h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">trait</span>
+      <span class="kind">class</span>
       <span class="symbol"> 
-        <span class="name">LowPriorityWriters</span>
+        <span class="name">FieldBlank</span>
         
         <span class="result"> extends AnyRef</span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>RichString
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
-        </div><div class="toggleContainer block">
-          <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter$.html">ValueWriter</a></div>
         </div></div>
         
 
@@ -49,7 +47,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.LowPriorityWriters" class="in"><span>LowPriorityWriters</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="com.osinka.subset.FieldBlank" class="in"><span>FieldBlank</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -57,9 +55,37 @@
             </div>
         </div>
 
+        <div class="members" id="constructors">
+              <h3>Instance Constructors</h3>
+              <ol><li visbl="pub" name="com.osinka.subset.FieldBlank#this" data-isabs="false">
+      <a id="this:FieldBlank"></a>
+      <h4 class="signature">
+      <span class="kind">new</span>
+      <span class="symbol"> 
+        <span class="name">FieldBlank</span>
         
+        <span class="params">(<span name="name">name: String</span>)</span>
+      </span>
+      </h4>
+      
+    </li></ol>
+            </div>
 
-        
+        <div class="types members" id="types">
+              <h3>Type Members</h3>
+              <ol><li visbl="pub" name="com.osinka.subset.FieldBlank.SubsetBlank" data-isabs="false">
+      <a id="SubsetBlank:SubsetBlank[Self]"></a>
+      <h4 class="signature">
+      <span class="kind">class</span>
+      <span class="symbol"> 
+        <a href="FieldBlank$SubsetBlank.html"><span class="name">SubsetBlank</span></a>
+        <span class="tparams">[<span name="Self">Self</span>]</span>
+        <span class="result"> extends AnyRef</span>
+      </span>
+      </h4>
+      
+    </li></ol>
+            </div>
         
         
 
@@ -145,17 +171,6 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.LowPriorityWriters#defaultWriter" data-isabs="false">
-      <a id="defaultWriter[T]:ValueWriter[T]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol"> 
-        <span class="name">defaultWriter</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="result">: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -178,6 +193,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.FieldBlank#fieldOf" data-isabs="false">
+      <a id="fieldOf[T]:Field[T]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">fieldOf</span>
+        <span class="tparams">[<span name="T">T</span>]</span>
+        <span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
+      </span>
+      </h4>
+      
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -225,6 +251,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.FieldBlank#name" data-isabs="false">
+      <a id="name:String"></a>
+      <h4 class="signature">
+      <span class="kind">val</span>
+      <span class="symbol"> 
+        <span class="name">name</span>
+        
+        <span class="result">: String</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -258,6 +295,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.FieldBlank#subset" data-isabs="false">
+      <a id="subset[Self](Self):SubsetBlank[Self]"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">subset</span>
+        <span class="tparams">[<span name="Self">Self</span>]</span>
+        <span class="params">(<span name="self">self: Self</span>)</span><span class="result">: <a name="com.osinka.subset.FieldBlank.SubsetBlank" class="extype" href="FieldBlank$SubsetBlank.html">SubsetBlank</a>[Self]</span>
+      </span>
+      </h4>
+      
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">

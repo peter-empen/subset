@@ -1,0 +1,85 @@
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Composition</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/custom.css"></link>
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/pamflet.js"></script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"></link><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+      </head>
+      <body>
+        <a class="page prev nav" href="Queries.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip">❧</span>
+          </a><a class="page next nav" href="Conditional+Operators.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span>
+               — Composition
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Composition">Composition</h1><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a>,
+so queries can be composed together using <code>~</code> method. But the result
+will be <code>Mutation</code> and cannot not account for the possible fact this
+query is in scope of a <code>Subset</code>, thus will be lacking MongoDB “dot
+notation” to designate internal keys. <code>Query</code> benefits from the
+ability of <em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+</p><p>Query has the following methods to compose:
+</p><ul><li><code>def ||(other: Query)</code> (the same as <code>or</code>) creates <code>$or</code>
+queries: ”<code>q1 || q2 || q3</code>” results in ”<code>{$or: [q1, q2, q3]}</code>”
+</li><li><code>def and(other: Query)</code> creates <code>$and</code>
+queries: ”<code>q1 &amp;&amp; q2 &amp;&amp; q3</code>” results in ”<code>{$and:
+[q1, q2, q3]}</code>“.
+</li><li><code>def nor(other: Query)</code> creates <code>$nor</code> quries.
+</li></ul><p>There is also <code>def &amp;&amp;(other: Query)</code> and it behaves not like
+<code>and</code>. While <code>and</code> always generates <code>$and</code> quries, <code>&amp;&amp;</code> writes quries
+into a key-value <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> map (MongoDB assumes conjunction in this
+case)
+</p><blockquote><p>In the case there are several condition operators on the same field,
+only the last operator will be written (since <em>mutation</em> silently
+overwrites key-values when there is a key clash)
+</p></blockquote><pre><code class="prettyprint lang-scala">val q: DBObject = f1 === 3 &amp;&amp; f2 &lt;= 10
+</code></pre><p>would create <code>q</code> to be equal to
+</p><pre><code class="prettyprint lang-json">{
+  f1: 3,
+  f2: {
+    $lte: 10
+  }
+}
+</code></pre><p>If there are conditions on the same field, <strong>Subset</strong> writes the last
+one only:
+</p><pre><code class="prettyprint lang-scala">val q: DBObject = (f === 1 &amp;&amp; f &gt; 5) and k === 3
+</code></pre><p>would create q to be equal to
+</p><pre><code class="prettyprint lang-json">{
+  $and: {
+    f: {
+      $gt: 5
+    },
+    k: 3
+  }
+}
+</code></pre><blockquote><p>There is a more natural way to to set several conditions per field,
+  more on this in the next section.
+</p></blockquote><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="apply+method.html">apply method</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div class="current">Composition</div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>

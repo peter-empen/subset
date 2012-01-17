@@ -37,13 +37,15 @@ collection.findOne( q.get )
 collection.findOne(q : DBObject)
 </pre><p><b>NOTE:</b> <code>DBCollection.findOne</code> is a method that accepts <code>AnyRef</code>, that's
 why an implicit conversion will not be triggered automatically and you have
-to say explicitly you want to convert a <code>Query</code> into <code>DBObject</code></p><h4> Composition </h4><p>Queries allow composition using methods</p><ul><li><code>&amp;&amp;</code> (the same as <code>and</code>), this will result in <code>$and</code></li><li><code>||</code> (the same as <code>or</code>), this will result in <code>$or</code></li><li><code>nor</code>, this will result in <code>$nor</code></li></ul><p>Whenever you join queries with <code>&amp;&amp;</code>, <b>Subset</b> tries to determine if
-both queries use the same keys. If they does, it creates an <code>$and</code> query.
-If not, it simply joins two maps.</p><pre>
-val q1 = (f &gt; 0 &amp;&amp; f &lt; 10).get
-</pre><p>This results in <code>{$and: [{f: {$gt:0}}, {f: {$lt:10}}]}</code>.</p><pre>
-val q2 = (f &gt; 0 &amp;&amp; g &lt; 10).get
-</pre><p>This results in <code>{f: {$gt:0}, g: {$lt:10}}</code></p><p>The same rules apply to the larger number of query terms.
+to say explicitly you want to convert a <code>Query</code> into <code>DBObject</code></p><h4> Composition </h4><p>Queries allow composition using methods</p><ul><li><code>and</code> results in <code>$and</code> query</li><li><code>&amp;&amp;</code> writes all the conditional operators into the resulting query
+   document</li><li><code>||</code> (the same as <code>or</code>), this will result in <code>$or</code></li><li><code>nor</code>, this will result in <code>$nor</code></li></ul><p>Whenever you join queries with <code>&amp;&amp;</code>, they are written as document keys, e.g.</p><pre>
+val q1 = (f &gt; 0 &amp;&amp; k === 3).get
+</pre><p>This results in <code>{f: {$gt: 0}, k: 3}</code></p><p><i>Note</i> in the case several condition operators are set on the same field,
+only the last one will be written:</p><pre>
+val q1 = (f &gt; 0 &amp;&amp; f &lt; 5 &amp;&amp; k === 3).get
+</pre><p>This results in <code>{f: {$lt: 5}, k: 3}</code></p><p>In this case, <code>and</code> method must be used, e.g.</p><pre>
+val q1 = ((f &gt; 0 and f &lt; 5) &amp;&amp; k === 3).get
+</pre><p>This results in <code>{$and: [{f: {$gt:0}}, {f: {$lt:10}}], k: 3}</code>.
 </p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
 </p></span></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
