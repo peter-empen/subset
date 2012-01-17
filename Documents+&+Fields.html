@@ -23,7 +23,7 @@
         <a class="page prev nav" href="Mutation.html">
             <span class="space">&nbsp;</span>
             <span class="flip">❧</span>
-          </a><a class="page next nav" href="apply+method.html">
+          </a><a class="page next nav" href="Writing+key-value.html">
             <span class="space">&nbsp;</span>
             <span>❧</span>
           </a>
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="span-16 prepend-1 append-1 contents">
-            <h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><p><code>Field</code> is a typed represenation of MongoDB document field. It serves
+            <h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><h2 id="Field">Field</h2><p><code>Field</code> is a typed represenation of MongoDB document field. It serves
 as a generator for a number of mutations, e.g. setting a key-value in
 a <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>, queries and update modifiers. It provides a convenient
 extractor for the document field as well to ease extracting field
@@ -44,7 +44,7 @@ of ways:
 </p><pre><code class="prettyprint lang-scala">val f = Field[Int](&quot;key&quot;)
 // is the same as
 val f = &quot;key&quot;.fieldOf[Int]
-</code></pre><p><code>Subset</code> is a typed representation of MongoDB nested documents. It has
+</code></pre><h2 id="Document">Document</h2><p><code>Subset</code> is a typed representation of MongoDB nested documents. It has
 a name (since a subdocument is stored under a key in <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>). A
 type of <em>subset</em> is not neccesarily <code>T</code>, it could be e.g. <code>List[T]</code> if
 an array of sub-documents is stored under this particular key, or
@@ -62,11 +62,11 @@ modifiers in “dot notation” (e.g. <code>{&quot;subdoc.inner&quot;: {$set: &q
 val subdoc = &quot;subdoc&quot;.subset(Subdoc).of[DBObject]
 </code></pre><blockquote><p>It makes sense to specify <code>T</code> of a <code>Subset</code> to the classes or case
 classes which may be serialized into <code>DBObject</code> or <code>DBObject</code>
-itself. For example, makes no sense to create a <code>Subset</code> of type
+itself. For example, it makes no sense to create a <code>Subset</code> of type
 <code>String</code>.
 </p></blockquote><ul><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Field"><code>Field</code></a>
 </li><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Subset"><code>Subset</code></a>
-</li></ul><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div class="current">Documents &amp; Fields</div><ol class="toc"> <li><div><a href="apply+method.html">apply method</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div><a href="Composition.html">Composition</a></div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
+</li></ul><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div class="current">Documents &amp; Fields</div><ol class="toc"> <li><div><a href="Writing+key-value.html">Writing key-value</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div><a href="Composition.html">Composition</a></div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
           </div>
         </div>
         <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>

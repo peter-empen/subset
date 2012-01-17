@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="span-16 prepend-1 append-1 contents">
-            <h4>Contents</h4><div><a href="#Subset">Subset</a></div><ol class="toc"> <li><div><a href="#Example">Example</a></div></li><li><div><a href="#Why+Subset">Why Subset</a></div></li><li><div><a href="#Getting+Started">Getting Started</a></div></li><li><div><a href="#Serialization">Serialization</a></div><ol class="toc"> <li><div><a href="#ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="#Defining+ValueReader">Defining ValueReader</a></div></li><li><div><a href="#Defining+ValueWriter">Defining ValueWriter</a></div></li><li><div><a href="#Sub-document">Sub-document</a></div></li> </ol></li><li><div><a href="#Mutation">Mutation</a></div></li><li><div><a href="#Documents+%26+Fields">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="#apply+method">apply method</a></div></li><li><div><a href="#Extractor">Extractor</a></div></li><li><div><a href="#Tuples">Tuples</a></div></li><li><div><a href="#Type+Modification">Type Modification</a></div></li><li><div><a href="#Positional+Fields">Positional Fields</a></div></li><li><div><a href="#Caveats">Caveats</a></div></li> </ol></li><li><div><a href="#Queries">Queries</a></div><ol class="toc"> <li><div><a href="#Composition">Composition</a></div></li><li><div><a href="#Conditional+Operators">Conditional Operators</a></div></li><li><div><a href="#Subset+Query">Subset Query</a></div></li><li><div><a href="#Field+Alias">Field Alias</a></div></li> </ol></li><li><div><a href="#Update+Operators">Update Operators</a></div><ol class="toc"> <li><div><a href="#Subset+Updates">Subset Updates</a></div></li> </ol></li> </ol><h1 id="Subset">Subset</h1><p><strong>Subset</strong> is a library to ease extracting fields from MongoDB documents,
+            <h4>Contents</h4><div><a href="#Subset">Subset</a></div><ol class="toc"> <li><div><a href="#Example">Example</a></div></li><li><div><a href="#Why+Subset">Why Subset</a></div></li><li><div><a href="#Getting+Started">Getting Started</a></div></li><li><div><a href="#Serialization">Serialization</a></div><ol class="toc"> <li><div><a href="#ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="#Defining+ValueReader">Defining ValueReader</a></div></li><li><div><a href="#Defining+ValueWriter">Defining ValueWriter</a></div></li><li><div><a href="#Sub-document">Sub-document</a></div></li> </ol></li><li><div><a href="#Mutation">Mutation</a></div></li><li><div><a href="#Documents+%26+Fields">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="#Writing+key-value">Writing key-value</a></div></li><li><div><a href="#Extractor">Extractor</a></div></li><li><div><a href="#Tuples">Tuples</a></div></li><li><div><a href="#Type+Modification">Type Modification</a></div></li><li><div><a href="#Positional+Fields">Positional Fields</a></div></li><li><div><a href="#Caveats">Caveats</a></div></li> </ol></li><li><div><a href="#Queries">Queries</a></div><ol class="toc"> <li><div><a href="#Composition">Composition</a></div></li><li><div><a href="#Conditional+Operators">Conditional Operators</a></div></li><li><div><a href="#Subset+Query">Subset Query</a></div></li><li><div><a href="#Field+Alias">Field Alias</a></div></li> </ol></li><li><div><a href="#Update+Operators">Update Operators</a></div><ol class="toc"> <li><div><a href="#Subset+Updates">Subset Updates</a></div></li> </ol></li> </ol><h1 id="Subset">Subset</h1><p><strong>Subset</strong> is a library to ease extracting fields from MongoDB documents,
 serializing them back and constructing queries.
 </p><blockquote><p><a  href="http://www.mongodb.org/">MongoDB</a> is a scalable, high-performance, open-source
 NoSQL document-oriented database. It stores schema-less JSON-like structures.
@@ -56,7 +56,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#97;&#122;&#x61;&#114;&#111;&#118;&#x40;&#x6f;&#x73;&#x69;&#110;&#x6b;&#x61;&#46;&#x63;&#x6f;&#109;">mailto:azarov@osinka.com</a>  
+<a  href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x61;&#122;&#x61;&#114;&#x6f;&#118;&#64;&#x6f;&#115;&#105;&#x6e;&#x6b;&#97;&#46;&#x63;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
@@ -313,7 +313,7 @@ e.g. (as JSON)
 }
 </code></pre><p>Every comment is represented in the model as
 </p><pre><code class="prettyprint lang-scala">case class Comment(by: String, votes: Int, text: String)
-</code></pre><blockquote><p>Since <strong>Subset</strong> is not a mapper, there is no real necessity to give
+</code></pre><blockquote><p>There is no real necessity to give
 same names to the <em>case class</em>’s fields  
 </p></blockquote><p>And a list of comments is defined in a “blog post” like
 </p><pre><code class="prettyprint lang-scala">object BlogPost {
@@ -381,7 +381,7 @@ one serializes a field’s value or builds a query, the result would be
 that a developer may modify <code>DBObject</code> got from any source and keep
 other fields intact.
 </li><li>mutations compose, accumulating the changes.  
-</li></ul><hr></hr><h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><p><code>Field</code> is a typed represenation of MongoDB document field. It serves
+</li></ul><hr></hr><h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><h2 id="Field">Field</h2><p><code>Field</code> is a typed represenation of MongoDB document field. It serves
 as a generator for a number of mutations, e.g. setting a key-value in
 a <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>, queries and update modifiers. It provides a convenient
 extractor for the document field as well to ease extracting field
@@ -390,7 +390,7 @@ of ways:
 </p><pre><code class="prettyprint lang-scala">val f = Field[Int](&quot;key&quot;)
 // is the same as
 val f = &quot;key&quot;.fieldOf[Int]
-</code></pre><p><code>Subset</code> is a typed representation of MongoDB nested documents. It has
+</code></pre><h2 id="Document">Document</h2><p><code>Subset</code> is a typed representation of MongoDB nested documents. It has
 a name (since a subdocument is stored under a key in <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>). A
 type of <em>subset</em> is not neccesarily <code>T</code>, it could be e.g. <code>List[T]</code> if
 an array of sub-documents is stored under this particular key, or
@@ -408,11 +408,11 @@ modifiers in “dot notation” (e.g. <code>{&quot;subdoc.inner&quot;: {$set: &q
 val subdoc = &quot;subdoc&quot;.subset(Subdoc).of[DBObject]
 </code></pre><blockquote><p>It makes sense to specify <code>T</code> of a <code>Subset</code> to the classes or case
 classes which may be serialized into <code>DBObject</code> or <code>DBObject</code>
-itself. For example, makes no sense to create a <code>Subset</code> of type
+itself. For example, it makes no sense to create a <code>Subset</code> of type
 <code>String</code>.
 </p></blockquote><ul><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Field"><code>Field</code></a>
 </li><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Subset"><code>Subset</code></a>
-</li></ul><hr></hr><h1 id="apply+method">apply method</h1><p>An <code>apply</code> method takes <code>T</code> and generates a
+</li></ul><hr></hr><h1 id="Writing+key-value">Writing key-value</h1><p>An <code>apply</code> method takes <code>T</code> and generates a
 <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> that sets a key-value in
 <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>:
 </p><pre><code class="prettyprint lang-scala">val mutation = f(10)
@@ -689,8 +689,8 @@ sub-documents residing under <code>BlogPost</code> document.
 under object <code>Comment</code>:
 </p><pre><code class="prettyprint lang-scala">BlogPost.comments.where { _.by === 10 }
 </code></pre><p>results in a query ”<code>{&quot;comments.by&quot;: 10}</code>“. Thus, method <code>where</code> and
-all its analogous siblings in <code>Subset</code> prepends a query supplied as an
-argument with a sub-document’s name.
+all its analogous siblings in <code>Subset</code> modify a parameter query to
+have proper long field names in <a  href="http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29">“dot notation“</a>.
 </p><h2 id=""><code>$elemMatch</code></h2><p><strong>Subset</strong> supports more advanced
 <a  href="http://www.mongodb.org/display/DOCS/Advanced+Queries#AdvancedQueries-%24elemMatch">elemMatch</a>
 queries as well:
