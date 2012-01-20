@@ -51,18 +51,18 @@ only concern is about documents and their fields. By the way, you may use
 </p></blockquote><h2 id="Links">Links</h2><ul><li><a  href="http://github.com/osinka/subset">Source Code</a>
 </li><li><a  href="http://github.com/osinka/subset/issues">Issues</a>
 </li><li><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.package">API Reference (scaladoc)</a>
-</li></ul><h4 id="Examples">Examples</h4><ul><li><a  href="https://gist.github.com/1e9df3f30d58c5eef1df">REPLable simple example (at gist.github.com)</a>
-</li><li><a  href="https://gist.github.com/3033b1cc11825870656d">REPLable example on working with subdocuments (at gist.github.com)</a> and
+</li></ul><h4 id="Examples">Examples</h4><ul><li><a  href="https://gist.github.com/1647302">REPLable simple example (at gist.github.com)</a>
+</li><li><a  href="https://gist.github.com/1647326">REPLable example on working with subdocuments (at gist.github.com)</a> and
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x61;&#122;&#x61;&#114;&#x6f;&#118;&#64;&#x6f;&#115;&#105;&#x6e;&#x6b;&#97;&#46;&#x63;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
+<a  href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#58;&#97;&#x7a;&#97;&#x72;&#x6f;&#118;&#x40;&#x6f;&#115;&#105;&#x6e;&#107;&#x61;&#x2e;&#99;&#x6f;&#109;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
 <a  href="http://twitter.com/aazarov">Twitter</a>  
 </p><h2 id="License">License</h2><p><a  href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.
-</p><hr></hr><h1 id="Example">Example</h1><p>All the following is a fragment of <a  href="https://gist.github.com/1e9df3f30d58c5eef1df">REPLable gist</a>:
+</p><hr></hr><h1 id="Example">Example</h1><p>All the following is a fragment of <a  href="https://gist.github.com/1647302">REPLable gist</a>:
 </p><h3 id="Fields">Fields</h3><blockquote><p>A couple of fields in a tweet JSON:
 </p></blockquote><pre><code class="prettyprint lang-scala">val text = &quot;text&quot;.fieldOf[String]
 val createdAt = &quot;created_at&quot;.fieldOf[DateTime]
@@ -342,7 +342,7 @@ writer:
   }
 }
 </code></pre><blockquote><p>The fragment of code above is a part of
-<a  href="https://gist.github.com/3033b1cc11825870656d">REPLable example on working with subdocuments (at gist.github.com)</a>
+<a  href="https://gist.github.com/1647326">REPLable example on working with subdocuments (at gist.github.com)</a>
 </p></blockquote><p>With all the above definitions, creating a new <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> will be like
 </p><pre><code class="prettyprint lang-scala">import BlogPost._
 

@@ -487,14 +487,14 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.ValueWriter#tupleSetter" data-isabs="false">
-      <a id="tupleSetter[T](ValueWriter[T]):ValueWriter[(String, T)]"></a>
+    </li><li visbl="pub" name="com.osinka.subset.ValueWriter#tuple2Setter" data-isabs="false">
+      <a id="tuple2Setter[T1, T2](ValueWriter[T1],ValueWriter[T2]):ValueWriter[(T1, T2)] { def pack(t: (T1, T2)): Option[Array[Any]] }"></a>
       <h4 class="signature">
       <span class="kind">implicit def</span>
       <span class="symbol"> 
-        <span class="name">tupleSetter</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span class="implicit">implicit </span><span name="w">w: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[(String, T)]</span>
+        <span class="name">tuple2Setter</span>
+        <span class="tparams">[<span name="T1">T1</span>, <span name="T2">T2</span>]</span>
+        <span class="params">(<span class="implicit">implicit </span><span name="w1">w1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T1]</span>, <span name="w2">w2: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T2]</span>)</span><span class="result">: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[(T1, T2)] { def pack(t: (T1, T2)): Option[Array[Any]] }</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
