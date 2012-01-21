@@ -2,36 +2,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>com.osinka.subset.Tuple7Subset</title>
+          <title>~</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../../lib/template.css" rel="stylesheet" type="text/css" media="screen" />
-      <script type="text/javascript" src="../../../lib/jquery.js"></script>
-      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      <link href="lib/template.css" rel="stylesheet" type="text/css" media="screen" />
+      <script type="text/javascript" src="lib/jquery.js"></script>
+      <script type="text/javascript" src="lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="lib/template.js"></script>
+      <script type="text/javascript" src="lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="type" onload="windowTitle();">
+        <body class="value" onload="windowTitle();">
 
-      <p id="owner"><a href="../../package.html" class="extype" name="com">com</a>.<a href="../package.html" class="extype" name="com.osinka">osinka</a>.<a href="package.html" class="extype" name="com.osinka.subset">subset</a></p>
+      
 
       <div id="definition">
-        <img src="../../../lib/class_big.png" />
-        <h1>Tuple7Subset</h1>
+        <img src="lib/object_big.png" />
+        <h1>~</h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">class</span>
+      <span class="kind">object</span>
       <span class="symbol">
-        <span class="name">Tuple7Subset</span>
-        <span class="tparams">[<span name="T1">T1</span>, <span name="T2">T2</span>, <span name="T3">T3</span>, <span name="T4">T4</span>, <span name="T5">T5</span>, <span name="T6">T6</span>, <span name="T7">T7</span>]</span>
+        <span class="name">~</span>
+        
         
         <span class="result"> extends AnyRef</span>
       </span>
       </h4>
-      <div class="fullcomment" id="comment"><div class="comment cmt"><p>A tuple made of 7 fields
-</p></div><div class="block">
+      <div class="fullcomment" id="comment"><div class="comment cmt"><p>Convenience extractor</p><p>It provides conjunction for use in pattern matching, e.g.</p><pre>
+val FieldI = &quot;i&quot;.fieldOf[Int]
+val FieldS = &quot;s&quot;.fieldOf[String]
+
+dbo match {
+  case FieldI(i) ~ FieldS(s) =&gt;
+}
+</pre><p>Based on the idea from <a href="http://stackoverflow.com/questions/2261358/pattern-matching-with-conjunctions-patterna-and-patternb">Pattern Matching with Conjunctions (PatternA AND PatternB)</a></p></div><div class="block">
             linear super types: AnyRef, <span class="extype" name="scala.Any">Any</span>
           </div>
             
@@ -50,7 +56,7 @@
           <div id="ancestors">
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall">Hide All</li><li class="showall">Show all</li></ol>
-                <ol id="linearization"><li class="in" name="com.osinka.subset.Tuple7Subset">Tuple7Subset</li><li class="in" name="scala.AnyRef">AnyRef</li><li class="in" name="scala.Any">Any</li></ol>
+                <ol id="linearization"><li class="in" name="~">~</li><li class="in" name="scala.AnyRef">AnyRef</li><li class="in" name="scala.Any">Any</li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -62,22 +68,7 @@
             </div>
         </div>
 
-        <div class="members" id="constructors">
-              <h3>Instance constructors</h3>
-              <ol><li visbl="pub" data-isabs="false" name="com.osinka.subset.Tuple7Subset#this">
-      <a id="this:Tuple7Subset[T1, T2, T3, T4, T5, T6, T7]"></a>
-      <h4 class="signature">
-      <span class="kind">new</span>
-      <span class="symbol">
-        <span class="name">Tuple7Subset</span>
         
-        <span class="params">(<span name="e6">e6: <a href="Tuple6Subset.html" class="extype" name="com.osinka.subset.Tuple6Subset">Tuple6Subset</a>[T1, T2, T3, T4, T5, T6]</span>, <span name="f7">f7: String</span>)</span>
-        
-      </span>
-      </h4>
-      
-    </li></ol>
-            </div>
 
         
 
@@ -231,25 +222,6 @@
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.Tuple7Subset#apply">
-      <a id="apply((T1, T2, T3, T4, T5, T6, T7))(ValueWriter[T1],ValueWriter[T2],ValueWriter[T3],ValueWriter[T4],ValueWriter[T5],ValueWriter[T6],ValueWriter[T7]):Mutation"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol">
-        <span class="name">apply</span>
-        
-        <span class="params">(<span name="t7">t7: (T1, T2, T3, T4, T5, T6, T7)</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="s1">s1: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T1]</span>, <span name="s2">s2: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T2]</span>, <span name="s3">s3: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T3]</span>, <span name="s4">s4: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T4]</span>, <span name="s5">s5: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T5]</span>, <span name="s6">s6: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T6]</span>, <span name="s7">s7: <a href="ValueWriter.html" class="extype" name="com.osinka.subset.ValueWriter">ValueWriter</a>[T7]</span>)</span>
-        <span class="result">: <a href="Mutation.html" class="extype" name="com.osinka.subset.Mutation">Mutation</a></span>
-      </span>
-      </h4>
-      
-            <p class="shortcomment cmt">Serialize a tuple into a <a href="Mutation.html" class="extype" name="com.osinka.subset.Mutation">Mutation</a></p>
-            <div class="fullcomment"><div class="comment cmt"><p>Serialize a tuple into a <a href="Mutation.html" class="extype" name="com.osinka.subset.Mutation">Mutation</a></p></div>
-            
-            
-            
-          </div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.Any#asInstanceOf">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -290,7 +262,7 @@ part of compilation it is not possible to check whether the contents of the list
             <p class="shortcomment cmt">This method creates and returns a copy of the receiver object.</p>
             <div class="fullcomment"><div class="comment cmt"><p>This method creates and returns a copy of the receiver object.</p><p>The default implementation of the <code>clone</code> method is platform dependent.
 </p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>a copy of the receiver object.</p></dd></dl><div class="block">
-          attributes: protected[<a href="../../../java/lang/package.html" class="extype" name="java.lang">lang</a>] 
+          attributes: protected[<a href="java/lang/package.html" class="extype" name="java.lang">lang</a>] 
         </div><div class="block">
           definition classes: AnyRef
         </div>
@@ -299,18 +271,6 @@ part of compilation it is not possible to check whether the contents of the list
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.Tuple7Subset#e6">
-      <a id="e6:Tuple6Subset[T1, T2, T3, T4, T5, T6]"></a>
-      <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol">
-        <span class="name">e6</span>
-        
-        
-        <span class="result">: <a href="Tuple6Subset.html" class="extype" name="com.osinka.subset.Tuple6Subset">Tuple6Subset</a>[T1, T2, T3, T4, T5, T6]</span>
-      </span>
-      </h4>
-      
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#eq">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -380,18 +340,6 @@ scala.Int
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.Tuple7Subset#f7">
-      <a id="f7:String"></a>
-      <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol">
-        <span class="name">f7</span>
-        
-        
-        <span class="result">: String</span>
-      </span>
-      </h4>
-      
     </li><li visbl="prt" data-isabs="false" name="scala.AnyRef#finalize">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
@@ -408,7 +356,7 @@ scala.Int
 there are no more references to the object.</p>
             <div class="fullcomment"><div class="comment cmt"><p>This method is called by the garbage collector on the receiver object when garbage collection determines that
 there are no more references to the object.</p><p>The details of when and if the <code>finalize</code> method are invoked, as well as the interaction between <code>finalize</code>and non-local returns and exceptions, are all platform dependent.</p></div><div class="block">
-          attributes: protected[<a href="../../../java/lang/package.html" class="extype" name="java.lang">lang</a>] 
+          attributes: protected[<a href="java/lang/package.html" class="extype" name="java.lang">lang</a>] 
         </div><div class="block">
           definition classes: AnyRef
         </div>
@@ -604,27 +552,18 @@ possible to check whether the contents of the list are of the requested typed.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.Tuple7Subset#unapply">
-      <a id="unapply(DBObject)(ValueReader[T1],ValueReader[T2],ValueReader[T3],ValueReader[T4],ValueReader[T5],ValueReader[T6],ValueReader[T7]):Option[(T1, T2, T3, T4, T5, T6, T7)]"></a>
+    </li><li visbl="pub" data-isabs="false" name="~#unapply">
+      <a id="unapply[A](A):Some[(A, A)]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol">
         <span class="name">unapply</span>
-        
-        <span class="params">(<span name="dbo">dbo: <span class="extype" name="com.mongodb.DBObject">DBObject</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="g1">g1: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T1]</span>, <span name="g2">g2: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T2]</span>, <span name="g3">g3: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T3]</span>, <span name="g4">g4: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T4]</span>, <span name="g5">g5: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T5]</span>, <span name="g6">g6: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T6]</span>, <span name="g7">g7: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T7]</span>)</span>
-        <span class="result">: <span class="extype" name="scala.Option">Option</span>[(T1, T2, T3, T4, T5, T6, T7)]</span>
+        <span class="tparams">[<span name="A">A</span>]</span>
+        <span class="params">(<span name="a">a: A</span>)</span>
+        <span class="result">: <span class="extype" name="scala.Some">Some</span>[(A, A)]</span>
       </span>
       </h4>
       
-            <p class="shortcomment cmt">Deserialize a <code>DBObject</code> into a tuple
-</p>
-            <div class="fullcomment"><div class="comment cmt"><p>Deserialize a <code>DBObject</code> into a tuple
-</p></div>
-            
-            
-            
-          </div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#wait">
       <a id="wait():Unit"></a>
       <h4 class="signature">
@@ -682,18 +621,6 @@ possible to check whether the contents of the list are of the requested typed.
           definition classes: AnyRef
         </div></div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.Tuple7Subset#~">
-      <a id="~[T8](Field[T8]):Tuple8Subset[T1, T2, T3, T4, T5, T6, T7, T8]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol">
-        <span class="name">~</span>
-        <span class="tparams">[<span name="T8">T8</span>]</span>
-        <span class="params">(<span name="f8">f8: <a href="Field.html" class="extype" name="com.osinka.subset.Field">Field</a>[T8]</span>)</span>
-        <span class="result">: <a href="Tuple8Subset.html" class="extype" name="com.osinka.subset.Tuple8Subset">Tuple8Subset</a>[T1, T2, T3, T4, T5, T6, T7, T8]</span>
-      </span>
-      </h4>
-      
     </li></ol>
             </div>
 
