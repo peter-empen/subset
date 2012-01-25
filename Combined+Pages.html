@@ -56,7 +56,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#58;&#x61;&#x7a;&#x61;&#114;&#111;&#118;&#64;&#111;&#x73;&#x69;&#x6e;&#x6b;&#x61;&#46;&#x63;&#111;&#109;">mailto:azarov@osinka.com</a>  
+<a  href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#97;&#x7a;&#97;&#x72;&#x6f;&#x76;&#64;&#x6f;&#x73;&#x69;&#x6e;&#x6b;&#97;&#46;&#x63;&#x6f;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
@@ -208,16 +208,16 @@ you save and consume <code>DateTime</code> fields
 is declared <em>optional</em> in Ivy / Maven configurations. Your project
 must depend on “Joda Time” if you use it.
 </p><h2 id="SBT+Configuration">SBT Configuration</h2><p>For <em>simple</em> configuration:
-</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.6.3&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.6.4&quot;
 </code></pre><p>For <em>scala</em> configration:
 </p><pre><code class="prettyprint lang-scala">lazy val root = Project(....) dependsOn(subset)
 
-lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.6.3&quot;
+lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.6.4&quot;
 </code></pre><h2 id="Maven+Configuration">Maven Configuration</h2><p>Dependency:
 </p><pre><code class="prettyprint lang-xml">&lt;dependency&gt;
   &lt;groupId&gt;com.osinka.subset&lt;/groupId&gt;
   &lt;artifactId&gt;subset_2.9.1&lt;/artifactId&gt;
-  &lt;version&gt;0.6.3&lt;/version&gt;
+  &lt;version&gt;0.6.4&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre><p>Do not forget to add the repository:
 </p><pre><code class="prettyprint lang-xml">&lt;repositories&gt;
@@ -444,7 +444,22 @@ dbObject match {
   case f(value) =&gt; 
   case smth =&gt; logger warn &quot;cannot parse %s&quot;.format(smth)
 }
-</code></pre><hr></hr><h1 id="Tuples">Tuples</h1><p>Sometimes you may want to serialize fields in batches, e.g. two or
+</code></pre><h2 id="Extractor+Failures">Extractor Failures</h2><p>Since <code>ValueReader</code> only knows how to extract from <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> values,
+it cannot know how to process the absence of a field. Thus, for a
+field declaration like the above, the inability of <code>ValueReader</code> to
+extract <code>Int</code> will be indistinguishable from the fact there is no
+field “f” in the <code>DBObject</code>. What choices do we have?
+</p><p>We may declare the field as <code>Option[Int]</code>:
+</p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Option[Int]]
+</code></pre><p>In this case, the field extractor will always succeed if there is a
+field “f” (of any kind), but it will return <code>Some</code> if <code>ValueReader</code>
+has successfully extracted the value and <code>None</code> if it could
+not. Anyway the extractor will fail if there is no such key at all.
+</p><h2 id="Default+Value">Default Value</h2><p>We may also declare the field as having a default value:
+</p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Option[Int]].withDefault(None)
+</code></pre><p>The extractor will always succeed and it will return the default value
+if there is no such key or if <code>ValueReader</code> could not extract the value.
+</p><hr></hr><h1 id="Tuples">Tuples</h1><p>Sometimes you may want to serialize fields in batches, e.g. two or
 three  at a time. <strong>Subset</strong> has a mechanism for this, it is a <code>Tuple</code>
 serializer.
 </p><p>Assuming there is a couple of fields defined
