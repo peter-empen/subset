@@ -35,13 +35,15 @@
             </div>
           </div>
           <div class="span-16 prepend-1 append-1 contents">
-            <h1 id="Composition">Composition</h1><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a>,
-so queries can be composed together using <code>~</code> method. But the result
-will be <code>Mutation</code> and cannot not account for the possible fact this
-query is in scope of a <code>Subset</code>, thus will be lacking MongoDB “dot
-notation” to designate internal keys. <code>Query</code> benefits from the
-ability of <em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>.
-</p><p>Query has the following methods to compose:
+            <h1 id="Composition">Composition</h1><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of
+<a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> and benefits from the ability of
+<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+</p><blockquote><p>’’Note’’ While queries can be composed together using <code>~</code> method, the
+result will be <code>Mutation</code> and cannot account for the possible fact this
+query is in scope of a <code>Subset</code>, thus will be lacking MongoDB
+“dot notation” to designate internal keys. It’s better to use special
+methods for composing queries, outlined below.
+</p></blockquote><p>Query has the following methods to compose:
 </p><ul><li><code>def ||(other: Query)</code> (the same as <code>or</code>) creates <code>$or</code>
 queries: ”<code>q1 || q2 || q3</code>” results in ”<code>{$or: [q1, q2, q3]}</code>”
 </li><li><code>def and(other: Query)</code> creates <code>$and</code>
@@ -49,7 +51,7 @@ queries: ”<code>q1 &amp;&amp; q2 &amp;&amp; q3</code>” results in ”<code>{
 [q1, q2, q3]}</code>“.
 </li><li><code>def nor(other: Query)</code> creates <code>$nor</code> quries.
 </li></ul><p>There is also <code>def &amp;&amp;(other: Query)</code> and it behaves not like
-<code>and</code>. While <code>and</code> always generates <code>$and</code> quries, <code>&amp;&amp;</code> writes quries
+<code>and</code>. While <code>and</code> always generates <code>$and</code> queries, <code>&amp;&amp;</code> writes quries
 into a key-value <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> map (MongoDB assumes conjunction in this
 case)
 </p><blockquote><p>In the case there are several condition operators on the same field,
@@ -75,7 +77,7 @@ one only:
     k: 3
   }
 }
-</code></pre><blockquote><p>There is a more natural way to to set several conditions per field,
+</code></pre><blockquote><p>There is a more natural way to set several conditions per field,
   more on this in the next section.
 </p></blockquote><hr></hr><h4>Contents</h4><div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Writing+key-value.html">Writing key-value</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Extractor+Issues.html">Extractor Issues</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div class="current">Composition</div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol>
           </div>

@@ -64,15 +64,15 @@ field “f” in the <code>DBObject</code>. What choices do we have?
 </p><p>We may declare the field as <code>Option[Int]</code>:
 </p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Option[Int]]
 </code></pre><p>In this case, the field extractor will always succeed if there is a
-field “f” (of any kind), but it will return <code>Some</code> if <code>ValueReader</code>
+field ”<code>f</code>” (of any kind): it will return <code>Some</code> if <code>ValueReader</code>
 has successfully extracted the value and <code>None</code> if it could
-not. Anyway the extractor will fail if there is no such key at all.
-</p><h2 id="Default+Value">Default Value</h2><p>We may also declare the field as having a default value:
+not. Though the extractor will fail if there is no such key at all.
+</p><h2 id="Default+Value">Default Value</h2><p>A field may have a default value:
 </p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Option[Int]].withDefault(None)
-</code></pre><p>The extractor will always succeed and it will return the default value
-if there is no such key or if <code>ValueReader</code> could not extract the value.
+</code></pre><p>Such an extractor always succeeds, it returns the default value
+if there is no such key or <code>ValueReader</code> could not extract the value.
 </p><h2 id="Conjunction">Conjunction</h2><p>When there is a need to extract many fields, <strong>Subset</strong> provides a
-convenient conjunction extractor (based on the idea from
+convenient conjunction extraction operator <code>~</code> (based on the idea from
 <a  href="http://stackoverflow.com/questions/2261358/pattern-matching-with-conjunctions-patterna-and-patternb">Pattern Matching with Conjunctions</a>). All
 the techniques combined let define quite complex extractors:
 </p><pre><code class="prettyprint lang-scala">val Mandatory = &quot;mandatory&quot;.fieldOf[Int]

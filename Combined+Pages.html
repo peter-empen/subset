@@ -56,7 +56,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#x6d;&#97;&#105;&#108;&#x74;&#111;&#58;&#97;&#x7a;&#97;&#x72;&#x6f;&#118;&#x40;&#x6f;&#115;&#105;&#110;&#107;&#97;&#46;&#x63;&#111;&#109;">mailto:azarov@osinka.com</a>  
+<a  href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#97;&#x7a;&#97;&#114;&#111;&#118;&#x40;&#111;&#x73;&#105;&#110;&#107;&#97;&#46;&#x63;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
@@ -464,15 +464,15 @@ field “f” in the <code>DBObject</code>. What choices do we have?
 </p><p>We may declare the field as <code>Option[Int]</code>:
 </p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Option[Int]]
 </code></pre><p>In this case, the field extractor will always succeed if there is a
-field “f” (of any kind), but it will return <code>Some</code> if <code>ValueReader</code>
+field ”<code>f</code>” (of any kind): it will return <code>Some</code> if <code>ValueReader</code>
 has successfully extracted the value and <code>None</code> if it could
-not. Anyway the extractor will fail if there is no such key at all.
-</p><h2 id="Default+Value">Default Value</h2><p>We may also declare the field as having a default value:
+not. Though the extractor will fail if there is no such key at all.
+</p><h2 id="Default+Value">Default Value</h2><p>A field may have a default value:
 </p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Option[Int]].withDefault(None)
-</code></pre><p>The extractor will always succeed and it will return the default value
-if there is no such key or if <code>ValueReader</code> could not extract the value.
+</code></pre><p>Such an extractor always succeeds, it returns the default value
+if there is no such key or <code>ValueReader</code> could not extract the value.
 </p><h2 id="Conjunction">Conjunction</h2><p>When there is a need to extract many fields, <strong>Subset</strong> provides a
-convenient conjunction extractor (based on the idea from
+convenient conjunction extraction operator <code>~</code> (based on the idea from
 <a  href="http://stackoverflow.com/questions/2261358/pattern-matching-with-conjunctions-patterna-and-patternb">Pattern Matching with Conjunctions</a>). All
 the techniques combined let define quite complex extractors:
 </p><pre><code class="prettyprint lang-scala">val Mandatory = &quot;mandatory&quot;.fieldOf[Int]
@@ -557,16 +557,16 @@ collection.ensureIndex(userName.int === 1, userName.int === -1)
 or read a field “as is”. If you absolutely certain in what you are
 doing, 
 </p><pre><code class="prettyprint lang-scala">collection.modify(userName === &quot;john&quot;, userName.any.set(10566))
-</code></pre><hr></hr><h1 id="Positional+Fields">Positional Fields</h1><p>It is possible to create a “positional” field, that may be used to
+</code></pre><hr></hr><h1 id="Positional+Fields">Positional Fields</h1><p>A “positional” field may be used to
 update the first matched element in an array (in MongoDB update modifiers), see
 <a  href="http://www.mongodb.org/display/DOCS/Updating#Updating-The%24positionaloperator">The $ positional operator</a>
 for details.
 </p><p>E.g. assuming <code>seq</code> is a field of <code>Seq[Int]</code>, expression
 </p><pre><code class="prettyprint lang-scala">collection.update(seq &gt; 3, seq.first inc -1)
-</code></pre><p>Will call an <code>update</code> method with modifier <code>{$inc: {&quot;seq.$&quot;: -1}}</code>.
+</code></pre><p>Will call <code>update</code> method with modifier <code>{$inc: {&quot;seq.$&quot;: -1}}</code>.
 </p><p>A field representing an array element at index <code>i</code> is created with <code>field.at(i)</code>
 </p><pre><code class="prettyprint lang-scala">collection.update(Query.empty, seq.at(2) set 5)
-</code></pre><p>pdates all collection documents with modifier <code>{$set: {&quot;seq.2&quot;: 5}}</code>.
+</code></pre><p>updates all collection documents with modifier <code>{$set: {&quot;seq.2&quot;: 5}}</code>.
 </p><hr></hr><h1 id="Caveats">Caveats</h1><h2 id="%E2%80%9CWhere+is+my+new+object%E2%80%99s+%3F%E2%80%9C">“Where is my new object’s <code>_id</code>?“</h2><p>Suppose you want to insert a new object and you need this object’s <a  href="http://api.mongodb.org/java/2.7.0/org/bson/types/ObjectId.html"><code>_id</code></a> back?
 An approach could be like this
 </p><pre><code class="prettyprint lang-scala">import Document._
@@ -669,13 +669,15 @@ val query =
 </p></blockquote><ul><li>The full list of MongoDB conditional operators can be found in
 <a  href="http://www.mongodb.org/display/DOCS/Advanced+Queries">MongoDB documentation</a>
 </li><li><strong>Subset</strong> scaladoc on <code>query</code> is <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package">here</a>
-</li></ul><hr></hr><h1 id="Composition">Composition</h1><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a>,
-so queries can be composed together using <code>~</code> method. But the result
-will be <code>Mutation</code> and cannot not account for the possible fact this
-query is in scope of a <code>Subset</code>, thus will be lacking MongoDB “dot
-notation” to designate internal keys. <code>Query</code> benefits from the
-ability of <em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>.
-</p><p>Query has the following methods to compose:
+</li></ul><hr></hr><h1 id="Composition">Composition</h1><p>A <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of
+<a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> and benefits from the ability of
+<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+</p><blockquote><p>’’Note’’ While queries can be composed together using <code>~</code> method, the
+result will be <code>Mutation</code> and cannot account for the possible fact this
+query is in scope of a <code>Subset</code>, thus will be lacking MongoDB
+“dot notation” to designate internal keys. It’s better to use special
+methods for composing queries, outlined below.
+</p></blockquote><p>Query has the following methods to compose:
 </p><ul><li><code>def ||(other: Query)</code> (the same as <code>or</code>) creates <code>$or</code>
 queries: ”<code>q1 || q2 || q3</code>” results in ”<code>{$or: [q1, q2, q3]}</code>”
 </li><li><code>def and(other: Query)</code> creates <code>$and</code>
@@ -683,7 +685,7 @@ queries: ”<code>q1 &amp;&amp; q2 &amp;&amp; q3</code>” results in ”<code>{
 [q1, q2, q3]}</code>“.
 </li><li><code>def nor(other: Query)</code> creates <code>$nor</code> quries.
 </li></ul><p>There is also <code>def &amp;&amp;(other: Query)</code> and it behaves not like
-<code>and</code>. While <code>and</code> always generates <code>$and</code> quries, <code>&amp;&amp;</code> writes quries
+<code>and</code>. While <code>and</code> always generates <code>$and</code> queries, <code>&amp;&amp;</code> writes quries
 into a key-value <a  href="http://api.mongodb.org/java/2.7.0/com/mongodb/DBObject.html"><code>DBObject</code></a> map (MongoDB assumes conjunction in this
 case)
 </p><blockquote><p>In the case there are several condition operators on the same field,
@@ -709,7 +711,7 @@ one only:
     k: 3
   }
 }
-</code></pre><blockquote><p>There is a more natural way to to set several conditions per field,
+</code></pre><blockquote><p>There is a more natural way to set several conditions per field,
   more on this in the next section.
 </p></blockquote><hr></hr><h1 id="Conditional+Operators">Conditional Operators</h1><p>Equality conditional is applicable for fields and can be expressed in
 terms of several methods:
