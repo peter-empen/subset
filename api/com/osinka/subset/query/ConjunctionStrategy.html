@@ -2,36 +2,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>com.osinka.subset.SmartValues</title>
+          <title>com.osinka.subset.query.ConjunctionStrategy</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link type="text/css" media="screen" rel="stylesheet" href="../../../lib/template.css" />
-      <script type="text/javascript" src="../../../lib/jquery.js"></script>
-      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      <link type="text/css" media="screen" rel="stylesheet" href="../../../../lib/template.css" />
+      <script type="text/javascript" src="../../../../lib/jquery.js"></script>
+      <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <a title="Go to companion" href="SmartValues.html"><img src="../../../lib/object_to_trait_big.png" /></a>
-        <p id="owner"><a name="com" class="extype" href="../../package.html">com</a>.<a name="com.osinka" class="extype" href="../package.html">osinka</a>.<a name="com.osinka.subset" class="extype" href="package.html">subset</a></p>
-        <h1><a title="Go to companion" href="SmartValues.html">SmartValues</a></h1>
+        <a title="Go to companion" href="ConjunctionStrategy$.html"><img src="../../../../lib/trait_to_object_big.png" /></a>
+        <p id="owner"><a name="com" class="extype" href="../../../package.html">com</a>.<a name="com.osinka" class="extype" href="../../package.html">osinka</a>.<a name="com.osinka.subset" class="extype" href="../package.html">subset</a>.<a name="com.osinka.subset.query" class="extype" href="package.html">query</a></p>
+        <h1><a title="Go to companion" href="ConjunctionStrategy$.html">ConjunctionStrategy</a></h1>
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">object</span>
+      <span class="kind">trait</span>
       <span class="symbol"> 
-        <span class="name">SmartValues</span>
+        <span class="name">ConjunctionStrategy</span>
         
-        <span class="result"> extends <a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></span>
+        <span class="result"> extends AnyRef</span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Provides a smart deserialization of BSON values
-</p></div><div class="toggleContainer block">
+          <div class="fullcommenttop" id="comment"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+          <div class="superTypes hiddenContent">AnyRef, <span name="scala.Any" class="extype">Any</span></div>
+        </div><div class="toggleContainer block">
+          <span class="toggle">Known Subclasses</span>
+          <div class="subClasses hiddenContent"><a name="com.osinka.subset.query.ConjunctionStrategy.AndQuery" class="extype" href="ConjunctionStrategy$$AndQuery$.html">AndQuery</a>, <a name="com.osinka.subset.query.ConjunctionStrategy.Auto" class="extype" href="ConjunctionStrategy$$Auto$.html">Auto</a>, <a name="com.osinka.subset.query.ConjunctionStrategy.Override" class="extype" href="ConjunctionStrategy$$Override$.html">Override</a></div>
         </div></div>
         
 
@@ -47,7 +49,7 @@
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall out"><span>Hide All</span></li>
                 <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.SmartValues" class="in"><span>SmartValues</span></li><li name="com.osinka.subset.SmartValues" class="in"><span>SmartValues</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+                <ol id="linearization"><li name="com.osinka.subset.query.ConjunctionStrategy" class="in"><span>ConjunctionStrategy</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -59,10 +61,24 @@
 
         
         
+        <div class="values members" id="values">
+              <h3>Abstract Value Members</h3>
+              <ol><li visbl="pub" name="com.osinka.subset.query.ConjunctionStrategy#conj" data-isabs="true">
+      <a id="conj(Query,Query):Query"></a>
+      <h4 class="signature">
+      <span class="kind">def</span>
+      <span class="symbol"> 
+        <span class="name">conj</span>
         
+        <span class="params">(<span name="q1">q1: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>, <span name="q2">q2: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>abstract </dd></dl></div>
+    </li></ol>
+            </div>
 
         <div class="values members" id="values">
-              <h3>Value Members</h3>
+              <h3>Concrete Value Members</h3>
               <ol><li visbl="pub" name="scala.AnyRef#!=" data-isabs="false">
       <a id="!=(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -129,28 +145,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#booleanRecoveringGetter" data-isabs="false">
-      <a id="booleanRecoveringGetter:ValueReaderPf[Boolean]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">booleanRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Boolean" class="extype">Boolean</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#byteRecoveringGetter" data-isabs="false">
-      <a id="byteRecoveringGetter:ValueReaderPf[Byte]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">byteRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Byte" class="extype">Byte</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
@@ -161,32 +155,10 @@
         <span class="params">()</span><span class="result">: AnyRef</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#dateRecoveringGetter" data-isabs="false">
-      <a id="dateRecoveringGetter:ValueReaderPf[Date]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">dateRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="java.util.Date" class="extype">Date</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#doubleRecoveringGetter" data-isabs="false">
-      <a id="doubleRecoveringGetter:ValueReaderPf[Double]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">doubleRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Double" class="extype">Double</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -219,21 +191,10 @@
         <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#floatRecoveringGetter" data-isabs="false">
-      <a id="floatRecoveringGetter:ValueReaderPf[Float]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">floatRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Float" class="extype">Float</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -256,17 +217,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#intRecoveringGetter" data-isabs="false">
-      <a id="intRecoveringGetter:ValueReaderPf[Int]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">intRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Int" class="extype">Int</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -278,17 +228,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#longRecoveringGetter" data-isabs="false">
-      <a id="longRecoveringGetter:ValueReaderPf[Long]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">longRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Long" class="extype">Long</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
@@ -322,39 +261,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#objIdRecoveringGetter" data-isabs="false">
-      <a id="objIdRecoveringGetter:ValueReaderPf[ObjectId]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">objIdRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="org.bson.types.ObjectId" class="extype">ObjectId</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#shortRecoveringGetter" data-isabs="false">
-      <a id="shortRecoveringGetter:ValueReaderPf[Short]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">shortRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Short" class="extype">Short</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
-    </li><li visbl="pub" name="com.osinka.subset.SmartValues#stringRecoveringGetter" data-isabs="false">
-      <a id="stringRecoveringGetter:ValueReaderPf[String]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol"> 
-        <span class="name">stringRecoveringGetter</span>
-        
-        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[String]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
@@ -424,9 +330,7 @@
 
         
 
-        <div name="com.osinka.subset.SmartValues" class="parent">
-              <h3>Inherited from <a name="com.osinka.subset.SmartValues" class="extype" href="SmartValues.html">SmartValues</a></h3>
-            </div><div name="scala.AnyRef" class="parent">
+        <div name="scala.AnyRef" class="parent">
               <h3>Inherited from AnyRef</h3>
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>

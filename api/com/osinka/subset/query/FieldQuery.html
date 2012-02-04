@@ -129,13 +129,13 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Query#&amp;&amp;" data-isabs="false">
-      <a id="&amp;&amp;(Query):Query"></a>
+      <a id="&amp;&amp;(Query)(ConjunctionStrategy):Query"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">&amp;&amp;</span>
         
-        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="strategy">strategy: <a name="com.osinka.subset.query.ConjunctionStrategy" class="extype" href="ConjunctionStrategy.html">ConjunctionStrategy</a> = <span class="symbol"><span class="name"><a href="ConjunctionStrategy$.html">ConjunctionStrategy.Auto</a></span></span></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></dd></dl></div>
@@ -254,13 +254,13 @@ val query2: DBObject = !( f &gt;= 2 &lt; 10 )
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Query#and" data-isabs="false">
-      <a id="and(Query):Query"></a>
+      <a id="and(Query)(ConjunctionStrategy):Query"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">and</span>
         
-        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="strategy">strategy: <a name="com.osinka.subset.query.ConjunctionStrategy" class="extype" href="ConjunctionStrategy.html">ConjunctionStrategy</a> = <span class="symbol"><span class="name"><a href="ConjunctionStrategy$.html">ConjunctionStrategy.AndQuery</a></span></span></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a></dd></dl></div>

@@ -37,15 +37,11 @@ collection.findOne( q.get )
 collection.findOne(q : DBObject)
 </pre><p><b>NOTE:</b> <code>DBCollection.findOne</code> is a method that accepts <code>AnyRef</code>, that's
 why an implicit conversion will not be triggered automatically and you have
-to say explicitly you want to convert a <code>Query</code> into <code>DBObject</code></p><h4> Composition </h4><p>Queries allow composition using methods</p><ul><li><code>and</code> results in <code>$and</code> query</li><li><code>&amp;&amp;</code> writes all the conditional operators into the resulting query
-   document</li><li><code>||</code> (the same as <code>or</code>), this will result in <code>$or</code></li><li><code>nor</code>, this will result in <code>$nor</code></li></ul><p>Whenever you join queries with <code>&amp;&amp;</code>, they are written as document keys, e.g.</p><pre>
+to say explicitly you want to convert a <code>Query</code> into <code>DBObject</code></p><h4> Composition </h4><p>Queries allow composition using methods</p><ul><li><code>and</code> results in <code>$and</code> query</li><li><code>&amp;&amp;</code> results in either &quot;one document query&quot; or <code>$and</code> query (depending on the strategy used)</li><li><code>||</code> (the same as <code>or</code>), this will result in <code>$or</code></li><li><code>nor</code>, this will result in <code>$nor</code></li></ul><p>Whenever you join queries with <code>&amp;&amp;</code>, they are written as document keys if possible, e.g.</p><pre>
 val q1 = (f &gt; 0 &amp;&amp; k === 3).get
-</pre><p>This results in <code>{f: {$gt: 0}, k: 3}</code></p><p><i>Note</i> in the case several condition operators are set on the same field,
-only the last one will be written:</p><pre>
-val q1 = (f &gt; 0 &amp;&amp; f &lt; 5 &amp;&amp; k === 3).get
-</pre><p>This results in <code>{f: {$lt: 5}, k: 3}</code></p><p>In this case, <code>and</code> method must be used, e.g.</p><pre>
-val q1 = ((f &gt; 0 and f &lt; 5) &amp;&amp; k === 3).get
-</pre><p>This results in <code>{$and: [{f: {$gt:0}}, {f: {$lt:10}}], k: 3}</code>.
+</pre><p>This results in <code>{f: {$gt: 0}, k: 3}</code></p><p>If the quries refer to the same field, <code>$and</code> query will be generated:</p><pre>
+val q1 = (f &gt; 0 &amp;&amp; f &lt; 5).get
+</pre><p>This results in <code>{$and: [{f: {$gt: 0}}, {f: {$lt: 5}}]}</code>
 </p></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
 </p></span></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
@@ -132,13 +128,13 @@ val q1 = ((f &gt; 0 and f &lt; 5) &amp;&amp; k === 3).get
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Query#&amp;&amp;" data-isabs="false">
-      <a id="&amp;&amp;(Query):Query"></a>
+      <a id="&amp;&amp;(Query)(ConjunctionStrategy):Query"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">&amp;&amp;</span>
         
-        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="strategy">strategy: <a name="com.osinka.subset.query.ConjunctionStrategy" class="extype" href="ConjunctionStrategy.html">ConjunctionStrategy</a> = <span class="symbol"><span class="name"><a href="ConjunctionStrategy$.html">ConjunctionStrategy.Auto</a></span></span></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>
       </span>
       </h4>
       
@@ -191,13 +187,13 @@ val q1 = ((f &gt; 0 and f &lt; 5) &amp;&amp; k === 3).get
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Query#and" data-isabs="false">
-      <a id="and(Query):Query"></a>
+      <a id="and(Query)(ConjunctionStrategy):Query"></a>
       <h4 class="signature">
       <span class="kind">def</span>
       <span class="symbol"> 
         <span class="name">and</span>
         
-        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>
+        <span class="params">(<span name="other">other: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="strategy">strategy: <a name="com.osinka.subset.query.ConjunctionStrategy" class="extype" href="ConjunctionStrategy.html">ConjunctionStrategy</a> = <span class="symbol"><span class="name"><a href="ConjunctionStrategy$.html">ConjunctionStrategy.AndQuery</a></span></span></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="">Query</a></span>
       </span>
       </h4>
       

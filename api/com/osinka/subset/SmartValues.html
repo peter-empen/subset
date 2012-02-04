@@ -28,7 +28,8 @@
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>unpack primitives and try to convert from other type:</p><p>- tries to get Int, Long, Double, Byte from String
+          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>unpack primitives and try to convert from other type:</p><p>- tries to get <code>ObjectId</code> from String
+- tries to get Int, Long, Double, Byte from String
 - tries to get DateTime (java.util.Date) from Int (as a number of seconds from the epoch)
   or Long (as a number of milliseconds from the epoch)
 </p></div><div class="toggleContainer block">
@@ -327,6 +328,17 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.SmartValues#objIdRecoveringGetter" data-isabs="false">
+      <a id="objIdRecoveringGetter:ValueReaderPf[ObjectId]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">objIdRecoveringGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="org.bson.types.ObjectId" class="extype">ObjectId</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.SmartValues#shortRecoveringGetter" data-isabs="false">
       <a id="shortRecoveringGetter:ValueReaderPf[Short]"></a>
       <h4 class="signature">
@@ -335,6 +347,17 @@
         <span class="name">shortRecoveringGetter</span>
         
         <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[<span name="scala.Short" class="extype">Short</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
+    </li><li visbl="pub" name="com.osinka.subset.SmartValues#stringRecoveringGetter" data-isabs="false">
+      <a id="stringRecoveringGetter:ValueReaderPf[String]"></a>
+      <h4 class="signature">
+      <span class="kind">implicit val</span>
+      <span class="symbol"> 
+        <span class="name">stringRecoveringGetter</span>
+        
+        <span class="result">: <a name="com.osinka.subset.ValueReaderPf" class="extype" href="ValueReaderPf.html">ValueReaderPf</a>[String]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>implicit </dd></dl></div>
