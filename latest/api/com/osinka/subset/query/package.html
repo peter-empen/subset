@@ -5,44 +5,49 @@
           <title>com.osinka.subset.query</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link type="text/css" media="screen" rel="stylesheet" href="../../../../lib/template.css" />
+      <link href="../../../../lib/template.css" rel="stylesheet" type="text/css" media="screen" />
       <script type="text/javascript" src="../../../../lib/jquery.js"></script>
       <script type="text/javascript" src="../../../../lib/jquery-ui.js"></script>
       <script type="text/javascript" src="../../../../lib/template.js"></script>
       <script type="text/javascript" src="../../../../lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="value">
+        <body class="value" onload="windowTitle();">
+
+      <p id="owner"><a href="../../../package.html" class="extype" name="com">com</a>.<a href="../../package.html" class="extype" name="com.osinka">osinka</a>.<a href="../package.html" class="extype" name="com.osinka.subset">subset</a></p>
+
       <div id="definition">
         <img src="../../../../lib/package_big.png" />
-        <p id="owner"><a name="com" class="extype" href="../../../package.html">com</a>.<a name="com.osinka" class="extype" href="../../package.html">osinka</a>.<a name="com.osinka.subset" class="extype" href="../package.html">subset</a></p>
         <h1>query</h1>
       </div>
 
       <h4 class="signature" id="signature">
       <span class="kind">package</span>
-      <span class="symbol"> 
+      <span class="symbol">
         <span class="name">query</span>
+        
         
         
       </span>
       </h4>
-      
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><h4> Field Queries </h4><p>Typical query starts from a field. The simplest condition is an equality
-test (see <a name="com.osinka.subset.query.FieldConditions" class="extype" href="FieldConditions.html">FieldConditions</a>).</p><p>It is possible to create several tests on the same field (an example is
-a range <code>f &gt; 3 &lt;= 10</code>) or negate a condition, see
-<a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a> for details.</p><h4> Composing Queries </h4><p>It is possible to compose queries with <code>&amp;&amp;</code>, <code>||</code> and <code>nor</code> methods.
-See <a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a> for details.</p><h4> Subset </h4><p>com.osinka.subset.Subset.elemMatch method allows creating <code>$elemMatch</code>
-queries, when you need to match all the conditions on a specific subdocument.</p><pre>
+      <div class="fullcomment" id="comment"><div class="comment cmt"><h4> Field Queries </h4><p>Typical query starts from a field. The simplest condition is an equality
+test (see <a href="FieldConditions.html" class="extype" name="com.osinka.subset.query.FieldConditions">FieldConditions</a>).</p><p>It is possible to create several tests on the same field (an example is
+a range <code>f &gt; 3 &lt;= 10</code>) or negate a condition, see<a href="FieldQuery.html" class="extype" name="com.osinka.subset.query.FieldQuery">FieldQuery</a> for details.</p><h4> Composing Queries </h4><p>It is possible to compose queries with <code>&amp;&amp;</code>, <code>||</code> and <code>nor</code> methods.
+See <a href="Query.html" class="extype" name="com.osinka.subset.query.Query">Query</a> for details.</p><h4> Subset </h4><p>com.osinka.subset.Subset.elemMatch
+ method allows creating <code>\$elemMatch</code>queries, when you need to match all the conditions on a specific subdocument.</p><pre>
 val query = BlogPost.comments.elemMatch { comment =&gt;
   comment.by === &quot;joe&quot; &amp;&amp; comment.votes === 2
 }
 
 val blogPosts = collection.find(query)
-</pre></div><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a name="com.osinka.subset.query.Query" class="extype" href="Query.html">Query</a>, <a name="com.osinka.subset.query.FieldQuery" class="extype" href="FieldQuery.html">FieldQuery</a>,
-     <a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
-</p></span></dd></dl></div>
-        
+</pre></div>
+            
+            
+            <div class="block"><ol>see also:
+                  <li><p><a href="Query.html" class="extype" name="com.osinka.subset.query.Query">Query</a>, <a href="FieldQuery.html" class="extype" name="com.osinka.subset.query.FieldQuery">FieldQuery</a>,
+     <a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a></p></li>
+                </ol></div>
+          </div>
 
       <div id="template">
 
@@ -52,7 +57,11 @@ val blogPosts = collection.find(query)
           
           <div id="visbl">
               <span class="filtertype">Visibility</span>
-              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+              <ol><li class="public in">Public</li><li class="all out">All</li></ol>
+            </div>
+          <div id="impl">
+              <span class="filtertype">Impl.</span>
+              <ol><li class="concrete in">Concrete</li><li class="abstract in">Abstract</li></ol>
             </div>
         </div>
 
@@ -60,116 +69,121 @@ val blogPosts = collection.find(query)
 
         <div class="types members" id="types">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="com.osinka.subset.query.Conditions" data-isabs="true">
+              <ol><li visbl="pub" data-isabs="true" name="com.osinka.subset.query.Conditions">
       <a id="Conditions:Conditions[T]"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="Conditions.html">
       <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="Conditions.html"><span class="name">Conditions</span></a>
+      <span class="symbol">
+        <span class="name">Conditions</span>
         <span class="tparams">[<span name="T">T</span>]</span>
+        
         <span class="result"> extends Path</span>
       </span>
-      </h4>
+      </a></h4>
       <p class="comment cmt">All the field conditions that MongoDB allows to verify.</p>
-    </li><li visbl="pub" name="com.osinka.subset.query.ConjunctionStrategy" data-isabs="true">
+    </li><li visbl="pub" data-isabs="true" name="com.osinka.subset.query.ConjunctionStrategy">
       <a id="ConjunctionStrategy:ConjunctionStrategy"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="ConjunctionStrategy.html">
       <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="ConjunctionStrategy.html"><span class="name">ConjunctionStrategy</span></a>
+      <span class="symbol">
+        <span class="name">ConjunctionStrategy</span>
+        
         
         <span class="result"> extends AnyRef</span>
       </span>
-      </h4>
+      </a></h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.query.FieldConditions" data-isabs="true">
+    </li><li visbl="pub" data-isabs="true" name="com.osinka.subset.query.FieldConditions">
       <a id="FieldConditions:FieldConditions[T]"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="FieldConditions.html">
       <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="FieldConditions.html"><span class="name">FieldConditions</span></a>
+      <span class="symbol">
+        <span class="name">FieldConditions</span>
         <span class="tparams">[<span name="T">T</span>]</span>
+        
         <span class="result"> extends Conditions[T]</span>
       </span>
-      </h4>
+      </a></h4>
       <p class="comment cmt">Equality condition for a field.</p>
-    </li><li visbl="pub" name="com.osinka.subset.query.FieldQuery" data-isabs="false">
+    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.query.FieldQuery">
       <a id="FieldQuery:FieldQuery[T]"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="FieldQuery.html">
       <span class="kind">case class</span>
-      <span class="symbol"> 
-        <a href="FieldQuery.html"><span class="name">FieldQuery</span></a>
+      <span class="symbol">
+        <span class="name">FieldQuery</span>
         <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="p">p: Path</span>, <span name="condition">condition: Mutation</span>)</span><span class="result"> extends Query with Conditions[T] with Product with Serializable</span>
+        <span class="params">(<span name="p">p: Path</span>, <span name="condition">condition: Mutation</span>)</span>
+        <span class="result"> extends Query with Conditions[T] with Product</span>
       </span>
-      </h4>
+      </a></h4>
       <p class="comment cmt">A query term that helps define several conditions on the same field (e.</p>
-    </li><li visbl="pub" name="com.osinka.subset.query.Query" data-isabs="true">
+    </li><li visbl="pub" data-isabs="true" name="com.osinka.subset.query.Query">
       <a id="Query:Query"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="Query.html">
       <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="Query.html"><span class="name">Query</span></a>
+      <span class="symbol">
+        <span class="name">Query</span>
+        
         
         <span class="result"> extends Mutation</span>
       </span>
-      </h4>
+      </a></h4>
       <p class="comment cmt">A Query</p>
-    </li><li visbl="pub" name="com.osinka.subset.query.QueryMutation" data-isabs="true">
+    </li><li visbl="pub" data-isabs="true" name="com.osinka.subset.query.QueryMutation">
       <a id="QueryMutation:QueryMutation"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="QueryMutation.html">
       <span class="kind">trait</span>
-      <span class="symbol"> 
-        <a href="QueryMutation.html"><span class="name">QueryMutation</span></a>
+      <span class="symbol">
+        <span class="name">QueryMutation</span>
+        
         
         <span class="result"> extends (Path) ⇒ Mutation</span>
       </span>
-      </h4>
+      </a></h4>
       <p class="comment cmt">The low level mechanism for constructing mutations dependant on Path.</p>
     </li></ol>
             </div>
-        
-        
 
         <div class="values members" id="values">
               <h3>Value Members</h3>
-              <ol><li visbl="pub" name="com.osinka.subset.query.ConjunctionStrategy" data-isabs="false">
+              <ol><li visbl="pub" data-isabs="false" name="com.osinka.subset.query.ConjunctionStrategy">
       <a id="ConjunctionStrategy:ConjunctionStrategy"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="ConjunctionStrategy$.html">
       <span class="kind">object</span>
-      <span class="symbol"> 
-        <a href="ConjunctionStrategy$.html"><span class="name">ConjunctionStrategy</span></a>
+      <span class="symbol">
+        <span class="name">ConjunctionStrategy</span>
+        
         
         <span class="result"> extends AnyRef</span>
       </span>
-      </h4>
+      </a></h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.query.Query" data-isabs="false">
+    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.query.Query">
       <a id="Query:Query"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="Query$.html">
       <span class="kind">object</span>
-      <span class="symbol"> 
-        <a href="Query$.html"><span class="name">Query</span></a>
+      <span class="symbol">
+        <span class="name">Query</span>
+        
         
         <span class="result"> extends AnyRef</span>
       </span>
-      </h4>
+      </a></h4>
       
-    </li><li visbl="pub" name="com.osinka.subset.query.QueryMutation" data-isabs="false">
+    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.query.QueryMutation">
       <a id="QueryMutation:QueryMutation"></a>
-      <h4 class="signature">
+      <h4 class="signature"><a href="QueryMutation$.html">
       <span class="kind">object</span>
-      <span class="symbol"> 
-        <a href="QueryMutation$.html"><span class="name">QueryMutation</span></a>
+      <span class="symbol">
+        <span class="name">QueryMutation</span>
+        
         
         <span class="result"> extends AnyRef</span>
       </span>
-      </h4>
+      </a></h4>
       
     </li></ol>
             </div>
-
-        
 
         
 

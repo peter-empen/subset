@@ -2,38 +2,42 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>com.osinka.subset.ValueReader</title>
+          <title>~</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link href="../../../lib/template.css" rel="stylesheet" type="text/css" media="screen" />
-      <script type="text/javascript" src="../../../lib/jquery.js"></script>
-      <script type="text/javascript" src="../../../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../../../lib/template.js"></script>
-      <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
+      <link href="lib/template.css" rel="stylesheet" type="text/css" media="screen" />
+      <script type="text/javascript" src="lib/jquery.js"></script>
+      <script type="text/javascript" src="lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="lib/template.js"></script>
+      <script type="text/javascript" src="lib/tools.tooltip.js"></script>
     
         </head>
         <body class="value" onload="windowTitle();">
 
-      <p id="owner"><a href="../../package.html" class="extype" name="com">com</a>.<a href="../package.html" class="extype" name="com.osinka">osinka</a>.<a href="package.html" class="extype" name="com.osinka.subset">subset</a></p>
+      
 
       <div id="definition">
-        <img src="../../../lib/object_big.png" />
-        <h1>ValueReader</h1>
+        <img src="lib/object_big.png" />
+        <h1>~</h1>
       </div>
 
       <h4 class="signature" id="signature">
       <span class="kind">object</span>
       <span class="symbol">
-        <span class="name">ValueReader</span>
+        <span class="name">~</span>
         
         
         <span class="result"> extends AnyRef</span>
       </span>
       </h4>
-      <div class="fullcomment" id="comment"><div class="comment cmt"><p>ValueReader factory based on <code>PartialFunction[Any,T]</code>.</p><p>It contains default reader implicits as well.
-</p></div><div class="block">
-            go to: <a href="ValueReader.html">companion</a>
-          </div><div class="block">
+      <div class="fullcomment" id="comment"><div class="comment cmt"><p>Convenience extractor</p><p>It provides conjunction for use in pattern matching, e.g.</p><pre>
+val FieldI = &quot;i&quot;.fieldOf[Int]
+val FieldS = &quot;s&quot;.fieldOf[String]
+
+dbo match {
+  case FieldI(i) ~ FieldS(s) =&gt;
+}
+</pre><p>Based on the idea from <a href="http://stackoverflow.com/questions/2261358/pattern-matching-with-conjunctions-patterna-and-patternb">Pattern Matching with Conjunctions (PatternA AND PatternB)</a></p></div><div class="block">
             linear super types: AnyRef, <span class="extype" name="scala.Any">Any</span>
           </div>
             
@@ -52,7 +56,7 @@
           <div id="ancestors">
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall">Hide All</li><li class="showall">Show all</li></ol>
-                <ol id="linearization"><li class="in" name="com.osinka.subset.ValueReader">ValueReader</li><li class="in" name="scala.AnyRef">AnyRef</li><li class="in" name="scala.Any">Any</li></ol>
+                <ol id="linearization"><li class="in" name="~">~</li><li class="in" name="scala.AnyRef">AnyRef</li><li class="in" name="scala.Any">Any</li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -218,35 +222,6 @@
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#apply">
-      <a id="apply[T](PartialFunction[Any, T]):ValueReaderPf[T]"></a>
-      <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol">
-        <span class="name">apply</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span name="pf">pf: <span class="extype" name="scala.PartialFunction">PartialFunction</span>[<span class="extype" name="scala.Any">Any</span>, T]</span>)</span>
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[T]</span>
-      </span>
-      </h4>
-      
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#arrayGetter">
-      <a id="arrayGetter[T]:ValueReaderPf[Array[T]]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol">
-        <span class="name">arrayGetter</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Array">Array</span>[T]]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.Any#asInstanceOf">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
@@ -272,40 +247,6 @@ part of compilation it is not possible to check whether the contents of the list
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#booleanGetter">
-      <a id="booleanGetter:ValueReaderPf[Boolean]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">booleanGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#byteArrayGetter">
-      <a id="byteArrayGetter:ValueReaderPf[Array[Byte]]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol">
-        <span class="name">byteArrayGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
     </li><li visbl="prt" data-isabs="false" name="scala.AnyRef#clone">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
@@ -329,57 +270,6 @@ part of compilation it is not possible to check whether the contents of the list
             
             
           </div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#dateGetter">
-      <a id="dateGetter:ValueReaderPf[Date]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">dateGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="java.util.Date">Date</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#dboGetter">
-      <a id="dboGetter:ValueReaderPf[DBObject]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">dboGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="com.mongodb.DBObject">DBObject</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#doubleGetter">
-      <a id="doubleGetter:ValueReaderPf[Double]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">doubleGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Double">Double</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
           
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#eq">
       <a id="eq(AnyRef):Boolean"></a>
@@ -475,23 +365,6 @@ there are no more references to the object.</p><p>The details of when and if the
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#floatGetter">
-      <a id="floatGetter:ValueReaderPf[Float]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">floatGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Float">Float</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#getClass">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
@@ -542,23 +415,6 @@ to verify that the behavior is consistent with the <code>equals</code> method.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#intGetter">
-      <a id="intGetter:ValueReaderPf[Int]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">intGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Int">Int</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.Any#isInstanceOf">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
@@ -584,40 +440,6 @@ possible to check whether the contents of the list are of the requested typed.
             
             
           </div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#listGetter">
-      <a id="listGetter[T](ValueReader[T]):ValueReaderPf[List[T]]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol">
-        <span class="name">listGetter</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span class="implicit">implicit </span><span name="r">r: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T]</span>)</span>
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[List[T]]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#longGetter">
-      <a id="longGetter:ValueReaderPf[Long]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">longGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Long">Long</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
           
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#ne">
       <a id="ne(AnyRef):Boolean"></a>
@@ -689,125 +511,6 @@ possible to check whether the contents of the list are of the requested typed.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#objIdGetter">
-      <a id="objIdGetter:ValueReaderPf[ObjectId]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">objIdGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="org.bson.types.ObjectId">ObjectId</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#optionGetter">
-      <a id="optionGetter[T](ValueReader[T]):ValueReader[Option[T]]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit def</span>
-      <span class="symbol">
-        <span class="name">optionGetter</span>
-        <span class="tparams">[<span name="T">T</span>]</span>
-        <span class="params">(<span class="implicit">implicit </span><span name="r">r: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T]</span>)</span>
-        <span class="result">: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[<span class="extype" name="scala.Option">Option</span>[T]]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#patternGetter">
-      <a id="patternGetter:ValueReaderPf[Pattern]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">patternGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="java.util.regex.Pattern">Pattern</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#regexGetter">
-      <a id="regexGetter:ValueReaderPf[Regex]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">regexGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.util.matching.Regex">Regex</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#shortGetter">
-      <a id="shortGetter:ValueReaderPf[Short]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">shortGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Short">Short</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#stringGetter">
-      <a id="stringGetter:ValueReaderPf[String]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">stringGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[String]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#symbolGetter">
-      <a id="symbolGetter:ValueReaderPf[Symbol]"></a>
-      <h4 class="signature">
-      <span class="kind">implicit val</span>
-      <span class="symbol">
-        <span class="name">symbolGetter</span>
-        
-        
-        <span class="result">: <a href="ValueReaderPf.html" class="extype" name="com.osinka.subset.ValueReaderPf">ValueReaderPf</a>[<span class="extype" name="scala.Symbol">Symbol</span>]</span>
-      </span>
-      </h4>
-      
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#synchronized">
       <a id="synchronized[T0](T0):T0"></a>
       <h4 class="signature">
@@ -849,23 +552,18 @@ possible to check whether the contents of the list are of the requested typed.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="com.osinka.subset.ValueReader#tuple2Getter">
-      <a id="tuple2Getter[T1, T2](ValueReader[T1],ValueReader[T2]):ValueReader[(T1, T2)]"></a>
+    </li><li visbl="pub" data-isabs="false" name="~#unapply">
+      <a id="unapply[A](A):Some[(A, A)]"></a>
       <h4 class="signature">
-      <span class="kind">implicit def</span>
+      <span class="kind">def</span>
       <span class="symbol">
-        <span class="name">tuple2Getter</span>
-        <span class="tparams">[<span name="T1">T1</span>, <span name="T2">T2</span>]</span>
-        <span class="params">(<span class="implicit">implicit </span><span name="r1">r1: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T1]</span>, <span name="r2">r2: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[T2]</span>)</span>
-        <span class="result">: <a href="ValueReader.html" class="extype" name="com.osinka.subset.ValueReader">ValueReader</a>[(T1, T2)]</span>
+        <span class="name">unapply</span>
+        <span class="tparams">[<span name="A">A</span>]</span>
+        <span class="params">(<span name="a">a: A</span>)</span>
+        <span class="result">: <span class="extype" name="scala.Some">Some</span>[(A, A)]</span>
       </span>
       </h4>
       
-            
-            <div class="fullcomment"><div class="block">
-          attributes: implicit 
-        </div></div>
-          
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#wait">
       <a id="wait():Unit"></a>
       <h4 class="signature">
