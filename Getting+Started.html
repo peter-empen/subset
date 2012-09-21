@@ -58,16 +58,16 @@ you save and consume <code>DateTime</code> fields
 is declared <em>optional</em> in Ivy / Maven configurations. Your project
 must depend on “Joda Time” if you use it.
 </p><h2 id="SBT+Configuration">SBT Configuration</h2><p>For <em>simple</em> configuration:
-</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.7.3&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;1.0.1&quot;
 </code></pre><p>For <em>scala</em> configration:
 </p><pre><code class="prettyprint lang-scala">lazy val root = Project(....) dependsOn(subset)
 
-lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;0.7.3&quot;
+lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;1.0.1&quot;
 </code></pre><h2 id="Maven+Configuration">Maven Configuration</h2><p>Dependency:
 </p><pre><code class="prettyprint lang-xml">&lt;dependency&gt;
   &lt;groupId&gt;com.osinka.subset&lt;/groupId&gt;
   &lt;artifactId&gt;subset_2.9.1&lt;/artifactId&gt;
-  &lt;version&gt;0.7.3&lt;/version&gt;
+  &lt;version&gt;1.0.1&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre><p>No need in repository declaration, <strong>Subset</strong> is in Maven Central.
 </p><hr></hr><div class="tocwrapper show">

@@ -38,7 +38,7 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h1 id="Writing+key-value">Writing key-value</h1><p>An <code>apply</code> method takes <code>T</code> and generates a
 <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> that sets a key-value in
-<a  href="http://api.mongodb.org/java/2.7.2/com/mongodb/DBObject.html"><code>DBObject</code></a>:
+<a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a>:
 </p><pre><code class="prettyprint lang-scala">val mutation = f(10)
 // is the same as
 (mutation.get) must equal(BasicDBObjectBuilder.start(&quot;f&quot;,10).get)
@@ -54,7 +54,7 @@ mutation(existingDBO) must containKeyValue(&quot;f&quot;, 10)
 </code></pre><p><code>apply</code> depends on availability of <code>ValueWriter[T]</code> type class. See
 <a  href="/Values.html">values</a> for details.
 </p><p>Taking into account ability of mutations to compose, it becomes
-possible to create a fresh <a  href="http://api.mongodb.org/java/2.7.2/com/mongodb/DBObject.html"><code>DBObject</code></a> with several fields or modify
+possible to create a fresh <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a> with several fields or modify
 these fields all at once:
 </p><pre><code class="prettyprint lang-scala">val subsetMutation = subdoc( Subdoc.inner(&quot;val&quot;) )
 

@@ -12,7 +12,7 @@
       <script type="text/javascript" src="../../../lib/tools.tooltip.js"></script>
     
         </head>
-        <body class="type">
+        <body onload="sh_highlightDocument('../lib/', '.min.js');" class="type">
       <div id="definition">
         <a title="Go to companion" href="Subset$.html"><img src="../../../lib/class_to_object_big.png" /></a>
         <p id="owner"><a name="com" class="extype" href="../../package.html">com</a>.<a name="com.osinka" class="extype" href="../package.html">osinka</a>.<a name="com.osinka.subset" class="extype" href="package.html">subset</a></p>
@@ -20,105 +20,107 @@
       </div>
 
       <h4 class="signature" id="signature">
-      <span class="kind">class</span>
-      <span class="symbol"> 
-        <span class="name">Subset</span>
-        <span class="tparams">[<span name="T">T</span>, <span name="Self">Self</span>]</span>
-        <span class="result"> extends <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Subset</span><span class="tparams">[<span name="T">T</span>, <span name="Self">Self</span>]</span><span class="result"> extends <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
       </span>
       </h4>
       
-          <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Subset wraps facilities for working with subdocuments.</p><p>Since MongoDB documents may be nested, they sometimes make up a complex hierarchies
+      <div class="fullcommenttop" id="comment"><div class="comment cmt"><p>Subset wraps facilities for working with subdocuments.</p><p>Since MongoDB documents may be nested, they sometimes make up a complex hierarchies
 with arrays of maps or maps of maps.</p><p>The easiest way to create a <code>Subset</code> object is via a helper String pimp:</p><pre>
-val subset = &quot;votes&quot;.subset(Vote).of[List[Vote]]
+<span class="kw">val</span> subset = <span class="lit">"votes"</span>.subset(Vote).of[<span class="std">List</span>[Vote]]
 </pre><h5> Queries and update modifiers </h5><p>An example:</p><pre>
-case class Comment(by: String, votes: Int, text: String)
-case class BlogPost(title: String, comments: List[Comment])
+<span class="kw">case</span> <span class="kw">class</span> Comment(by: <span class="std">String</span>, votes: <span class="std">Int</span>, text: <span class="std">String</span>)
+<span class="kw">case</span> <span class="kw">class</span> BlogPost(title: <span class="std">String</span>, comments: <span class="std">List</span>[Comment])
 
-object Comment {
-  val by = &quot;by&quot;.fieldOf[String]
-  val votes = &quot;votes&quot;.fieldOf[Int]
-  val text = &quot;text&quot;.fieldOf[String]
+<span class="kw">object</span> Comment {
+  <span class="kw">val</span> by = <span class="lit">"by"</span>.fieldOf[<span class="std">String</span>]
+  <span class="kw">val</span> votes = <span class="lit">"votes"</span>.fieldOf[<span class="std">Int</span>]
+  <span class="kw">val</span> text = <span class="lit">"text"</span>.fieldOf[<span class="std">String</span>]
 }
 
-object BlogPost {
-  val title = &quot;title&quot;.fieldOf[String]
-  val comments = &quot;comments&quot;.subset(Comment).of[List[Comment]]
+<span class="kw">object</span> BlogPost {
+  <span class="kw">val</span> title = <span class="lit">"title"</span>.fieldOf[<span class="std">String</span>]
+  <span class="kw">val</span> comments = <span class="lit">"comments"</span>.subset(Comment).of[<span class="std">List</span>[Comment]]
 }
 </pre><p><code>BlogPost.comments</code> represents an array of <code>Comment</code> sub-documents. From now on, you can
 create queries and update modifiers using the fields defined in <code>Comment</code>:</p><pre>
-BlogPost.comments.where { _.by === 10 }
+BlogPost.comments.where { _.by === <span class="num">10</span> }
 </pre><p>will result in a query <code>{&quot;comments.by&quot;: 10}</code>.</p><p>Analogously, update operation</p><pre>
-BlogPost.comments.modify {_.vote inc 1}`
+BlogPost.comments.modify {_.vote inc <span class="num">1</span>}`
 </pre><p>will result in <code>{$inc: {&quot;comments.vote&quot;: 1}}</code></p><h5> Serialization </h5><p><code>Subset</code> provides a couple of helper methods for serializing and deserializing
 a document from <code>DBObject</code>.</p><p><code>apply</code> takes an object and creates a <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a>,
 assuming we have a type class <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a> in scope.
 For example,</p><pre>
-BlogPost.comments(new Comment(&quot;Joe&quot;, 2, &quot;text&quot;)).get
+BlogPost.comments(<span class="kw">new</span> Comment(<span class="lit">"Joe"</span>, <span class="num">2</span>, <span class="lit">"text"</span>)).get
 </pre><p>will result in
 <code>{&quot;by&quot;: &quot;Joe&quot;, &quot;votes&quot;: 2, &quot;text&quot;: &quot;text&quot;}</code></p><p><code>unapply</code> makes use of <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a> to extract
 an object. E.g. assuming we have implicit in scope,</p><pre>
-dbObject match {
-  case BlogPost.comments(comments) =&gt;  ...
+dbObject <span class="kw">match</span> {
+  <span class="kw">case</span> BlogPost.comments(comments) <span class="kw">=&gt;</span>  ...
 }
 </pre><h5> Cloning </h5><p>You can create a conditional operator for a specific array element, e.g.</p><pre>
-BlogPost.comments(1).modify {_.by set &quot;john&quot;}
+BlogPost.comments(<span class="num">1</span>).modify {_.by set <span class="lit">"john"</span>}
 </pre><p>creates an update modifier <code>{$set: {&quot;comments.1.by&quot;: &quot;john&quot;}}</code></p><p>Method <code>matched</code> creates a positional query, e.g.</p><pre>
-BlogPost.comments.matched.modify {_.by set &quot;john&quot;}
+BlogPost.comments.matched.modify {_.by set <span class="lit">"john"</span>}
 </pre><p>creates an update modifier <code>{$set: {&quot;comments.$.by&quot;: &quot;john&quot;}}</code></p><h5> Querying and Updating </h5><p>Along with the ordinary queries every field supports, <code>Subset</code> lets you define
 much more advanced
 <a href="http://www.mongodb.org/display/DOCS/Advanced+Queries#AdvancedQueries-%24elemMatch">elemMatch</a>
 queries and
 <a href="http://www.mongodb.org/display/DOCS/Updating#Updating-The%24positionaloperator">positional</a>
 update.</p><p>Again, turning back to our example, how would you increment &quot;votes&quot; of a Joe's comment?</p><pre>
-// Let's increment a Joe's comment vote
-coll.update(BlogPost.comments.where {_.by === &quot;joe&quot;},
-            BlogPost.comments.matched.modify {_.votes inc 1})
+<span class="cmt">// Let's increment a Joe's comment vote</span>
+coll.update(BlogPost.comments.where {_.by === <span class="lit">"joe"</span>},
+            BlogPost.comments.matched.modify {_.votes inc <span class="num">1</span>})
 </pre><p>It is also possible to find a BlogPost which has a comment made by &quot;Joe&quot; <i>and</i> having &quot;votes&quot;
 equal to 2:</p><pre>
-// Find a blog post commented by Joe and the comment's vote is 2
-coll.find(BlogPost.comments.elemMatch {comment =&gt; comment.by === &quot;joe&quot; &amp;&amp; comment.votes === 2}).iterator
+<span class="cmt">// Find a blog post commented by Joe and the comment's vote is 2</span>
+coll.find(BlogPost.comments.elemMatch {comment <span class="kw">=&gt;</span> comment.by === <span class="lit">"joe"</span> &amp;&amp; comment.votes === <span class="num">2</span>}).iterator
 </pre><h4> <code>pullWhere</code> </h4><p><code>pullWhere</code> lets specify a <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a> to select an object
 that needs to be removed from an array, e.g.</p><pre>
-collection.update(BlogPost.title === &quot;test&quot;,
-                  BlogPost.comments.pullWhere{comment =&gt; comment.by === &quot;user2&quot; &amp;&amp; comment.votes === 0})
+collection.update(BlogPost.title === <span class="lit">"test"</span>,
+                  BlogPost.comments.pullWhere{comment <span class="kw">=&gt;</span> comment.by === <span class="lit">"user2"</span> &amp;&amp; comment.votes === <span class="num">0</span>})
 </pre></div><dl class="paramcmts block"><dt class="tparam">Self</dt><dd class="cmt"><p>a type of fields container</p></dd></dl><dl class="attributes block"> <dt>See also</dt><dd><span class="cmt"><p><a href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">Blog Comment Example</a>
 </p></span></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T], <a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a>[T], <a name="com.osinka.subset.query.FieldConditions" class="extype" href="query/FieldConditions.html">FieldConditions</a>[T], <a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a>[T], <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a>, AnyRef, <span name="scala.Any" class="extype">Any</span></div>
         </div></div>
-        
+    
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol><li class="alpha in"><span>Alphabetic</span></li><li class="inherit out"><span>By inheritance</span></li></ol>
+            </div>
+        <div id="ancestors">
+              <span class="filtertype">Inherited</span>
+              <ol><li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li></ol>
+              <ol id="linearization"><li name="com.osinka.subset.Subset" class="in"><span>Subset</span></li><li name="com.osinka.subset.Field" class="in"><span>Field</span></li><li name="com.osinka.subset.update.Modifications" class="in"><span>Modifications</span></li><li name="com.osinka.subset.query.FieldConditions" class="in"><span>FieldConditions</span></li><li name="com.osinka.subset.query.Conditions" class="in"><span>Conditions</span></li><li name="com.osinka.subset.Path" class="in"><span>Path</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
+            </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
 
       <div id="template">
-
-        <div id="mbrsel">
-          <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
-          <div id="order">
-                <span class="filtertype">Ordering</span>
-                <ol><li class="alpha in"><span>Alphabetic</span></li><li class="inherit out"><span>By inheritance</span></li></ol>
-              </div>
-          <div id="ancestors">
-                <span class="filtertype">Inherited</span>
-                <ol><li class="hideall out"><span>Hide All</span></li>
-                <li class="showall in"><span>Show all</span></li></ol>
-                <ol id="linearization"><li name="com.osinka.subset.Subset" class="in"><span>Subset</span></li><li name="com.osinka.subset.Field" class="in"><span>Field</span></li><li name="com.osinka.subset.update.Modifications" class="in"><span>Modifications</span></li><li name="com.osinka.subset.query.FieldConditions" class="in"><span>FieldConditions</span></li><li name="com.osinka.subset.query.Conditions" class="in"><span>Conditions</span></li><li name="com.osinka.subset.Path" class="in"><span>Path</span></li><li name="scala.AnyRef" class="in"><span>AnyRef</span></li><li name="scala.Any" class="in"><span>Any</span></li></ol>
-              </div>
-          <div id="visbl">
-              <span class="filtertype">Visibility</span>
-              <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
-            </div>
-        </div>
-
+        <div id="allMembers">
         <div class="members" id="constructors">
               <h3>Instance Constructors</h3>
               <ol><li visbl="pub" name="com.osinka.subset.Subset#this" data-isabs="false">
       <a id="this:Subset[T, Self]"></a>
       <h4 class="signature">
-      <span class="kind">new</span>
-      <span class="symbol"> 
-        <span class="name">Subset</span>
-        
-        <span class="params">(<span name="path">path: List[String]</span>, <span name="self">self: Self</span>)</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">Subset</span><span class="params">(<span name="path">path: List[String]</span>, <span name="self">self: Self</span>)</span>
       </span>
       </h4>
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">self</dt><dd class="cmt"><p>is a fields container. Usually this is an object where a subdocument's fields reside.</p></dd></dl></div>
@@ -126,7 +128,7 @@ collection.update(BlogPost.title === &quot;test&quot;,
             </div>
 
         
-        
+
         
 
         <div class="values members" id="values">
@@ -134,198 +136,216 @@ collection.update(BlogPost.title === &quot;test&quot;,
               <ol><li visbl="pub" name="scala.AnyRef#!=" data-isabs="false">
       <a id="!=(AnyRef):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">!=</span>
-        
-        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $bang$eq">!=</span><span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="scala.Any#!=" data-isabs="false">
       <a id="!=(Any):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">!=</span>
-        
-        <span class="params">(<span name="arg0">arg0: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $bang$eq">!=</span><span class="params">(<span name="arg0">arg0: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#!==" data-isabs="false">
       <a id="!==(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">!==</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $bang$eq$eq">!==</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef###" data-isabs="false">
       <a id="##():Int"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">##</span>
-        
-        <span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $hash$hash">##</span><span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Path#+" data-isabs="false">
       <a id="+(Path):Path"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">+</span>
-        
-        <span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $plus">+</span><span class="params">(<span name="p">p: <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></span>)</span><span class="result">: <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#&lt;" data-isabs="false">
       <a id="&lt;(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">&lt;</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $less">&lt;</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#&lt;=" data-isabs="false">
       <a id="&lt;=(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">&lt;=</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $less$eq">&lt;=</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#==" data-isabs="false">
       <a id="==(AnyRef):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">==</span>
-        
-        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $eq$eq">==</span><span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="scala.Any#==" data-isabs="false">
       <a id="==(Any):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">==</span>
-        
-        <span class="params">(<span name="arg0">arg0: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $eq$eq">==</span><span class="params">(<span name="arg0">arg0: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldConditions#===" data-isabs="false">
       <a id="===(Pattern):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">===</span>
-        
-        <span class="params">(<span name="x">x: <span name="java.util.regex.Pattern" class="extype">Pattern</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $eq$eq$eq">===</span><span class="params">(<span name="x">x: <span name="java.util.regex.Pattern" class="extype">Pattern</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldConditions" class="extype" href="query/FieldConditions.html">FieldConditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldConditions#===" data-isabs="false">
       <a id="===(Regex)(ValueWriter[Regex]):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">===</span>
-        
-        <span class="params">(<span name="x">x: <span name="scala.util.matching.Regex" class="extype">Regex</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[<span name="scala.util.matching.Regex" class="extype">Regex</span>]</span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $eq$eq$eq">===</span><span class="params">(<span name="x">x: <span name="scala.util.matching.Regex" class="extype">Regex</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[<span name="scala.util.matching.Regex" class="extype">Regex</span>]</span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldConditions" class="extype" href="query/FieldConditions.html">FieldConditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldConditions#===" data-isabs="false">
       <a id="===(Option[T])(ValueWriter[T]):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">===</span>
-        
-        <span class="params">(<span name="x">x: <span name="scala.Option" class="extype">Option</span>[T]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $eq$eq$eq">===</span><span class="params">(<span name="x">x: <span name="scala.Option" class="extype">Option</span>[T]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldConditions" class="extype" href="query/FieldConditions.html">FieldConditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.FieldConditions#===" data-isabs="false">
       <a id="===(T)(ValueWriter[T]):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">===</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $eq$eq$eq">===</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.Query" class="extype" href="query/Query.html">Query</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldConditions" class="extype" href="query/FieldConditions.html">FieldConditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#&gt;" data-isabs="false">
       <a id="&gt;(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">&gt;</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $greater">&gt;</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#&gt;=" data-isabs="false">
       <a id="&gt;=(T)(ValueWriter[T]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">&gt;=</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $greater$eq">&gt;=</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#addToSet" data-isabs="false">
       <a id="addToSet[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">addToSet</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="w">w: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addToSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="w">w: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#addToSet" data-isabs="false">
       <a id="addToSet[A](A)(ValueWriter[A],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">addToSet</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">addToSet</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#added" data-isabs="false">
       <a id="added[A](A)((A) ⇒ T,ValueWriter[A]):Mutation"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">added</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: (A) ⇒ T</span>, <span name="arg1">arg1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">added</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: (A) ⇒ T</span>, <span name="arg1">arg1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Writer mutation
@@ -334,22 +354,24 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#all" data-isabs="false">
       <a id="all[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">all</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="s">s: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">all</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="s">s: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#any" data-isabs="false">
       <a id="any:Field[Any]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">any</span>
-        
-        <span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[<span name="scala.Any" class="extype">Any</span>]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">any</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[<span name="scala.Any" class="extype">Any</span>]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a new field, that has the same name and scope, but <code>Any</code> type.</p><div class="fullcomment"><div class="comment cmt"><p>Create a new field, that has the same name and scope, but <code>Any</code> type.</p><p><code>Field[Any]</code> is of much help to insert custom objects or e.g. <code>org.bson.types.{MaxKey, MinKey}</code>
@@ -357,22 +379,24 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Subset#apply" data-isabs="false">
       <a id="apply(Int):Subset[T, Self]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">apply</span>
-        
-        <span class="params">(<span name="i">i: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.Subset" class="extype" href="">Subset</a>[T, Self]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="params">(<span name="i">i: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.Subset" class="extype" href="">Subset</a>[T, Self]</span>
       </span>
       </h4>
       
     </li><li visbl="pub" name="com.osinka.subset.Field#apply" data-isabs="false">
       <a id="apply[A](A)((A) ⇒ T,ValueWriter[A]):Mutation"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">apply</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: (A) ⇒ T</span>, <span name="arg1">arg1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: (A) ⇒ T</span>, <span name="arg1">arg1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <p class="shortcomment cmt">(an alias for <code>added</code>)
@@ -381,11 +405,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Field#as" data-isabs="false">
       <a id="as[A]:Field[A]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">as</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[A]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">as</span><span class="tparams">[<span name="A">A</span>]</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[A]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a new field, that has the same name and scope, but with another type.</p><div class="fullcomment"><div class="comment cmt"><p>Create a new field, that has the same name and scope, but with another type.
@@ -393,22 +418,24 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="scala.Any#asInstanceOf" data-isabs="false">
       <a id="asInstanceOf[T0]:T0"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">asInstanceOf</span>
-        <span class="tparams">[<span name="T0">T0</span>]</span>
-        <span class="result">: T0</span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: T0</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#at" data-isabs="false">
       <a id="at(Int):Field[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">at</span>
-        
-        <span class="params">(<span name="index">index: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">at</span><span class="params">(<span name="index">index: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a field representing array element
@@ -419,11 +446,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="prt" name="scala.AnyRef#clone" data-isabs="false">
       <a id="clone():AnyRef"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">clone</span>
-        
-        <span class="params">()</span><span class="result">: AnyRef</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: AnyRef</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -433,11 +461,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Subset#elemMatch" data-isabs="false">
       <a id="elemMatch((Self) ⇒ Query):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">elemMatch</span>
-        
-        <span class="params">(<span name="f">f: (Self) ⇒ Query</span>)</span><span class="result">: Query</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">elemMatch</span><span class="params">(<span name="f">f: (Self) ⇒ Query</span>)</span><span class="result">: Query</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Creates a query as an $elemMatch relative to this document</p><div class="fullcomment"><div class="comment cmt"><p>Creates a query as an $elemMatch relative to this document</p><p><a href="http://www.mongodb.org/display/DOCS/Advanced+Queries#AdvancedQueries-%24elemMatch">Advanced Queries - elemMatch</a>
@@ -445,11 +474,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Field#elemMatch" data-isabs="false">
       <a id="elemMatch(Query):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">elemMatch</span>
-        
-        <span class="params">(<span name="q">q: Query</span>)</span><span class="result">: Query</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">elemMatch</span><span class="params">(<span name="q">q: Query</span>)</span><span class="result">: Query</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Creates a query as an $elemMatch relative to this document
@@ -459,44 +489,48 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="scala.AnyRef#eq" data-isabs="false">
       <a id="eq(AnyRef):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">eq</span>
-        
-        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#equals" data-isabs="false">
       <a id="equals(Any):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">equals</span>
-        
-        <span class="params">(<span name="o">o: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="o">o: <span name="scala.Any" class="extype">Any</span></span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Subset" class="extype" href="">Subset</a> → <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a> → <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#exists" data-isabs="false">
       <a id="exists(Boolean):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">exists</span>
-        
-        <span class="params">(<span name="v">v: <span name="scala.Boolean" class="extype">Boolean</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">exists</span><span class="params">(<span name="v">v: <span name="scala.Boolean" class="extype">Boolean</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="prt" name="scala.AnyRef#finalize" data-isabs="false">
       <a id="finalize():Unit"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">finalize</span>
-        
-        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a name="java.lang" class="extype" href="../../../java/lang/package.html">lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
@@ -506,55 +540,60 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.query.FieldConditions#fquery" data-isabs="false">
       <a id="fquery(Mutation):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">fquery</span>
-        
-        <span class="params">(<span name="condition">condition: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fquery</span><span class="params">(<span name="condition">condition: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.FieldConditions" class="extype" href="query/FieldConditions.html">FieldConditions</a> → <a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="prt" name="com.osinka.subset.query.Conditions#fquery" data-isabs="false">
       <a id="fquery[A](String,A)(ValueWriter[A]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">fquery</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="key">key: String</span>, <span name="v">v: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fquery</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="key">key: String</span>, <span name="v">v: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#getClass" data-isabs="false">
       <a id="getClass():java.lang.Class[_]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">getClass</span>
-        
-        <span class="params">()</span><span class="result">: java.lang.Class[_]</span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: java.lang.Class[_]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Path#hashCode" data-isabs="false">
       <a id="hashCode():Int"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">hashCode</span>
-        
-        <span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span name="scala.Int" class="extype">Int</span></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#in" data-isabs="false">
       <a id="in(com.osinka.subset.Field[_]):Field[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">in</span>
-        
-        <span class="params">(<span name="subset">subset: com.osinka.subset.Field[_]</span>)</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">in</span><span class="params">(<span name="subset">subset: com.osinka.subset.Field[_]</span>)</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create an alias
@@ -563,33 +602,36 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#in" data-isabs="false">
       <a id="in(Traversable[T])(ValueWriter[Traversable[T]]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">in</span>
-        
-        <span class="params">(<span name="s">s: Traversable[T]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[T]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">in</span><span class="params">(<span name="s">s: Traversable[T]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[T]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#inc" data-isabs="false">
       <a id="inc(T)(ValueWriter[T]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">inc</span>
-        
-        <span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inc</span><span class="params">(<span name="x">x: T</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[T]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#int" data-isabs="false">
       <a id="int:Field[Int]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">int</span>
-        
-        <span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[<span name="scala.Int" class="extype">Int</span>]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">int</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[<span name="scala.Int" class="extype">Int</span>]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a new field, that has the same name and scope, but <code>Int</code> type</p><div class="fullcomment"><div class="comment cmt"><p>Create a new field, that has the same name and scope, but <code>Int</code> type</p><p><code>Field[Int]</code> is of much help to produce <code>[Int]</code> queries (in <code>$special</code>, <code>$maxKey</code>, <code>$minKey</code>, sort, index, etc.)
@@ -597,22 +639,24 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="scala.Any#isInstanceOf" data-isabs="false">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">isInstanceOf</span>
-        <span class="tparams">[<span name="T0">T0</span>]</span>
-        <span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>Any</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Path#longName" data-isabs="false">
       <a id="longName:String"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">longName</span>
-        
-        <span class="result">: String</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">longName</span><span class="result">: String</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Path in dot notation</p><div class="fullcomment"><div class="comment cmt"><p>Path in dot notation</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></dd><dt>See also</dt><dd><span class="cmt"><p><a href="http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29">MongoDB dot notation</a>
@@ -620,11 +664,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Subset#matched" data-isabs="false">
       <a id="matched:Subset[T, Self]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">matched</span>
-        
-        <span class="result">: <a name="com.osinka.subset.Subset" class="extype" href="">Subset</a>[T, Self]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">matched</span><span class="result">: <a name="com.osinka.subset.Subset" class="extype" href="">Subset</a>[T, Self]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a new positional field with the same type.</p><div class="fullcomment"><div class="comment cmt"><p>Create a new positional field with the same type. The last element is &quot;$&quot;</p><p>Creates a positional field to update the first matched element in an array.
@@ -633,22 +678,24 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#mod" data-isabs="false">
       <a id="mod(Int,Int):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">mod</span>
-        
-        <span class="params">(<span name="by">by: <span name="scala.Int" class="extype">Int</span></span>, <span name="rest">rest: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mod</span><span class="params">(<span name="by">by: <span name="scala.Int" class="extype">Int</span></span>, <span name="rest">rest: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#modify" data-isabs="false">
       <a id="modify((Self) ⇒ Update):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">modify</span>
-        
-        <span class="params">(<span name="f">f: (Self) ⇒ Update</span>)</span><span class="result">: Update</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modify</span><span class="params">(<span name="f">f: (Self) ⇒ Update</span>)</span><span class="result">: Update</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Creates an update operator positioned relative to this document</p><div class="fullcomment"><div class="comment cmt"><p>Creates an update operator positioned relative to this document</p><p><a href="http://www.mongodb.org/display/DOCS/Updating#Updating-The%24positionaloperator">Updating - The positional operator</a>
@@ -656,11 +703,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Field#modify" data-isabs="false">
       <a id="modify(Update):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">modify</span>
-        
-        <span class="params">(<span name="u">u: Update</span>)</span><span class="result">: Update</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modify</span><span class="params">(<span name="u">u: Update</span>)</span><span class="result">: Update</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Creates an update operator positioned relative to this document
@@ -670,165 +718,180 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Path#name" data-isabs="false">
       <a id="name:String"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">name</span>
-        
-        <span class="result">: String</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">name</span><span class="result">: String</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#ne" data-isabs="false">
       <a id="ne(AnyRef):Boolean"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">ne</span>
-        
-        <span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: AnyRef</span>)</span><span class="result">: <span name="scala.Boolean" class="extype">Boolean</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#near" data-isabs="false">
       <a id="near(Double,Double,Double)(ValueWriter[Traversable[Double]]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">near</span>
-        
-        <span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>, <span name="d">d: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[<span name="scala.Double" class="extype">Double</span>]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">near</span><span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>, <span name="d">d: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[<span name="scala.Double" class="extype">Double</span>]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#near" data-isabs="false">
       <a id="near(Double,Double)(ValueWriter[Traversable[Double]]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">near</span>
-        
-        <span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[<span name="scala.Double" class="extype">Double</span>]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">near</span><span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[<span name="scala.Double" class="extype">Double</span>]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#notIn" data-isabs="false">
       <a id="notIn(Traversable[T])(ValueWriter[Traversable[T]]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">notIn</span>
-        
-        <span class="params">(<span name="s">s: Traversable[T]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[T]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notIn</span><span class="params">(<span name="s">s: Traversable[T]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[T]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#notify" data-isabs="false">
       <a id="notify():Unit"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">notify</span>
-        
-        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#notifyAll" data-isabs="false">
       <a id="notifyAll():Unit"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">notifyAll</span>
-        
-        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="prt" name="com.osinka.subset.update.Modifications#op" data-isabs="false">
       <a id="op[B](String,B)(ValueWriter[B]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">op</span>
-        <span class="tparams">[<span name="B">B</span>]</span>
-        <span class="params">(<span name="op">op: String</span>, <span name="x">x: B</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[B]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">op</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="op">op: String</span>, <span name="x">x: B</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[B]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#path" data-isabs="false">
       <a id="path:List[String]"></a>
       <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol"> 
-        <span class="name">path</span>
-        
-        <span class="result">: List[String]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">path</span><span class="result">: List[String]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Subset" class="extype" href="">Subset</a> → <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a> → <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pop" data-isabs="false">
       <a id="pop(Int)(ValueWriter[Int],&lt;:&lt;[T, Traversable[_]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pop</span>
-        
-        <span class="params">(<span name="i">i: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[<span name="scala.Int" class="extype">Int</span>]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pop</span><span class="params">(<span name="i">i: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[<span name="scala.Int" class="extype">Int</span>]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#prefixString" data-isabs="false">
       <a id="prefixString:String"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">prefixString</span>
-        
-        <span class="result">: String</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">prefixString</span><span class="result">: String</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Subset" class="extype" href="">Subset</a> → <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a> → <a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pull" data-isabs="false">
       <a id="pull[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pull</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pull</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pull" data-isabs="false">
       <a id="pull[A](A)(ValueWriter[A],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pull</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pull</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pullAll" data-isabs="false">
       <a id="pullAll[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pullAll</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pullAll</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#pullWhere" data-isabs="false">
       <a id="pullWhere((Self) ⇒ Query)(&lt;:&lt;[T, Traversable[_]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pullWhere</span>
-        
-        <span class="params">(<span name="f">f: (Self) ⇒ Query</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: Update</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pullWhere</span><span class="params">(<span name="f">f: (Self) ⇒ Query</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: Update</span>
       </span>
       </h4>
       <p class="shortcomment cmt"><code>$pull</code> using a query
@@ -836,11 +899,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Field#pullWhere" data-isabs="false">
       <a id="pullWhere(Query)(&lt;:&lt;[T, Traversable[_]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pullWhere</span>
-        
-        <span class="params">(<span name="q">q: Query</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: Update</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pullWhere</span><span class="params">(<span name="q">q: Query</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: Update</span>
       </span>
       </h4>
       <p class="shortcomment cmt"><code>$pull</code> based on a condition
@@ -849,44 +913,48 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#push" data-isabs="false">
       <a id="push[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">push</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">push</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#push" data-isabs="false">
       <a id="push[A](A)(ValueWriter[A],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">push</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">push</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#pushAll" data-isabs="false">
       <a id="pushAll[A](Traversable[A])(ValueWriter[Traversable[A]],&lt;:&lt;[T, Traversable[A]]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">pushAll</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pushAll</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="seq">seq: Traversable[A]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="writer">writer: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[Traversable[A]]</span>, <span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[A]]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#removed" data-isabs="false">
       <a id="removed:Mutation"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">removed</span>
-        
-        <span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">removed</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Removing mutation
@@ -895,110 +963,120 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#rename" data-isabs="false">
       <a id="rename(com.osinka.subset.Field[_]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">rename</span>
-        
-        <span class="params">(<span name="newField">newField: com.osinka.subset.Field[_]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">rename</span><span class="params">(<span name="newField">newField: com.osinka.subset.Field[_]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#rename" data-isabs="false">
       <a id="rename(String):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">rename</span>
-        
-        <span class="params">(<span name="newName">newName: String</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">rename</span><span class="params">(<span name="newName">newName: String</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#self" data-isabs="false">
       <a id="self:Self"></a>
       <h4 class="signature">
-      <span class="kind">val</span>
-      <span class="symbol"> 
-        <span class="name">self</span>
-        
-        <span class="result">: Self</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">self</span><span class="result">: Self</span>
       </span>
       </h4>
       <p class="shortcomment cmt">is a fields container.</p><div class="fullcomment"><div class="comment cmt"><p>is a fields container. Usually this is an object where a subdocument's fields reside.</p></div></div>
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#set" data-isabs="false">
       <a id="set[A](A)((A) ⇒ T,ValueWriter[A]):Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">set</span>
-        <span class="tparams">[<span name="A">A</span>]</span>
-        <span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: (A) ⇒ T</span>, <span name="arg1">arg1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">set</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="x">x: A</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: (A) ⇒ T</span>, <span name="arg1">arg1: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[A]</span>)</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#size" data-isabs="false">
       <a id="size(Int)(&lt;:&lt;[T, Traversable[_]]):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">size</span>
-        
-        <span class="params">(<span name="n">n: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">size</span><span class="params">(<span name="n">n: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span name="scala.Predef.&lt;:&lt;" class="extype">&lt;:&lt;</span>[T, Traversable[_]]</span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#synchronized" data-isabs="false">
       <a id="synchronized[T0](⇒ T0):T0"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">synchronized</span>
-        <span class="tparams">[<span name="T0">T0</span>]</span>
-        <span class="params">(<span name="arg0">arg0: ⇒ T0</span>)</span><span class="result">: T0</span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ T0</span>)</span><span class="result">: T0</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Path#toString" data-isabs="false">
       <a id="toString():String"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">toString</span>
-        
-        <span class="params">()</span><span class="result">: String</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: String</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Path" class="extype" href="Path.html">Path</a> → AnyRef → Any</dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#type" data-isabs="false">
       <a id="type(Int):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">type</span>
-        
-        <span class="params">(<span name="n">n: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">type</span><span class="params">(<span name="n">n: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#unapply" data-isabs="false">
       <a id="unapply(DBObject)(ValueReader[T]):Option[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">unapply</span>
-        
-        <span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="getter">getter: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unapply</span><span class="params">(<span name="dbo">dbo: <span name="com.mongodb.DBObject" class="extype">DBObject</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="getter">getter: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>)</span><span class="result">: <span name="scala.Option" class="extype">Option</span>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#unary_-" data-isabs="false">
       <a id="unary_-:Mutation"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">unary_-</span>
-        
-        <span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: unary_$minus">unary_-</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <p class="shortcomment cmt">(an alias for <code>drop</code>)
@@ -1007,22 +1085,24 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.update.Modifications#unset" data-isabs="false">
       <a id="unset:Update"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">unset</span>
-        
-        <span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unset</span><span class="result">: <a name="com.osinka.subset.update.Update" class="extype" href="update/Update.html">Update</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.update.Modifications" class="extype" href="update/Modifications.html">Modifications</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#updated" data-isabs="false">
       <a id="updated[R]((T) ⇒ R)(ValueReader[T],ValueWriter[R]):Mutation"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">updated</span>
-        <span class="tparams">[<span name="R">R</span>]</span>
-        <span class="params">(<span name="f">f: (T) ⇒ R</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="r">r: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>, <span name="w">w: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[R]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">updated</span><span class="tparams">[<span name="R">R</span>]</span><span class="params">(<span name="f">f: (T) ⇒ R</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="r">r: <a name="com.osinka.subset.ValueReader" class="extype" href="ValueReader.html">ValueReader</a>[T]</span>, <span name="w">w: <a name="com.osinka.subset.ValueWriter" class="extype" href="ValueWriter.html">ValueWriter</a>[R]</span>)</span><span class="result">: <a name="com.osinka.subset.Mutation" class="extype" href="Mutation.html">Mutation</a></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Mutation modifying a value
@@ -1031,53 +1111,57 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
       <a id="wait():Unit"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">wait</span>
-        
-        <span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
       <a id="wait(Long,Int):Unit"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">wait</span>
-        
-        <span class="params">(<span name="arg0">arg0: <span name="scala.Long" class="extype">Long</span></span>, <span name="arg1">arg1: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span name="scala.Long" class="extype">Long</span></span>, <span name="arg1">arg1: <span name="scala.Int" class="extype">Int</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li visbl="pub" name="scala.AnyRef#wait" data-isabs="false">
       <a id="wait(Long):Unit"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">wait</span>
-        
-        <span class="params">(<span name="arg0">arg0: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span name="scala.Long" class="extype">Long</span></span>)</span><span class="result">: <span name="scala.Unit" class="extype">Unit</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>final </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Subset#where" data-isabs="false">
       <a id="where((Self) ⇒ Query):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">where</span>
-        
-        <span class="params">(<span name="f">f: (Self) ⇒ Query</span>)</span><span class="result">: Query</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">where</span><span class="params">(<span name="f">f: (Self) ⇒ Query</span>)</span><span class="result">: Query</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Wrap a query into this subset
@@ -1085,11 +1169,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Field#where" data-isabs="false">
       <a id="where(Query):Query"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">where</span>
-        
-        <span class="params">(<span name="q">q: Query</span>)</span><span class="result">: Query</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">where</span><span class="params">(<span name="q">q: Query</span>)</span><span class="result">: Query</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a query relative to this field
@@ -1098,11 +1183,12 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.Field#withDefault" data-isabs="false">
       <a id="withDefault(⇒ T):Field[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">withDefault</span>
-        
-        <span class="params">(<span name="x">x: ⇒ T</span>)</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withDefault</span><span class="params">(<span name="x">x: ⇒ T</span>)</span><span class="result">: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Use the default value when extracting and no key found.</p><div class="fullcomment"><div class="comment cmt"><p>Use the default value when extracting and no key found.
@@ -1111,33 +1197,36 @@ collection.update(BlogPost.title === &quot;test&quot;,
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#withinBox" data-isabs="false">
       <a id="withinBox(Double,Double,Double,Double):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">withinBox</span>
-        
-        <span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>, <span name="x2">x2: <span name="scala.Double" class="extype">Double</span></span>, <span name="y2">y2: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withinBox</span><span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>, <span name="x2">x2: <span name="scala.Double" class="extype">Double</span></span>, <span name="y2">y2: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.query.Conditions#withinCenter" data-isabs="false">
       <a id="withinCenter(Double,Double,Double):FieldQuery[T]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">withinCenter</span>
-        
-        <span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>, <span name="r">r: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">withinCenter</span><span class="params">(<span name="x">x: <span name="scala.Double" class="extype">Double</span></span>, <span name="y">y: <span name="scala.Double" class="extype">Double</span></span>, <span name="r">r: <span name="scala.Double" class="extype">Double</span></span>)</span><span class="result">: <a name="com.osinka.subset.query.FieldQuery" class="extype" href="query/FieldQuery.html">FieldQuery</a>[T]</span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a name="com.osinka.subset.query.Conditions" class="extype" href="query/Conditions.html">Conditions</a></dd></dl></div>
     </li><li visbl="pub" name="com.osinka.subset.Field#~" data-isabs="false">
       <a id="~[T2](Field[T2]):Tuple2Subset[T, T2]"></a>
       <h4 class="signature">
-      <span class="kind">def</span>
-      <span class="symbol"> 
-        <span class="name">~</span>
-        <span class="tparams">[<span name="T2">T2</span>]</span>
-        <span class="params">(<span name="f2">f2: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T2]</span>)</span><span class="result">: <a name="com.osinka.subset.Tuple2Subset" class="extype" href="Tuple2Subset.html">Tuple2Subset</a>[T, T2]</span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name" title="gt4s: $tilde">~</span><span class="tparams">[<span name="T2">T2</span>]</span><span class="params">(<span name="f2">f2: <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T2]</span>)</span><span class="result">: <a name="com.osinka.subset.Tuple2Subset" class="extype" href="Tuple2Subset.html">Tuple2Subset</a>[T, T2]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Create a tuple subset
@@ -1147,7 +1236,9 @@ collection.update(BlogPost.title === &quot;test&quot;,
             </div>
 
         
+        </div>
 
+        <div id="inheritedMembers">
         <div name="com.osinka.subset.Field" class="parent">
               <h3>Inherited from <a name="com.osinka.subset.Field" class="extype" href="Field.html">Field</a>[T]</h3>
             </div><div name="com.osinka.subset.update.Modifications" class="parent">
@@ -1163,10 +1254,14 @@ collection.update(BlogPost.title === &quot;test&quot;,
             </div><div name="scala.Any" class="parent">
               <h3>Inherited from <span name="scala.Any" class="extype">Any</span></h3>
             </div>
+        </div>
 
       </div>
-      
+
       <div id="tooltip"></div>
-      
+
+      <div id="footer">  </div>
+
+
     </body>
       </html>

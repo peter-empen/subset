@@ -48,8 +48,8 @@ we need
 </code></pre><blockquote><p>Every field provides both extractor (you’ve seen it above when we extracted the
 field values using pattern matching) and <code>apply</code> function to serialize values.
 The result of this <code>apply</code> method is a Mutation that modifies DBObjects, which is
-rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.7.2/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
-or you may modify an existing <a  href="http://api.mongodb.org/java/2.7.2/com/mongodb/DBObject.html"><code>DBObject</code></a>
+rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
+or you may modify an existing <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a>
 </p></blockquote><pre><code class="prettyprint lang-scala">val changes = text(&quot;text&quot;) ~ createdAt(new DateTime)
 
 // this will produce a fresh DBObject with two fields
@@ -96,7 +96,7 @@ from a user who has more than 100 tweets:
 </p></blockquote><pre><code class="prettyprint lang-scala">coll.find( createdAt &gt; DateTime.now.minusHours(6) &amp;&amp;
            user.where {_.tweets &gt; 100} )
 </code></pre><h3 id="Updating">Updating</h3><blockquote><p>How would you get tweets from a user who has more than 100 tweets and mark
-these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.7.2/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
+these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
 </p></blockquote><pre><code class="prettyprint lang-scala">val fromActiveUser = &quot;fromActiveUser&quot;.field[Boolean]
 
 coll.find( user.where {_.tweets &gt; 100} ) foreach { dbo =&gt;
