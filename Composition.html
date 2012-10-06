@@ -36,7 +36,7 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h1 id="Composition">Composition</h1><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of
 <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> and benefits from the ability of
-<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>.
 </p><blockquote><p><strong>Note</strong> While queries can be composed together using <code>~</code> method, the
 result will be <code>Mutation</code> and cannot account for the possible fact this
 query is in scope of a <code>Subset</code>, thus will be lacking MongoDB
@@ -47,7 +47,7 @@ methods for composing queries, outlined below.
 queries: ”<code>q1 || q2 || q3</code>” results in ”<code>{$or: [q1, q2, q3]}</code>”
 </li><li><code>def &amp;&amp;(other: Query)</code> (the same as <code>and</code>) creates “and” query. The
 specific behaviour depends on the strategy. By default, <strong>Subset</strong>
-tries to pack all fields in a single <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a>, but when any of the
+tries to pack all fields in a single <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, but when any of the
 queries makes use of <code>$and</code> or same field names are used, <code>$and</code>
 query will be used.
 </li><li><code>def nor(other: Query)</code> creates <code>$nor</code> quries.

@@ -38,7 +38,7 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h1 id="Mutation">Mutation</h1><p><em>Mutation</em> in <strong>Subset</strong> is an extension of function <code>(DBObject =&gt;
 DBObject)</code>. <strong>Subset</strong> makes a heavy use of mutations to accumulate
-updates to <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a> values and benefits from mutations composability.
+updates to <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> values and benefits from mutations composability.
 </p><pre><code class="prettyprint lang-scala">trait Mutation extends (DBObject =&gt; DBObject)
 </code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Mutation"><code>Mutation</code></a> has the
 following methods:
@@ -58,10 +58,10 @@ some key, removing a key, to name a few), though they are rarely used
 directly. Almost everywhere <strong>Subset</strong> generates <code>Mutation</code>: when
 one serializes a field’s value or builds a query, the result would be
 <code>Mutation</code> or its subtype. This gives a beautiful flexibility:
-</p><ul><li>it’s very easy to get a fresh <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a> by calling <code>mutation.get</code>
+</p><ul><li>it’s very easy to get a fresh <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> by calling <code>mutation.get</code>
 (certainly there is also an implicit, that converts mutations into
 <code>DBObject</code>)
-</li><li>it’s always possible to apply a mutation to the existing <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBObject.html"><code>DBObject</code></a>, so
+</li><li>it’s always possible to apply a mutation to the existing <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, so
 that a developer may modify <code>DBObject</code> got from any source and keep
 other fields intact.
 </li><li>mutations compose, accumulating the changes.  
