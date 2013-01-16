@@ -1,0 +1,69 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Composition</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/custom.css"></link>
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/jquery.collapse.js"></script>
+        <script src="js/pamflet.js"></script>
+        
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
+      </head>
+      <body>
+        <a class="page prev nav" href="Queries.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip">❧</span>
+          </a><a class="page next nav" href="Conditional+Operators.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span> — Composition
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Composition">Composition</h1><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of
+<a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> and benefits from the ability of
+<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+</p><blockquote><p><strong>Note</strong> While queries can be composed together using <code>~</code> method, the
+result will be <code>Mutation</code> and cannot account for the possible fact this
+query is in scope of a <code>Subset</code>, thus will be lacking MongoDB
+“dot notation” to designate internal keys. It’s better to use special
+methods for composing queries, outlined below.
+</p></blockquote><p>Query has the following methods to compose:
+</p><ul><li><code>def ||(other: Query)</code> (the same as <code>or</code>) creates <code>$or</code>
+queries: ”<code>q1 || q2 || q3</code>” results in ”<code>{$or: [q1, q2, q3]}</code>”
+</li><li><code>def &amp;&amp;(other: Query)</code> (the same as <code>and</code>) creates “and” query. The
+specific behaviour depends on the strategy. By default, <strong>Subset</strong>
+tries to pack all fields in a single <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, but when any of the
+queries makes use of <code>$and</code> or same field names are used, <code>$and</code>
+query will be used.
+</li><li><code>def nor(other: Query)</code> creates <code>$nor</code> quries.
+</li></ul><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Conditional+Operators.html"> Conditional Operators </a>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Writing+key-value.html">Writing key-value</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Extractor+Issues.html">Extractor Issues</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div class="current">Composition</div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>

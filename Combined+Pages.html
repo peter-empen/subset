@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "about:legacy-compat">
-<html manifest="pamflet.manifest">
+<html>
       <head>
         <title>Subset — Combined Pages</title>
         <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
@@ -20,6 +20,7 @@
       --></script>
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
       </head>
       <body>
         <a class="page prev nav" href="Contents+in+Depth.html">
@@ -64,7 +65,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#x61;&#x7a;&#97;&#x72;&#111;&#118;&#x40;&#111;&#115;&#x69;&#x6e;&#x6b;&#x61;&#46;&#x63;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
+<a  href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#97;&#x7a;&#97;&#114;&#111;&#118;&#x40;&#x6f;&#x73;&#x69;&#110;&#x6b;&#97;&#46;&#x63;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
@@ -82,8 +83,8 @@ we need
 </code></pre><blockquote><p>Every field provides both extractor (you’ve seen it above when we extracted the
 field values using pattern matching) and <code>apply</code> function to serialize values.
 The result of this <code>apply</code> method is a Mutation that modifies DBObjects, which is
-rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
-or you may modify an existing <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>
+rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
+or you may modify an existing <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>
 </p></blockquote><pre><code class="prettyprint lang-scala">val changes = text(&quot;text&quot;) ~ createdAt(new DateTime)
 
 // this will produce a fresh DBObject with two fields
@@ -130,7 +131,7 @@ from a user who has more than 100 tweets:
 </p></blockquote><pre><code class="prettyprint lang-scala">coll.find( createdAt &gt; DateTime.now.minusHours(6) &amp;&amp;
            user.where {_.tweets &gt; 100} )
 </code></pre><h3 id="Updating">Updating</h3><blockquote><p>How would you get tweets from a user who has more than 100 tweets and mark
-these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
+these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
 </p></blockquote><pre><code class="prettyprint lang-scala">val fromActiveUser = &quot;fromActiveUser&quot;.field[Boolean]
 
 coll.find( user.where {_.tweets &gt; 100} ) foreach { dbo =&gt;
@@ -171,7 +172,7 @@ and we have such an experience, we finally established a number of
 requirements for the new library:
 </p><ul><li>ability to work via official mongo-java-driver directly,
 </li><li>a type-safe mechanism to record transitions of documents
-(<a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>), define queries and “update modifiers”
+(<a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>), define queries and “update modifiers”
 </li><li>ability to apply all these to “pure BSON objects”, without intent to
 read/write them into MongoDB (that is, independent from storage)
 </li></ul><h2 id="Design+Goals">Design Goals</h2><p>Thus <a  href="https://github.com/osinka/subset"><strong>Subset</strong></a> has the following
@@ -222,16 +223,16 @@ you save and consume <code>DateTime</code> fields
 is declared <em>optional</em> in Ivy / Maven configurations. Your project
 must depend on “Joda Time” if you use it.
 </p><h2 id="SBT+Configuration">SBT Configuration</h2><p>For <em>simple</em> configuration:
-</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;1.0.1&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;1.0.2&quot;
 </code></pre><p>For <em>scala</em> configration:
 </p><pre><code class="prettyprint lang-scala">lazy val root = Project(....) dependsOn(subset)
 
-lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;1.0.1&quot;
+lazy val subset = &quot;com.osinka.subset&quot; %% &quot;subset&quot; % &quot;1.0.2&quot;
 </code></pre><h2 id="Maven+Configuration">Maven Configuration</h2><p>Dependency:
 </p><pre><code class="prettyprint lang-xml">&lt;dependency&gt;
   &lt;groupId&gt;com.osinka.subset&lt;/groupId&gt;
   &lt;artifactId&gt;subset_2.9.1&lt;/artifactId&gt;
-  &lt;version&gt;1.0.1&lt;/version&gt;
+  &lt;version&gt;1.0.2&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre><p>No need in repository declaration, <strong>Subset</strong> is in Maven Central.
 </p><hr></hr><h1 id="Serialization">Serialization</h1><p><strong>Subset</strong>’s units of serialization are ordinary values: the
@@ -350,7 +351,7 @@ writer:
 }
 </code></pre><blockquote><p>The fragment of code above is a part of
 <a  href="https://gist.github.com/1647326">REPLable example on working with subdocuments (at gist.github.com)</a>
-</p></blockquote><p>With all the above definitions, creating a new <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> will be like
+</p></blockquote><p>With all the above definitions, creating a new <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> will be like
 </p><pre><code class="prettyprint lang-scala">import BlogPost._
 
 val dbo: DBObject =
@@ -361,7 +362,7 @@ val dbo: DBObject =
 </code></pre><pre><code>       
 </code></pre><hr></hr><h1 id="Mutation">Mutation</h1><p><em>Mutation</em> in <strong>Subset</strong> is an extension of function <code>(DBObject =&gt;
 DBObject)</code>. <strong>Subset</strong> makes a heavy use of mutations to accumulate
-updates to <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> values and benefits from mutations composability.
+updates to <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> values and benefits from mutations composability.
 </p><pre><code class="prettyprint lang-scala">trait Mutation extends (DBObject =&gt; DBObject)
 </code></pre><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Mutation"><code>Mutation</code></a> has the
 following methods:
@@ -381,16 +382,16 @@ some key, removing a key, to name a few), though they are rarely used
 directly. Almost everywhere <strong>Subset</strong> generates <code>Mutation</code>: when
 one serializes a field’s value or builds a query, the result would be
 <code>Mutation</code> or its subtype. This gives a beautiful flexibility:
-</p><ul><li>it’s very easy to get a fresh <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> by calling <code>mutation.get</code>
+</p><ul><li>it’s very easy to get a fresh <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> by calling <code>mutation.get</code>
 (certainly there is also an implicit, that converts mutations into
 <code>DBObject</code>)
-</li><li>it’s always possible to apply a mutation to the existing <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, so
+</li><li>it’s always possible to apply a mutation to the existing <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, so
 that a developer may modify <code>DBObject</code> got from any source and keep
 other fields intact.
 </li><li>mutations compose, accumulating the changes.  
 </li></ul><hr></hr><h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><h2 id="Field">Field</h2><p><code>Field</code> is a typed represenation of MongoDB document field. It serves
 as a generator for a number of mutations, e.g. setting a key-value in
-a <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, queries and update modifiers. It provides a convenient
+a <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, queries and update modifiers. It provides a convenient
 extractor for the document field as well to ease extracting field
 contents using pattern matching. A <em>field</em> may be created in a number
 of ways:
@@ -398,7 +399,7 @@ of ways:
 // is the same as
 val f = &quot;key&quot;.fieldOf[Int]
 </code></pre><h2 id="Document">Document</h2><p><code>Subset</code> is a typed representation of MongoDB nested documents. It has
-a name (since a subdocument is stored under a key in <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>). A
+a name (since a subdocument is stored under a key in <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>). A
 type of <em>subset</em> is not neccesarily <code>T</code>, it could be e.g. <code>List[T]</code> if
 an array of sub-documents is stored under this particular key, or
 <code>Map[String,T]</code> if it is a nested key-value map where subdocuments are
@@ -421,7 +422,7 @@ itself. For example, it makes no sense to create a <code>Subset</code> of type
 </li><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Subset"><code>Subset</code></a>
 </li></ul><hr></hr><h1 id="Writing+key-value">Writing key-value</h1><p>An <code>apply</code> method takes <code>T</code> and generates a
 <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> that sets a key-value in
-<a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>:
+<a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>:
 </p><pre><code class="prettyprint lang-scala">val mutation = f(10)
 // is the same as
 (mutation.get) must equal(BasicDBObjectBuilder.start(&quot;f&quot;,10).get)
@@ -437,12 +438,12 @@ mutation(existingDBO) must containKeyValue(&quot;f&quot;, 10)
 </code></pre><p><code>apply</code> depends on availability of <code>ValueWriter[T]</code> type class. See
 <a  href="/Values.html">values</a> for details.
 </p><p>Taking into account ability of mutations to compose, it becomes
-possible to create a fresh <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with several fields or modify
+possible to create a fresh <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with several fields or modify
 these fields all at once:
 </p><pre><code class="prettyprint lang-scala">val subsetMutation = subdoc( Subdoc.inner(&quot;val&quot;) )
 
 val modifiedDBO = mutation ~ subsetMutation :~&gt; existingDBO
-</code></pre><hr></hr><h1 id="Extractor">Extractor</h1><p>Every <code>Field[T]</code> provides an extractor from <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> to <code>T</code>. It
+</code></pre><hr></hr><h1 id="Extractor">Extractor</h1><p>Every <code>Field[T]</code> provides an extractor from <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> to <code>T</code>. It
 depends on the availability of <code>ValueReader[T]</code> type class. See
 <a  href="/Serializer.html">values</a> for details.
 </p><pre><code class="prettyprint lang-scala">val f = &quot;f&quot;.fieldOf[Int]
@@ -463,7 +464,7 @@ dbo match {
 </code></pre><p>Besides, since any <code>Subset</code> is a <code>Field</code> subtype, it will extract its
 type <code>T</code> as well (there must be implicit <code>ValueReader[T]</code> available
 certainly), see <a  href="http://osinka.github.com/subset/Example.html#Subdocument">Subdocument</a>
-</p><h2 id="Extractor+Failures">Extractor Failures</h2><p>Since <code>ValueReader</code> only knows how to extract from <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> values,
+</p><h2 id="Extractor+Failures">Extractor Failures</h2><p>Since <code>ValueReader</code> only knows how to extract from <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> values,
 it cannot know how to process the absence of a field. Thus, for a
 field declaration like the above, the inability of <code>ValueReader</code> to
 extract <code>Int</code> will be indistinguishable from the fact there is no
@@ -574,7 +575,7 @@ for details.
 </p><p>A field representing an array element at index <code>i</code> is created with <code>field.at(i)</code>
 </p><pre><code class="prettyprint lang-scala">collection.update(Query.empty, seq.at(2) set 5)
 </code></pre><p>updates all collection documents with modifier <code>{$set: {&quot;seq.2&quot;: 5}}</code>.
-</p><hr></hr><h1 id="Caveats">Caveats</h1><h2 id="%E2%80%9CWhere+is+my+new+object%E2%80%99s+%3F%E2%80%9C">“Where is my new object’s <code>_id</code>?“</h2><p>Suppose you want to insert a new object and you need this object’s <a  href="http://api.mongodb.org/java/2.9.1/org/bson/types/ObjectId.html"><code>_id</code></a> back?
+</p><hr></hr><h1 id="Caveats">Caveats</h1><h2 id="%E2%80%9CWhere+is+my+new+object%E2%80%99s+%3F%E2%80%9C">“Where is my new object’s <code>_id</code>?“</h2><p>Suppose you want to insert a new object and you need this object’s <a  href="http://api.mongodb.org/java/2.10.1/org/bson/types/ObjectId.html"><code>_id</code></a> back?
 An approach could be like this
 </p><pre><code class="prettyprint lang-scala">import Document._
 
@@ -599,21 +600,21 @@ this algorithm, its signature is
     wr =&gt; System.err.println(&quot;Failed to save the object &quot;+wr.getError)
   )
 </code></pre><h2 id=""><code>DBCollection.findOne</code></h2><p>Method <a  href="http://api.mongodb.org/java/2.8.0/com/mongodb/DBCollection.html#findOne(java.lang.Object"><code>DBCollection.findOne</code></a>)
-accepts <code>Object</code> and this means an automatic implicit conversion from <code>Query</code> to <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> will not be triggered. Since
+accepts <code>Object</code> and this means an automatic implicit conversion from <code>Query</code> to <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> will not be triggered. Since
 MongoDB does not know what it has to do with <code>Query</code>, the method invocation will break.
-</p><p>The workaround: you have to explicitly say you want <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> as a query:
+</p><p>The workaround: you have to explicitly say you want <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> as a query:
 </p><pre><code class="prettyprint lang-scala">collection.findOne(Document.DocumentId === oid : DBObject)
-</code></pre><h2 id="DBObject+is+Mutable">DBObject is Mutable</h2><p><strong>Subset</strong> <em>is</em> immutable, but <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> (a key-value map storing documents) is
+</code></pre><h2 id="DBObject+is+Mutable">DBObject is Mutable</h2><p><strong>Subset</strong> <em>is</em> immutable, but <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> (a key-value map storing documents) is
 not. You get this object (e.g. from a collection) full of fields, <strong>Subset</strong> lets you
 modify some of them, add new ones and then you are storing it back. Since this object
-contains a special field <a  href="http://api.mongodb.org/java/2.9.1/org/bson/types/ObjectId.html"><code>_id</code></a>, MongoDB knows you are modifying an already existing
+contains a special field <a  href="http://api.mongodb.org/java/2.10.1/org/bson/types/ObjectId.html"><code>_id</code></a>, MongoDB knows you are modifying an already existing
 object, not inserting a new one.
 </p><p>There are two common caveats.
-</p><h3 id="DBObject+Keeps+a+State">DBObject Keeps a State</h3><p>The original <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> you got somewhere keeps a state, that <a  href="http://api.mongodb.org/java/2.9.1/org/bson/types/ObjectId.html"><code>_id</code></a> field. There
-is a danger you may forget about it and create a new shiny <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+</p><h3 id="DBObject+Keeps+a+State">DBObject Keeps a State</h3><p>The original <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> you got somewhere keeps a state, that <a  href="http://api.mongodb.org/java/2.10.1/org/bson/types/ObjectId.html"><code>_id</code></a> field. There
+is a danger you may forget about it and create a new shiny <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>.
 </p><h3 id="Schema+Compatibility">Schema Compatibility</h3><p>Moreover, since MongoDB is schemaless, a document in collection may contain some
 fields your application does not <em>still</em> understand. <strong>Subset</strong> is prepared for
-this, it lets you define changes and apply them to the existing <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>. Like
+this, it lets you define changes and apply them to the existing <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>. Like
 this
 </p><pre><code class="prettyprint lang-scala">val dbo: DBObject = .... // you have DBObject full of fields
 
@@ -635,7 +636,7 @@ fresh object with two fields (this can be of help if you’d like to sanitize
 your documents)
 </p></blockquote><pre><code class="prettyprint lang-scala">collection.save(modification)
 </code></pre><p><strong>Note</strong> Almost all <strong>Subset</strong> objects are <a  href="http://osinka.github.com/subset/Mutation.html"><em>Mutations</em></a>.
-</p><hr></hr><h1 id="Queries">Queries</h1><p>Quries in MongoDB are expressed in terms of a tree (in <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>) and
+</p><hr></hr><h1 id="Queries">Queries</h1><p>Quries in MongoDB are expressed in terms of a tree (in <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>) and
 can be quite complex, e.g. in MongoDB javascript shell one could write
 the following
 </p><pre><code class="prettyprint lang-json">{
@@ -678,7 +679,7 @@ val query =
 </li><li><strong>Subset</strong> scaladoc on <code>query</code> is <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package">here</a>
 </li></ul><hr></hr><h1 id="Composition">Composition</h1><p><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.query.package"><code>Query</code></a> is built on top of
 <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> and benefits from the ability of
-<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>.
+<em>mutations</em> to modify existing <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>.
 </p><blockquote><p><strong>Note</strong> While queries can be composed together using <code>~</code> method, the
 result will be <code>Mutation</code> and cannot account for the possible fact this
 query is in scope of a <code>Subset</code>, thus will be lacking MongoDB
@@ -689,7 +690,7 @@ methods for composing queries, outlined below.
 queries: ”<code>q1 || q2 || q3</code>” results in ”<code>{$or: [q1, q2, q3]}</code>”
 </li><li><code>def &amp;&amp;(other: Query)</code> (the same as <code>and</code>) creates “and” query. The
 specific behaviour depends on the strategy. By default, <strong>Subset</strong>
-tries to pack all fields in a single <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, but when any of the
+tries to pack all fields in a single <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, but when any of the
 queries makes use of <code>$and</code> or same field names are used, <code>$and</code>
 query will be used.
 </li><li><code>def nor(other: Query)</code> creates <code>$nor</code> quries.

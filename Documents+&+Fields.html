@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "about:legacy-compat">
-<html manifest="pamflet.manifest">
+<html>
       <head>
         <title>Subset — Documents &amp; Fields</title>
         <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
@@ -20,6 +20,7 @@
       --></script>
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
       </head>
       <body>
         <a class="page prev nav" href="Mutation.html">
@@ -38,7 +39,7 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h1 id="Documents+%26+Fields">Documents &amp; Fields</h1><h2 id="Field">Field</h2><p><code>Field</code> is a typed represenation of MongoDB document field. It serves
 as a generator for a number of mutations, e.g. setting a key-value in
-a <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, queries and update modifiers. It provides a convenient
+a <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>, queries and update modifiers. It provides a convenient
 extractor for the document field as well to ease extracting field
 contents using pattern matching. A <em>field</em> may be created in a number
 of ways:
@@ -46,7 +47,7 @@ of ways:
 // is the same as
 val f = &quot;key&quot;.fieldOf[Int]
 </code></pre><h2 id="Document">Document</h2><p><code>Subset</code> is a typed representation of MongoDB nested documents. It has
-a name (since a subdocument is stored under a key in <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>). A
+a name (since a subdocument is stored under a key in <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>). A
 type of <em>subset</em> is not neccesarily <code>T</code>, it could be e.g. <code>List[T]</code> if
 an array of sub-documents is stored under this particular key, or
 <code>Map[String,T]</code> if it is a nested key-value map where subdocuments are
@@ -67,7 +68,11 @@ itself. For example, it makes no sense to create a <code>Subset</code> of type
 <code>String</code>.
 </p></blockquote><ul><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Field"><code>Field</code></a>
 </li><li>Scaladoc on <a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.Subset"><code>Subset</code></a>
-</li></ul><hr></hr><div class="tocwrapper show">
+</li></ul><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Writing+key-value.html"> Writing key-value </a>
+                      </div><div class="tocwrapper show">
       <a class="tochead nav" style="display: none" href="#toc">❦</a>
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>

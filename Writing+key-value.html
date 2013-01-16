@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "about:legacy-compat">
-<html manifest="pamflet.manifest">
+<html>
       <head>
         <title>Subset — Writing key-value</title>
         <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
@@ -20,6 +20,7 @@
       --></script>
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
       </head>
       <body>
         <a class="page prev nav" href="Documents+%26+Fields.html">
@@ -38,7 +39,7 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h1 id="Writing+key-value">Writing key-value</h1><p>An <code>apply</code> method takes <code>T</code> and generates a
 <a  href="http://osinka.github.com/subset/Mutation.html">Mutation</a> that sets a key-value in
-<a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a>:
+<a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>:
 </p><pre><code class="prettyprint lang-scala">val mutation = f(10)
 // is the same as
 (mutation.get) must equal(BasicDBObjectBuilder.start(&quot;f&quot;,10).get)
@@ -54,12 +55,16 @@ mutation(existingDBO) must containKeyValue(&quot;f&quot;, 10)
 </code></pre><p><code>apply</code> depends on availability of <code>ValueWriter[T]</code> type class. See
 <a  href="/Values.html">values</a> for details.
 </p><p>Taking into account ability of mutations to compose, it becomes
-possible to create a fresh <a  href="http://api.mongodb.org/java/2.9.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with several fields or modify
+possible to create a fresh <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with several fields or modify
 these fields all at once:
 </p><pre><code class="prettyprint lang-scala">val subsetMutation = subdoc( Subdoc.inner(&quot;val&quot;) )
 
 val modifiedDBO = mutation ~ subsetMutation :~&gt; existingDBO
-</code></pre><hr></hr><div class="tocwrapper show">
+</code></pre><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Extractor.html"> Extractor </a>
+                      </div><div class="tocwrapper show">
       <a class="tochead nav" style="display: none" href="#toc">❦</a>
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>

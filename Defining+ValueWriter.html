@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "about:legacy-compat">
-<html manifest="pamflet.manifest">
+<html>
       <head>
         <title>Subset — Defining ValueWriter</title>
         <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
@@ -20,6 +20,7 @@
       --></script>
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
       </head>
       <body>
         <a class="page prev nav" href="Defining+ValueReader.html">
@@ -44,7 +45,11 @@ BSON-compatible value.
 </p><p>Looking back to an example of storing Joda’s <code>DateTime</code>, most likely we
 would want to save a <code>DateTime</code> as a sane MongoDate value:
 </p><pre><code class="prettyprint lang-scala">implicit val myDateWriter = ValueWriter(_.toDate)
-</code></pre><hr></hr><div class="tocwrapper show">
+</code></pre><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Sub-document.html"> Sub-document </a>
+                      </div><div class="tocwrapper show">
       <a class="tochead nav" style="display: none" href="#toc">❦</a>
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>

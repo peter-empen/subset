@@ -1,0 +1,112 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Sub-document</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/custom.css"></link>
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/jquery.collapse.js"></script>
+        <script src="js/pamflet.js"></script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"></link><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
+      </head>
+      <body>
+        <a class="page prev nav" href="Defining+ValueWriter.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip">❧</span>
+          </a><a class="page next nav" href="Mutation.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span> — Sub-document
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Sub-document">Sub-document</h1><p>Suppose you have a model where you store subdocuments in an array,
+e.g. (as JSON)
+</p><pre><code class="prettyprint lang-json">{
+  title: &quot;A blog post&quot;,
+  comments: [
+    {
+      by: &quot;joe&quot;,
+      text: &quot;joe's comment&quot;,
+      votes: 0
+    },
+    {
+      by: &quot;mary&quot;,
+      text: &quot;mary's comment&quot;,
+      votes: 1
+    }
+  ]
+}
+</code></pre><p>Every comment is represented in the model as
+</p><pre><code class="prettyprint lang-scala">case class Comment(by: String, votes: Int, text: String)
+</code></pre><blockquote><p>There is no real necessity to give
+same names to the <em>case class</em>’s fields  
+</p></blockquote><p>And a list of comments is defined in a “blog post” like
+</p><pre><code class="prettyprint lang-scala">object BlogPost {
+  val title = &quot;title&quot;.fieldOf[String]
+  val comments = &quot;comments&quot;.fieldOf[List[Comment]]
+</code></pre><p>In order to read <code>comments</code> field or write to it or create any queries
+or modifications (via MongoDB’s “update modifiers”), <strong>Subset</strong> needs
+to know how to serialize and deserialize <code>Comment</code> (it already knows
+what to do with <code>List[T]</code>), so you have to define Comment’s reader and
+writer:
+</p><pre><code class="prettyprint lang-scala">object Comment {
+  val by = &quot;by&quot;.fieldOf[String]
+  val votes = &quot;votes&quot;.fieldOf[Int]
+  val text = &quot;text&quot;.fieldOf[String]
+
+  implicit val reader = ValueReader[Comment]({
+    case by(by) ~ votes(votes) ~ text(text) =&gt;
+      new Comment(by, votes, text)
+  })
+  implicit val writer = {
+    def f(comment: Comment): DBObject =
+      ( (by -&gt; comment.by) ~
+        (votes -&gt; comment.votes) ~
+        (text -&gt; comment.text) )
+    ValueWriter(f _)
+  }
+}
+</code></pre><blockquote><p>The fragment of code above is a part of
+<a  href="https://gist.github.com/1647326">REPLable example on working with subdocuments (at gist.github.com)</a>
+</p></blockquote><p>With all the above definitions, creating a new <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> will be like
+</p><pre><code class="prettyprint lang-scala">import BlogPost._
+
+val dbo: DBObject =
+  title(&quot;A blog post&quot;) ~
+  comments(Comment(&quot;joe&quot;, &quot;joe's comment&quot;, 0) ::
+           Comment(&quot;mary&quot;, &quot;mary's comment&quot;, 1) ::
+           Nil)
+</code></pre><pre><code>       
+</code></pre><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Mutation.html"> Mutation </a>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div><a href="Example.html">Example</a></div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div class="current">Sub-document</div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Writing+key-value.html">Writing key-value</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Extractor+Issues.html">Extractor Issues</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div><a href="Composition.html">Composition</a></div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>

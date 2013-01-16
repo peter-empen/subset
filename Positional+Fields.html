@@ -1,5 +1,5 @@
 <!DOCTYPE html SYSTEM "about:legacy-compat">
-<html manifest="pamflet.manifest">
+<html>
       <head>
         <title>Subset — Positional Fields</title>
         <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
@@ -20,6 +20,7 @@
       --></script>
         <meta charset="utf-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
       </head>
       <body>
         <a class="page prev nav" href="Type+Modification.html">
@@ -46,7 +47,11 @@ for details.
 </p><p>A field representing an array element at index <code>i</code> is created with <code>field.at(i)</code>
 </p><pre><code class="prettyprint lang-scala">collection.update(Query.empty, seq.at(2) set 5)
 </code></pre><p>updates all collection documents with modifier <code>{$set: {&quot;seq.2&quot;: 5}}</code>.
-</p><hr></hr><div class="tocwrapper show">
+</p><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Caveats.html"> Caveats </a>
+                      </div><div class="tocwrapper show">
       <a class="tochead nav" style="display: none" href="#toc">❦</a>
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>

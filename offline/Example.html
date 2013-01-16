@@ -1,0 +1,135 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <title>Subset — Example</title>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/blueprint/screen.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/blueprint/grid.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/blueprint/print.css"></link> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/pamflet.css"></link>
+        <link type="text/css" media="print" rel="stylesheet" href="css/pamflet-print.css"></link>
+        <link type="text/css" media="screen and (min-device-width: 800px), projection" rel="stylesheet" href="css/pamflet-grid.css"></link>
+        <link type="text/css" media="screen, projection" rel="stylesheet" href="css/custom.css"></link>
+        <script src="js/jquery-1.6.2.min.js"></script>
+        <script src="js/jquery.collapse.js"></script>
+        <script src="js/pamflet.js"></script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"></link><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        
+      </head>
+      <body>
+        <a class="page prev nav" href="Subset.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip">❧</span>
+          </a><a class="page next nav" href="Why+Subset.html">
+            <span class="space">&nbsp;</span>
+            <span>❧</span>
+          </a>
+        <div class="container">
+          <div class="span-16 prepend-1 append-1">
+            <div class="top nav span-16 title">
+              <span>Subset</span> — Example
+            </div>
+          </div>
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Example">Example</h1><p>All the following is a fragment of <a  href="https://gist.github.com/1647302">REPLable gist</a>:
+</p><h3 id="Fields">Fields</h3><blockquote><p>A couple of fields in a tweet JSON:
+</p></blockquote><pre><code class="prettyprint lang-scala">val text = &quot;text&quot;.fieldOf[String]
+val createdAt = &quot;created_at&quot;.fieldOf[DateTime]
+</code></pre><h3 id="Serialization">Serialization</h3><blockquote><p>We may run through MongoDB collection and extract only fields
+we need
+</p></blockquote><pre><code class="prettyprint lang-scala">coll.find.iterator foreach {
+  case text(t) ~ createdAt(dt) =&gt; println(t + &quot; @ &quot; + dt)
+}
+</code></pre><blockquote><p>Every field provides both extractor (you’ve seen it above when we extracted the
+field values using pattern matching) and <code>apply</code> function to serialize values.
+The result of this <code>apply</code> method is a Mutation that modifies DBObjects, which is
+rather cool: they compose; you are free to get a <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> with only those fields;
+or you may modify an existing <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a>
+</p></blockquote><pre><code class="prettyprint lang-scala">val changes = text(&quot;text&quot;) ~ createdAt(new DateTime)
+
+// this will produce a fresh DBObject with two fields
+// (you may call changes.get explicitly)
+val dbo1: DBObject = changes
+
+// this will modify an existing DBObject
+val dboModified: DBObject = changes(exstingDBObject)
+</code></pre><h3 id="Subdocument">Subdocument</h3><blockquote><p>Actually the tweets contain a subdocument “user”.
+Suppose we want it as an object
+</p></blockquote><pre><code class="prettyprint lang-scala">case class User(name: String, tweets: Int, description: String)
+
+object User {
+  val tweets = &quot;statuses_count&quot;.fieldOf[Int]
+  val description = &quot;description&quot;.fieldOf[String]
+  val name = &quot;screen_name&quot;.fieldOf[String]
+}
+
+val user = &quot;user&quot;.subset(User).of[User]
+</code></pre><blockquote><p>First, we have declared a container for the sub-document’s fields.
+<code>user</code> is an object that denotes it’s name represents sub-documents
+of type <code>User</code>. Its type could be <code>List[User]</code> as well, if
+MongoDB document field “user” stored an array of sub-documents.
+</p></blockquote><blockquote><p>We need a custom
+<a  href="http://osinka.github.com/subset/ValueReader+%26+ValueWriter.html">ValueReader</a>,
+in order for the library to extract User objects from a
+document. (in fact, the best place for this <code>implicit</code> is <code>User</code>
+object itself)
+</p></blockquote><pre><code class="prettyprint lang-scala">implicit val userReader = {
+  import User._
+  ValueReader[User]({
+    case name(n) ~ tweets(t) ~ description(d) =&gt;
+      new User(n,t,d)
+  })
+}
+</code></pre><blockquote><p>With all the above, we may extract not only ordinary fields, but
+a User object as well
+</p></blockquote><pre><code class="prettyprint lang-scala">coll.find.iterator foreach { 
+  case user(u) ~ text(t) ~ createdAt(dt) =&gt;
+    println(&quot;%s @ %s: %s&quot;.format(u, dt, t))
+}
+</code></pre><h3 id="Querying">Querying</h3><blockquote><p>In case we would like to get only recent tweets (for the last 6 hours)
+from a user who has more than 100 tweets:
+</p></blockquote><pre><code class="prettyprint lang-scala">coll.find( createdAt &gt; DateTime.now.minusHours(6) &amp;&amp;
+           user.where {_.tweets &gt; 100} )
+</code></pre><h3 id="Updating">Updating</h3><blockquote><p>How would you get tweets from a user who has more than 100 tweets and mark
+these records with “fromActiveUser” (we shall modify the <a  href="http://api.mongodb.org/java/2.10.1/com/mongodb/DBObject.html"><code>DBObject</code></a> and save it back)
+</p></blockquote><pre><code class="prettyprint lang-scala">val fromActiveUser = &quot;fromActiveUser&quot;.field[Boolean]
+
+coll.find( user.where {_.tweets &gt; 100} ) foreach { dbo =&gt;
+  coll.save( fromActiveUser(true) :~&gt; dbo )
+}
+</code></pre><blockquote><p>You could want to accomplish the same task using <a  href="www.mongodb.org/display/DOCS/Updating"><code>update</code></a>
+operation
+</p></blockquote><pre><code class="prettyprint lang-scala">import Document._
+
+coll.find( user.where{_.tweets &gt; 100} ) foreach {
+  case DocumentId(id) =&gt;
+    coll.update(DocumentId === id, fromActiveUser.set(true))
+  }
+}
+</code></pre><blockquote><p>Or you could collect all IDs and update the documents all at once
+</p></blockquote><pre><code class="prettyprint lang-scala">def ids =
+  coll.find( user.where{_.tweets &gt; 100} ) map {
+    case DocumentId(id) =&gt; id
+  }
+coll.update(DocumentId in ids, fromActiveUser.set(true), false, true)
+</code></pre><hr></hr><div class="bottom nav">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Why+Subset.html"> Why Subset </a>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="Subset.html">Subset</a></div><ol class="toc"> <li><div class="current">Example</div></li><li><div><a href="Why+Subset.html">Why Subset</a></div></li><li><div><a href="Getting+Started.html">Getting Started</a></div></li><li><div><a href="Serialization.html">Serialization</a></div><ol class="toc"> <li><div><a href="ValueReader+%26+ValueWriter.html">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="Defining+ValueReader.html">Defining ValueReader</a></div></li><li><div><a href="Defining+ValueWriter.html">Defining ValueWriter</a></div></li><li><div><a href="Sub-document.html">Sub-document</a></div></li> </ol></li><li><div><a href="Mutation.html">Mutation</a></div></li><li><div><a href="Documents+%26+Fields.html">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="Writing+key-value.html">Writing key-value</a></div></li><li><div><a href="Extractor.html">Extractor</a></div></li><li><div><a href="Tuples.html">Tuples</a></div></li><li><div><a href="Extractor+Issues.html">Extractor Issues</a></div></li><li><div><a href="Type+Modification.html">Type Modification</a></div></li><li><div><a href="Positional+Fields.html">Positional Fields</a></div></li><li><div><a href="Caveats.html">Caveats</a></div></li> </ol></li><li><div><a href="Queries.html">Queries</a></div><ol class="toc"> <li><div><a href="Composition.html">Composition</a></div></li><li><div><a href="Conditional+Operators.html">Conditional Operators</a></div></li><li><div><a href="Subset+Query.html">Subset Query</a></div></li><li><div><a href="Field+Alias.html">Field Alias</a></div></li> </ol></li><li><div><a href="Update+Operators.html">Update Operators</a></div><ol class="toc"> <li><div><a href="Subset+Updates.html">Subset Updates</a></div></li> </ol></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <a class="fork nav" href="http://github.com/osinka/subset"><img alt="Fork me on GitHub" src="img/fork.png"></img></a>
+      </body>
+    </html>
