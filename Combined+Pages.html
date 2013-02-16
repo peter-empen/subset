@@ -39,7 +39,7 @@
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="#Subset">Subset</a></div><ol class="toc"> <li><div><a href="#Example">Example</a></div></li><li><div><a href="#Why+Subset">Why Subset</a></div></li><li><div><a href="#Getting+Started">Getting Started</a></div></li><li><div><a href="#Serialization">Serialization</a></div><ol class="toc"> <li><div><a href="#ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="#Defining+ValueReader">Defining ValueReader</a></div></li><li><div><a href="#Defining+ValueWriter">Defining ValueWriter</a></div></li><li><div><a href="#Sub-document">Sub-document</a></div></li> </ol></li><li><div><a href="#Mutation">Mutation</a></div></li><li><div><a href="#Documents+%26+Fields">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="#Writing+key-value">Writing key-value</a></div></li><li><div><a href="#Extractor">Extractor</a></div></li><li><div><a href="#Tuples">Tuples</a></div></li><li><div><a href="#Extractor+Issues">Extractor Issues</a></div></li><li><div><a href="#Type+Modification">Type Modification</a></div></li><li><div><a href="#Positional+Fields">Positional Fields</a></div></li><li><div><a href="#Caveats">Caveats</a></div></li> </ol></li><li><div><a href="#Queries">Queries</a></div><ol class="toc"> <li><div><a href="#Composition">Composition</a></div></li><li><div><a href="#Conditional+Operators">Conditional Operators</a></div></li><li><div><a href="#Subset+Query">Subset Query</a></div></li><li><div><a href="#Field+Alias">Field Alias</a></div></li> </ol></li><li><div><a href="#Update+Operators">Update Operators</a></div><ol class="toc"> <li><div><a href="#Subset+Updates">Subset Updates</a></div></li> </ol></li> </ol></div></div><h1 id="Subset">Subset</h1><p><strong>Subset</strong> is a Scala library to ease extracting fields from MongoDB documents,
+      <div><a href="#Subset">Subset</a></div><ol class="toc"> <li><div><a href="#Example">Example</a></div></li><li><div><a href="#Why+Subset">Why Subset</a></div></li><li><div><a href="#Getting+Started">Getting Started</a></div></li><li><div><a href="#Serialization">Serialization</a></div><ol class="toc"> <li><div><a href="#ValueReader+%26+ValueWriter">ValueReader &amp; ValueWriter</a></div></li><li><div><a href="#Defining+ValueReader">Defining ValueReader</a></div></li><li><div><a href="#Defining+ValueWriter">Defining ValueWriter</a></div></li><li><div><a href="#Sub-document">Sub-document</a></div></li> </ol></li><li><div><a href="#Mutation">Mutation</a></div></li><li><div><a href="#Documents+%26+Fields">Documents &amp; Fields</a></div><ol class="toc"> <li><div><a href="#Writing+key-value">Writing key-value</a></div></li><li><div><a href="#Extractor">Extractor</a></div></li><li><div><a href="#Tuples">Tuples</a></div></li><li><div><a href="#Extractor+Issues">Extractor Issues</a></div></li><li><div><a href="#Type+Modification">Type Modification</a></div></li><li><div><a href="#Positional+Fields">Positional Fields</a></div></li><li><div><a href="#Caveats">Caveats</a></div></li> </ol></li><li><div><a href="#Queries">Queries</a></div><ol class="toc"> <li><div><a href="#Composition">Composition</a></div></li><li><div><a href="#Conditional+Operators">Conditional Operators</a></div></li><li><div><a href="#Subset+Query">Subset Query</a></div></li><li><div><a href="#Field+Alias">Field Alias</a></div></li> </ol></li><li><div><a href="#Update+Operators">Update Operators</a></div><ol class="toc"> <li><div><a href="#Subset+Updates">Subset Updates</a></div></li> </ol></li> </ol></div></div><h1 id="Subset">Subset</h1><p><strong>Subset</strong> 1.x is a Scala library to ease extracting fields from MongoDB documents,
 serializing them back and constructing queries.
 </p><blockquote><p><a  href="http://www.mongodb.org/">MongoDB</a> is a scalable, high-performance, open-source
 NoSQL document-oriented database. It stores schema-less JSON-like structures.
@@ -55,7 +55,9 @@ your MongoDB documents sane. As well:
 only concern is about documents and their fields. By the way, you may use
 <strong>Subset</strong> to serialize/deserialize structured data for subsequent binary transmission.
 </p><blockquote><p><a  href="bsonspec.org/">BSON</a> is a binary format for document storage, that’s used by MongoDB.
-</p></blockquote><h2 id="Links">Links</h2><ul><li><a  href="http://github.com/osinka/subset">Source Code</a>
+</p></blockquote><p><strong>Subset</strong> 2.x is a complete rewrite and the work in progress. You may find it
+<a  href="https://github.com/osinka/subset2">here</a>
+</p><h2 id="Links">Links</h2><ul><li><a  href="http://github.com/osinka/subset">Source Code</a>
 </li><li><a  href="http://github.com/osinka/subset/issues">Issues</a>
 </li><li><a  href="http://osinka.github.com/subset/api/index.html#com.osinka.subset.package">API Reference (scaladoc)</a>
 </li><li><a  href="http://stackoverflow.com/questions/tagged/subset+mongodb+scala">Stackoverflow</a>
@@ -65,7 +67,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#97;&#122;&#x61;&#x72;&#x6f;&#x76;&#x40;&#111;&#x73;&#105;&#110;&#x6b;&#97;&#x2e;&#x63;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
+<a  href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#x61;&#x7a;&#x61;&#114;&#111;&#x76;&#x40;&#x6f;&#115;&#x69;&#110;&#x6b;&#x61;&#x2e;&#99;&#111;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
