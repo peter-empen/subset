@@ -67,7 +67,7 @@ only concern is about documents and their fields. By the way, you may use
 the same example as <a  href="https://github.com/osinka/subset/blob/master/src/it/scala/blogCommentSpec.scala">integration test</a>
 </li></ul><h4 id="Contact">Contact</h4><p>Alexander Azarov  
 <br/>
-<a  href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#97;&#x7a;&#97;&#114;&#x6f;&#x76;&#x40;&#111;&#x73;&#105;&#x6e;&#107;&#97;&#x2e;&#x63;&#x6f;&#x6d;">mailto:azarov@osinka.com</a>  
+<a  href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x61;&#122;&#x61;&#114;&#111;&#x76;&#64;&#111;&#x73;&#105;&#110;&#x6b;&#x61;&#46;&#x63;&#x6f;&#x6d;">mailto:azarov@osinka.com</a>  
 <br/>
 <a  href="http://www.linkedin.com/in/azarov">LinkedIn</a>  
 <br/>
@@ -751,8 +751,8 @@ object BlogPost {
 sub-documents residing under <code>BlogPost</code> document.
 </p><p>Now it becomes possible to create queries using the fields defined
 under object <code>Comment</code>:
-</p><pre><code class="prettyprint lang-scala">BlogPost.comments.where { _.by === 10 }
-</code></pre><p>results in a query ”<code>{&quot;comments.by&quot;: 10}</code>“. Thus, method <code>where</code> and
+</p><pre><code class="prettyprint lang-scala">BlogPost.comments.where { _.by === &quot;maria&quot; }
+</code></pre><p>results in a query ”<code>{&quot;comments.by&quot;: &quot;maria&quot;}</code>“. Thus, method <code>where</code> and
 all its analogous siblings in <code>Subset</code> modify a parameter query to
 have proper long field names in <a  href="http://www.mongodb.org/display/DOCS/Dot+Notation+%28Reaching+into+Objects%29">“dot notation“</a>.
 </p><h2 id=""><code>$elemMatch</code></h2><p><strong>Subset</strong> supports more advanced
@@ -773,8 +773,8 @@ queries as well:
 </code></pre><p>This query will find a BlogPost which has a comment made by “Joe”
 <strong>and</strong> having <code>votes</code> equal to 2.
 </p><h2 id="Positional+Queries">Positional Queries</h2><p>You can create a conditional operator for a specific array element, e.g.
-</p><pre><code class="prettyprint lang-scala">BlogPost.comments(1).where {_.by === &quot;john&quot;}
-</code></pre><p>creates an query <code>{&quot;comments.1.by&quot;: &quot;john&quot;}</code>
+</p><pre><code class="prettyprint lang-scala">BlogPost.comments(1).where {_.by === &quot;^jo&quot;.r}
+</code></pre><p>creates an query <code>{&quot;comments.1.by&quot;: /^jo/}</code>
 </p><hr></hr><h1 id="Field+Alias">Field Alias</h1><p>Sometimes a subset’s field can be used so frequently, that it makes
 sense to create a field alias. The idea is to avoid repetiting code
 like
